@@ -1,12 +1,14 @@
 # Warps
-Server and player warps module with advanced capabilities and lightweight game configuration
+Server and player warps module with advanced capabilities and lightweight game configuration.
 <br>
 Version: `v0.0.1-Alpha` <br>
 Native API: `Paper 1.15.2-R0.1-SNAPSHOT` <br>
 Website: <a href="www.sebbaindustries.com">SebbaIndustries.com</a><br>
 Source code: <a href="https://github.com/SebbaIndustries/Warps">github.com/SebbaIndustries/Warps</a><br>
 Java Docs: <a href="https://github.com/SebbaIndustries/JavaDocs">github.com/SebbaIndustries/JavaDocs</a><br>
-Developers: `SebbaIndustries`, `Frcsty`
+Developers: `SebbaIndustries`, `Frcsty` <br>
+Build: <br>
+![Java CI with Maven](https://github.com/SebbaIndustries/Warps/workflows/Java%20CI%20with%20Maven/badge.svg)
 
 ## Licence
 <b>MIT License</b><br>
