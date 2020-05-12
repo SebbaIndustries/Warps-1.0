@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+MIT License
+
+Copyright (c) 2020 SebbaIndustries
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<messages>
+
+    <!--
+    [!] AND symbols (&) are not allowed so use &amp; or § [!]
+    List of Color Codes
+    &0 -> &amp;0 <-> §0 (Black)
+    &1 -> &amp;1 <-> §1 (Dark Blue)
+    &2 -> &amp;2 <-> §2 (Dark Green)
+    &3 -> &amp;3 <-> §3 (Dark Aqua)
+    &4 -> &amp;4 <-> §4 (Dark Red)
+    &5 -> &amp;5 <-> §5 (Dark Purple)
+    &6 -> &amp;6 <-> §6 (Gold)
+    &7 -> &amp;7 <-> §7 (Gray)
+    &8 -> &amp;8 <-> §8 (Dark Gray)
+    &9 -> &amp;9 <-> §9 (Blue)
+    &a -> &amp;a <-> §a (Green)
+    &b -> &amp;b <-> §b (Aqua)
+    &c -> &amp;c <-> §c (Red)
+    &d -> &amp;d <-> §d (Light Purple)
+    &e -> &amp;e <-> §e (Yellow)
+    &f -> &amp;f <-> §f (White)
+    List of Format Codes
+    &k -> &amp;k <-> §k (Obfuscated)
+    &l -> &amp;l <-> §l (Bold)
+    &m -> &amp;m <-> §m (Strikethrough)
+    &n -> &amp;n <-> §n (Underline)
+    &o -> &amp;o <-> §o (Italic)
+    &r -> &amp;r <-> §r (Reset)
+    [!] AND symbols (&) are not allowed so use &amp; or § [!]
+    -->
+
+    <!-- Prefix for messages -->
+    <prefix>
+        <msg lang="EN">§8[§dWarps§8]§r </msg>
+        <msg lang="SI">§8[§dWarpi§8]§r </msg>
+    </prefix>
+
+    <!-- No permission message -->
+    <message id="0">
+        <msg lang="EN" prefix="true">§7You do not have permission to execute this command!</msg>
+        <msg lang="SI" prefix="true">§7Nimas dovoljenja za uporabo te komande!</msg>
+    </message>
+
+</messages>
