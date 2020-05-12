@@ -1,5 +1,5 @@
 # Warps
-Server and player warps module with advanced capabilities and lightweight game configuration
+Server and player warps module with advanced capabilities and lightweight game configuration.
 <br>
 Version: `v0.0.1-Alpha` <br>
 Native API: `Paper 1.15.2-R0.1-SNAPSHOT` <br>
