@@ -9,7 +9,6 @@ import javax.annotation.Nullable;
 
 public class TestCommand extends ICommand {
 
-
     public TestCommand() {
         super("argument", "usage", null);
         permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.CREATE);

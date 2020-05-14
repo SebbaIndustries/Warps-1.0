@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 
 /**
  * <b>This class contains command handling and executing to it's sub-classes</b><br>
+ *
  * @author sebbaindustries
  * @version 1.0
  */
@@ -29,6 +30,7 @@ public class CommandFactory implements CommandExecutor {
     /**
      * Main constructor, registers commands and it's sub classes <br>
      * <b>IF YOU DARE TO CREATE NEW ICommandHandler INSTANCE IN OTHER PLACE THAN GlobalCore I WILL PERSONALLY REMOVE YOU FROM EARTH.</b>
+     *
      * @param core Core instance
      */
     public CommandFactory(final @NotNull Core core) {
@@ -48,12 +50,12 @@ public class CommandFactory implements CommandExecutor {
     }
 
     /**
-     * @see CommandExecutor
-     * @param sender Player or console instance
+     * @param sender  Player or console instance
      * @param command Command class
-     * @param label todo open gui if label == "warps"
-     * @param args command arguments
+     * @param label   todo open gui if label == "warps"
+     * @param args    command arguments
      * @return True ALWAYS FUCKING true, if you change this I quit.
+     * @see CommandExecutor
      */
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command command, final @NotNull String label, final @NotNull String[] args) {
@@ -96,10 +98,11 @@ public class CommandFactory implements CommandExecutor {
 
     /**
      * Checks permissions for the player and returns boolean <br>
-     * @see ICommand
+     *
      * @param iCommand command template instance
-     * @param sender Player or console instance
+     * @param sender   Player or console instance
      * @return True if player has at least 1 permission for the sub-command, false if player has none #SadTimes
+     * @see ICommand
      */
     private boolean checkPermissions(ICommand iCommand, CommandSender sender) {
         for (IPermission iPermission : iCommand.permissions().getPermissions()) {
