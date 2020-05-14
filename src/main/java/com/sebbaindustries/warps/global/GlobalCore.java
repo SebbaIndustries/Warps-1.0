@@ -3,8 +3,8 @@ package com.sebbaindustries.warps.global;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.CommandFactory;
 import com.sebbaindustries.warps.lang.Lang;
+import com.sebbaindustries.warps.message.Message;
 import com.sebbaindustries.warps.utils.FileManager;
-import com.sebbaindustries.warps.utils.Messages;
 import com.sebbaindustries.warps.utils.Settings;
 import com.sebbaindustries.warps.warp.WarpStorage;
 
@@ -19,7 +19,7 @@ public class GlobalCore {
         // fileManager needs to be initialized first
         this.fileManager = new FileManager(core);
 
-        this.messages = new Messages();
+        message = new Message();
         this.settings = new Settings();
         this.lang = new Lang();
         commandFactory = new CommandFactory(core);
@@ -27,10 +27,10 @@ public class GlobalCore {
     }
 
     public final FileManager fileManager;
-    public final Messages messages;
     public final Settings settings;
     public final Lang lang;
     public final CommandFactory commandFactory;
     public final WarpStorage warpStorage;
+    public final Message message;
 
 }
