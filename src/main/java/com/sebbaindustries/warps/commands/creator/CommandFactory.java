@@ -1,8 +1,9 @@
 package com.sebbaindustries.warps.commands.creator;
 
 import com.sebbaindustries.warps.Core;
-import com.sebbaindustries.warps.commands.TestCommand;
-import com.sebbaindustries.warps.commands.permissions.IPermission;
+import com.sebbaindustries.warps.commands.subs.WarpChange;
+import com.sebbaindustries.warps.commands.subs.WarpCreate;
+import com.sebbaindustries.warps.commands.subs.WarpDelete;
 import com.sebbaindustries.warps.utils.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,10 +19,11 @@ import java.util.stream.Stream;
 
 /**
  * <b>This class contains command handling and executing to it's sub-classes</b><br>
+ *
  * @author sebbaindustries
  * @version 1.0
  */
-public class ICommandHandler implements CommandExecutor {
+public class CommandFactory implements CommandExecutor {
 
     private final Set<ICommand> iCommands;
     private final ICommand defaultICommand;
@@ -29,15 +31,18 @@ public class ICommandHandler implements CommandExecutor {
     /**
      * Main constructor, registers commands and it's sub classes <br>
      * <b>IF YOU DARE TO CREATE NEW ICommandHandler INSTANCE IN OTHER PLACE THAN GlobalCore I WILL PERSONALLY REMOVE YOU FROM EARTH.</b>
+     *
      * @param core Core instance
      */
-    public ICommandHandler(final @NotNull Core core) {
+    public CommandFactory(final @NotNull Core core) {
         // Register commands
-        Objects.requireNonNull(core.getCommand("warp")).setExecutor(this::onCommand);
+        Objects.requireNonNull(core.getCommand("warp")).setExecutor(this);
 
         // Register sub-commands
         iCommands = Stream.of(
-                new TestCommand()
+                new WarpCreate(),
+                new WarpChange(),
+                new WarpDelete()
         ).collect(Collectors.toSet());
         // Find "default" command
         defaultICommand = iCommands.stream().filter(ICommand::isDef).findAny().orElseThrow(NoDefaultCommandException::new);
@@ -48,12 +53,12 @@ public class ICommandHandler implements CommandExecutor {
     }
 
     /**
-     * @see CommandExecutor
-     * @param sender Player or console instance
+     * @param sender  Player or console instance
      * @param command Command class
-     * @param label todo open gui if label == "warps"
-     * @param args command arguments
+     * @param label   todo open gui if label == "warps"
+     * @param args    command arguments
      * @return True ALWAYS FUCKING true, if you change this I quit.
+     * @see CommandExecutor
      */
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command command, final @NotNull String label, final @NotNull String[] args) {
@@ -96,16 +101,14 @@ public class ICommandHandler implements CommandExecutor {
 
     /**
      * Checks permissions for the player and returns boolean <br>
-     * @see ICommand
+     *
      * @param iCommand command template instance
-     * @param sender Player or console instance
+     * @param sender   Player or console instance
      * @return True if player has at least 1 permission for the sub-command, false if player has none #SadTimes
+     * @see ICommand
      */
     private boolean checkPermissions(ICommand iCommand, CommandSender sender) {
-        for (IPermission iPermission : iCommand.permissions().getPermissions()) {
-            if (sender.hasPermission(iPermission.permission)) return true;
-        }
-        return false;
+        return iCommand.permissions().getPermissions().stream().anyMatch(perm -> sender.hasPermission(perm.permission));
     }
 
 }

@@ -1,6 +1,7 @@
-package com.sebbaindustries.warps.utils;
+package com.sebbaindustries.warps.message;
 
 import com.sebbaindustries.warps.Core;
+import com.sebbaindustries.warps.utils.Color;
 import org.apache.commons.lang.BooleanUtils;
 
 import javax.xml.stream.XMLInputFactory;
@@ -8,65 +9,24 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 /**
- * <b>This class contains all messages plugin uses and access to the file that contains them</b><br>
+ * <b>This class constructs messages form xml file</b>
  * @author sebbaindustries
  * @version 1.0
  */
-public class Messages {
+public abstract class MessageFactory {
 
-    /**
-     * Hashmap containing all messages
-     */
-    private final HashMap<Integer, String> messages = new HashMap<>();
+    public abstract String get(IMessage iMessage);
+    public abstract String getPrefix();
+    public abstract void reloadMessages();
 
-    /**
-     * Enums for messages, they just point to id
-     */
-    public enum M {
-
-        NO_PERMISSION(0),
-        ;
-
-        private final int value;
-
-        M(int value) {
-            this.value = value;
-        }
-    }
-
-    /**
-     * gets message from hashmap
-     *
-     * @param message Message enum
-     * @return Translated message from memory
-     * @see M message enum
-     */
-    public final String getMessage(final M message) {
-        return messages.get(message.value);
-    }
-
-    /**
-     * Reloads messages and loads them in HashMao
-     */
-    public final void reloadMessages() {
-        messages.clear();
-        for (final M ID : M.values()) {
-            messages.put(ID.value, getMessage(ID.value));
-        }
-    }
 
     /**
      * Gets prefix for messages
-     *
      * @return formatted prefix
      */
-    private String getPrefix() {
+    protected String getMessagePrefix() {
         try {
             final XMLInputFactory iFactory = XMLInputFactory.newInstance();
             XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.messages));
@@ -123,7 +83,7 @@ public class Messages {
      * @param messageID Integer
      * @return formatted message
      */
-    private String getMessage(final int messageID) {
+    protected String getMessage(final int messageID) {
         try {
             XMLInputFactory iFactory = XMLInputFactory.newInstance();
             XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.messages));
@@ -181,7 +141,7 @@ public class Messages {
                         // if attribute is same as lang tag it returns a message
                         if (lang.equalsIgnoreCase(Core.gCore.lang.LANG)) {
                             if (prefix) {
-                                return Color.chat(getPrefix() + sReader.getElementText());
+                                return Color.chat(getMessagePrefix() + sReader.getElementText());
                             }
                             return Color.chat(sReader.getElementText());
                         }
@@ -190,46 +150,6 @@ public class Messages {
             }
         }
         return "$ERROR_NOT_FOUND";
-    }
-
-    /**
-     * @param tag like ID, but in string form -> #N
-     * @return list of help messages
-     * @deprecated may get used in the feature
-     */
-    @Deprecated
-    private List<String> getHelpList(String tag) {
-        List<String> helpList = new ArrayList<>();
-        tag = "help line " + tag;
-        try {
-            XMLInputFactory iFactory = XMLInputFactory.newInstance();
-            XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.messages));
-            while (sReader.hasNext()) {
-                //Move to next event
-                sReader.next();
-
-                //Check if its 'START_ELEMENT'
-                if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
-                    //message tag - opened
-                    if (sReader.getLocalName().equalsIgnoreCase("message")) {
-
-                        //Read attributes within message tag
-                        if (sReader.getAttributeCount() > 0) {
-                            String id = sReader.getAttributeValue(null, "id");
-
-                            // check if id is same to message name
-                            if (tag.equalsIgnoreCase(id)) {
-                                helpList.add(readMessage(sReader));
-                            }
-                        }
-                    }
-                }
-            }
-            return helpList;
-        } catch (XMLStreamException | FileNotFoundException e) {
-            e.printStackTrace();
-            return Collections.singletonList("$ERROR_STACK");
-        }
     }
 
 }

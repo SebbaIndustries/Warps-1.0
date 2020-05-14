@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.utils;
+package com.sebbaindustries.warps.settings;
 
 import com.sebbaindustries.warps.Core;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +14,10 @@ import java.io.FileReader;
  * @author sebbaindustries
  * @version 1.0
  */
-public class Settings {
+public abstract class SettingsFactory {
+
+    public abstract String get(ISettings iSettings);
+    public abstract void reloadSettings();
 
     /**
      * Prepares XML file and tries to find elementName (<b>>tag<</b>) and attributeName(tag <b>attr="value"</b>)
@@ -23,7 +26,7 @@ public class Settings {
      * @param attributeName name of a attribute that contains data we need
      * @return Value of a attribute, if not found <b>$ERROR_NOT_FOUND</b> and if file encounters an exception <b>$ERROR_STACK</b>
      */
-    private String prepareXML(@NotNull final String elementName, @NotNull final String attributeName) {
+    protected String prepareXML(@NotNull final String elementName, @NotNull final String attributeName) {
         try {
             XMLInputFactory iFactory = XMLInputFactory.newInstance();
             XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.settings));
@@ -53,13 +56,5 @@ public class Settings {
             return "$ERROR_STACK";
         }
     }
-
-    /**
-     * Reloads all settings, called when class is created or command is run (/reload)
-     */
-    public void reloadSettings() {
-
-    }
-
 
 }
