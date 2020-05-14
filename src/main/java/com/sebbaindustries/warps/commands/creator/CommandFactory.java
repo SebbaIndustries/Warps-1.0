@@ -33,7 +33,7 @@ public class CommandFactory implements CommandExecutor {
      */
     public CommandFactory(final @NotNull Core core) {
         // Register commands
-        Objects.requireNonNull(core.getCommand("warp")).setExecutor(this::onCommand);
+        Objects.requireNonNull(core.getCommand("warp")).setExecutor(this);
 
         // Register sub-commands
         iCommands = Stream.of(
