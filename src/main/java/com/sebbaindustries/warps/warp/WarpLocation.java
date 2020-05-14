@@ -15,20 +15,19 @@ public class WarpLocation {
     private double z;
     private float yaw;
     private float pitch;
-    private World.Environment environment;
     private World world;
+
     /**
      * Warp location constructor, sets all variables
      *
-     * @param environment World.Environment
-     * @param x           X coordinate
-     * @param y           Y coordinate
-     * @param z           Z coordinate
-     * @param yaw         Yaw coordinate
-     * @param pitch       Pitch coordinate
+     * @param world world
+     * @param x     X coordinate
+     * @param y     Y coordinate
+     * @param z     Z coordinate
+     * @param yaw   Yaw coordinate
+     * @param pitch Pitch coordinate
      */
-    public WarpLocation(World.Environment environment, final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
-        this.environment = environment;
+    public WarpLocation(final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -40,22 +39,15 @@ public class WarpLocation {
     /**
      * @return World of the warp
      */
-    public World getWorld() { return world; }
-
-    /**
-     * @return Environment of the warp
-     */
-    public World.Environment getEnvironment() {
-        return environment;
+    public World getWorld() {
+        return world;
     }
 
     /**
-     * Changes environment of the warp
-     *
-     * @param environment World.Environment
+     * Changes the world of the warp
      */
-    public void setEnvironment(World.Environment environment) {
-        this.environment = environment;
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     /**

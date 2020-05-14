@@ -49,7 +49,7 @@ public class Warp {
         this.owner = owner;
 
         Location loc = owner.getLocation();
-        warpLocation = new WarpLocation(loc.getWorld().getEnvironment(), loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+        warpLocation = new WarpLocation(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 
         // check for name
         if (name == null) {
@@ -64,21 +64,21 @@ public class Warp {
      * @param type Type of warp
      * @param owner Owner of the warp
      * @param name Name of the warp
-     * @param environment World.Environment
+     * @param world warps world
      * @param x X coordinate
      * @param y Y coordinate
      * @param z Z coordinate
      * @param yaw Yaw coordinate
      * @param pitch Pitch coordinate
      */
-    public Warp(final @NotNull Type type, final @NotNull Player owner, final String name, final @NotNull World.Environment environment
+    public Warp(final @NotNull Type type, final @NotNull Player owner, final String name
                 , final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
         this.ID = generateID();
 
         this.type = type;
         this.owner = owner;
 
-        warpLocation = new WarpLocation(environment, world, x, y, z, yaw, pitch);
+        warpLocation = new WarpLocation(world, x, y, z, yaw, pitch);
 
         // check for name
         if (name == null) {

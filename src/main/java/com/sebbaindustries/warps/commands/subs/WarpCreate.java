@@ -51,7 +51,7 @@ public class WarpCreate extends ICommand {
          TODO: beautify the placeholder returns (environment capitalization, location toString)
          TODO: Add a safety check to ensure the created warps location is safe for teleportation
          @placeholder warpMame = {warp-name}
-         @placeholder location = {warp-location}
+         @placeholder location = {warp-world}
          @placeholder world = {warp-environment}
           */
         if (Core.gCore.warpStorage.addWarp(warp)) {
@@ -59,7 +59,7 @@ public class WarpCreate extends ICommand {
                     Core.gCore.message.get(IMessage.SUCCESSFULLY_CREATED_WARP)
                     , "{warp-name}", warp.getName()
                     , "{warp-location}", warp.getLocation().toString()
-                    , "{warp-environment}", String.valueOf(warp.getLocation().getEnvironment()))));
+                    , "{warp-world}", String.valueOf(warp.getLocation().getWorld()))));
             return;
         }
 
