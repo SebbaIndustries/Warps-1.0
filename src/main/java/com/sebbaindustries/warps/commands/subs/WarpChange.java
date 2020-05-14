@@ -59,7 +59,7 @@ public class WarpChange extends ICommand {
                     Set the new warp location to the users location
                      */
                     final Location location = player.getLocation();
-                    final WarpLocation warpLocation = new WarpLocation(player.getWorld().getEnvironment(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+                    final WarpLocation warpLocation = new WarpLocation(player.getWorld().getEnvironment(), player.getWorld(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 
                     /*
                     TODO: add safety check when assigning the new location, add location change message
