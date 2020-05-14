@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -90,8 +91,8 @@ public abstract class ICommand {
      * Changes if command is default or not
      * @param def true/false
      */
-    public void setDef(boolean def) {
-        this.def = def;
+    public void setDef() {
+        this.def = true;
     }
 
     /**
@@ -104,10 +105,9 @@ public abstract class ICommand {
 
     /**
      * Changes if console can execute command
-     * @param playerOnly true/false
      */
-    public void setPlayerOnly(boolean playerOnly) {
-        this.playerOnly = playerOnly;
+    public void setPlayerOnly() {
+        this.playerOnly = true;
     }
 
     /**
@@ -135,12 +135,10 @@ public abstract class ICommand {
         /**
          * Adds permission to the list <br>
          * @see IPermission
-         * @param permission IPermission enum
-         * @return Permissions class instance so we can add more than 1 permission at the time
+         * @param permissions IPermission enums
          */
-        public Permissions addPermission(IPermission permission) {
-            this.permissions.add(permission);
-            return this;
+        public void add(IPermission... permissions) {
+            this.permissions.addAll(Arrays.asList(permissions));
         }
     }
 

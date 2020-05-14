@@ -21,7 +21,7 @@ import java.util.stream.Stream;
  * @author sebbaindustries
  * @version 1.0
  */
-public class ICommandHandler implements CommandExecutor {
+public class CommandFactory implements CommandExecutor {
 
     private final Set<ICommand> iCommands;
     private final ICommand defaultICommand;
@@ -31,7 +31,7 @@ public class ICommandHandler implements CommandExecutor {
      * <b>IF YOU DARE TO CREATE NEW ICommandHandler INSTANCE IN OTHER PLACE THAN GlobalCore I WILL PERSONALLY REMOVE YOU FROM EARTH.</b>
      * @param core Core instance
      */
-    public ICommandHandler(final @NotNull Core core) {
+    public CommandFactory(final @NotNull Core core) {
         // Register commands
         Objects.requireNonNull(core.getCommand("warp")).setExecutor(this::onCommand);
 
