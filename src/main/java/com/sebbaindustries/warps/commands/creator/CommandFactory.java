@@ -2,7 +2,6 @@ package com.sebbaindustries.warps.commands.creator;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.TestCommand;
-import com.sebbaindustries.warps.commands.permissions.IPermission;
 import com.sebbaindustries.warps.utils.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -105,10 +104,7 @@ public class CommandFactory implements CommandExecutor {
      * @see ICommand
      */
     private boolean checkPermissions(ICommand iCommand, CommandSender sender) {
-        for (IPermission iPermission : iCommand.permissions().getPermissions()) {
-            if (sender.hasPermission(iPermission.permission)) return true;
-        }
-        return false;
+        return iCommand.permissions().getPermissions().stream().anyMatch(perm -> sender.hasPermission(perm.permission));
     }
 
 }
