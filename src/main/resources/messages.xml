@@ -80,4 +80,9 @@ SOFTWARE.
         <msg lang="EN" prefix="true">§aSuccessfully created warp ({warp-name}, {warp-location}, {warp-environment})</msg>
     </message>
 
+    <!-- Invalid warp location -->
+    <message id="4">
+        <msg lang="EN" prefix="true">Failed to create warp, due to invalid location</msg>
+    </message>
+
 </messages>

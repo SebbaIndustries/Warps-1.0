@@ -11,6 +11,7 @@ public enum IMessage {
     FAILED_WARP_CREATION(1),
     BLACKLISTED_WARP_NAME(2),
     SUCCESSFULLY_CREATED_WARP(3),
+    INVALID_LOCATION_MESSAGE(4),
     ;
 
     public Integer ID;

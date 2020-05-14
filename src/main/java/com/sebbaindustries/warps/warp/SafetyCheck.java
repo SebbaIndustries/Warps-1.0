@@ -24,21 +24,18 @@ public class SafetyCheck {
             return false;
         }
 
-        boolean safe = true;
         for (int x = (int) location.getX() - 1; x < location.getX() + 1; x++) {
             for (int y = (int) location.getY() - 1; y < location.getY() + 2; y++) {
                 for (int z = (int) location.getZ() - 1; z < location.getZ() + 1; z++) {
                     final Location l = new Location(location.getWorld(), x, y, z);
                     final Block block = location.getWorld().getBlockAt(l);
 
-                    for (Material mat : blacklisted) {
-                        if (block.getType() == mat) {
-                            safe = false;
-                        }
+                    if (blacklisted.stream().anyMatch(m -> m.equals(block.getType()))) {
+                        return false;
                     }
                 }
             }
         }
-        return safe;
+        return true;
     }
 }
