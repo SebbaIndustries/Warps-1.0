@@ -5,7 +5,7 @@ import com.sebbaindustries.warps.commands.creator.CommandFactory;
 import com.sebbaindustries.warps.lang.Lang;
 import com.sebbaindustries.warps.message.Message;
 import com.sebbaindustries.warps.utils.FileManager;
-import com.sebbaindustries.warps.utils.Settings;
+import com.sebbaindustries.warps.settings.Settings;
 import com.sebbaindustries.warps.warp.WarpStorage;
 
 /**
