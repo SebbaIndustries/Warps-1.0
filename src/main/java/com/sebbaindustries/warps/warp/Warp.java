@@ -26,7 +26,7 @@ public class Warp {
 
     private Player owner;
 
-    private final WarpLocation warpLocation;
+    private WarpLocation warpLocation;
 
     /**
      * Generates random UUID, frosty said that they won't repeat, so :/
@@ -146,6 +146,14 @@ public class Warp {
      */
     public final WarpLocation getLocation() {
         return warpLocation;
+    }
+
+    /**
+     * Updates warp location, overrides old values
+     * @param warpLocation New warp location
+     */
+    public final void setLocation(WarpLocation warpLocation) {
+        this.warpLocation = warpLocation;
     }
 
     /**

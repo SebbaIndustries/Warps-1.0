@@ -1,7 +1,7 @@
 package com.sebbaindustries.warps.global;
 
 import com.sebbaindustries.warps.Core;
-import com.sebbaindustries.warps.commands.CommandManager;
+import com.sebbaindustries.warps.commands.creator.ICommandHandler;
 import com.sebbaindustries.warps.lang.Lang;
 import com.sebbaindustries.warps.utils.FileManager;
 import com.sebbaindustries.warps.utils.Messages;
@@ -21,13 +21,14 @@ public class GlobalCore {
         this.messages = new Messages();
         this.settings = new Settings();
         this.lang = new Lang();
-        this.commandManager = new CommandManager(core);
+        iCommandHandler = new ICommandHandler(core);
+
     }
 
     public final FileManager fileManager;
     public final Messages messages;
     public final Settings settings;
     public final Lang lang;
-    public final CommandManager commandManager;
+    public final ICommandHandler iCommandHandler;
 
 }
