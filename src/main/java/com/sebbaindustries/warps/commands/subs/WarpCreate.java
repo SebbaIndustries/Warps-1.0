@@ -4,9 +4,9 @@ import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.IPermission;
 import com.sebbaindustries.warps.message.IMessage;
-import com.sebbaindustries.warps.message.Message;
 import com.sebbaindustries.warps.utils.Color;
 import com.sebbaindustries.warps.utils.Replace;
+import com.sebbaindustries.warps.warp.SafetyCheck;
 import com.sebbaindustries.warps.warp.Warp;
 import com.sebbaindustries.warps.warp.WarpSettings;
 import org.bukkit.command.CommandSender;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class WarpCreate extends ICommand {
 
     public WarpCreate() {
-        super("create", "create [name]", 1);
+        super("create", "create [name] (SERVER/PLAYER)", 1);
         permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.CREATE);
         setPlayerOnly();
     }
@@ -25,6 +25,7 @@ public class WarpCreate extends ICommand {
     public void execute(final @NotNull CommandSender sender, final String[] args) {
         final Player player = (Player) sender;
         final String name = args.length == 1 ? args[0] : player.getName();
+        final Warp.Type type = args.length == 2 ? Warp.Type.valueOf(args[1]) : Warp.Type.PLAYER;
 
         if (WarpSettings.blacklistedWarpNames().contains(name) && !name.equalsIgnoreCase(player.getName())) {
             /*
@@ -37,7 +38,15 @@ public class WarpCreate extends ICommand {
             return;
         }
 
-        final Warp warp = new Warp(Warp.Type.PLAYER, player, name);
+        final Warp warp = new Warp(type, player, name);
+
+        if (!SafetyCheck.isLocationSafe(warp.getLocation())) {
+            /*
+            TODO: add some fancy message
+             */
+            player.sendMessage(Color.chat("Unsafe location!"));
+            return;
+        }
         /*
          TODO: beautify the placeholder returns (environment capitalization, location toString)
          TODO: Add a safety check to ensure the created warps location is safe for teleportation
@@ -69,9 +78,5 @@ public class WarpCreate extends ICommand {
     private String getReason() {
         return "warp already exists!";
     }
-
-    /*
-
-     */
 
 }
