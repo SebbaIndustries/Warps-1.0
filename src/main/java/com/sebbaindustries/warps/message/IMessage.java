@@ -8,6 +8,9 @@ package com.sebbaindustries.warps.message;
 public enum IMessage {
 
     NO_PERMISSION(0),
+    FAILED_WARP_CREATION(1),
+    BLACKLISTED_WARP_NAME(2),
+    SUCCESSFULLY_CREATED_WARP(3),
     ;
 
     public Integer ID;

@@ -65,4 +65,19 @@ SOFTWARE.
         <msg lang="SI" prefix="true">§7Nimas dovoljenja za uporabo te komande!</msg>
     </message>
 
+    <!-- Already existing warp message -->
+    <message id="1">
+        <msg lang="EN" prefix="true">§7Failed to create specified warp! ({warp-name}, {reason})</msg>
+    </message>
+
+    <!-- Blacklisted Warp name message -->
+    <message id="2">
+        <msg lang="EN" prefix="true">§cFailed to create warp as it contains a blacklisted word! ({warp-name}</msg>
+    </message>
+
+    <!-- Successfully created warp message -->
+    <message id="3">
+        <msg lang="EN" prefix="true">§aSuccessfully created warp ({warp-name}, {warp-location}, {warp-environment})</msg>
+    </message>
+
 </messages>
