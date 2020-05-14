@@ -6,6 +6,7 @@ import com.sebbaindustries.warps.lang.Lang;
 import com.sebbaindustries.warps.utils.FileManager;
 import com.sebbaindustries.warps.utils.Messages;
 import com.sebbaindustries.warps.utils.Settings;
+import com.sebbaindustries.warps.warp.WarpStorage;
 
 /**
  * <b>This class links entire plugin together</b>
@@ -22,7 +23,7 @@ public class GlobalCore {
         this.settings = new Settings();
         this.lang = new Lang();
         commandFactory = new CommandFactory(core);
-
+        warpStorage = new WarpStorage();
     }
 
     public final FileManager fileManager;
@@ -30,5 +31,6 @@ public class GlobalCore {
     public final Settings settings;
     public final Lang lang;
     public final CommandFactory commandFactory;
+    public final WarpStorage warpStorage;
 
 }
