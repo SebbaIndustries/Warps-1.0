@@ -115,7 +115,7 @@ public abstract class ICommand {
      * @param sender Player or console instance
      * @param args command arguments
      */
-    public abstract void execute(final @NotNull CommandSender sender, final @NotNull String[] args);
+    public abstract void execute(final @NotNull CommandSender sender, final String[] args);
 
     /**
      * @author sebbaindustries
