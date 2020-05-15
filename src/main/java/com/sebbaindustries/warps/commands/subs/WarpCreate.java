@@ -22,6 +22,7 @@ public class WarpCreate extends ICommand {
         super("create", "create [name] (SERVER/PLAYER)", 1);
         permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.CREATE);
         setPlayerOnly();
+        setDef();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.sebbaindustries.warps.commands.subs;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
+import com.sebbaindustries.warps.commands.permissions.IPermission;
 import com.sebbaindustries.warps.utils.Color;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.Warp;
@@ -13,6 +14,7 @@ public class WarpDelete extends ICommand {
 
     public WarpDelete() {
         super("delete", "delete [warp]", 1);
+        permissions().add(IPermission.ROOT);
     }
 
     @Override

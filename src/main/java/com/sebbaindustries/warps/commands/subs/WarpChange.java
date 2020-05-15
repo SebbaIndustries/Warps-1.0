@@ -2,6 +2,7 @@ package com.sebbaindustries.warps.commands.subs;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
+import com.sebbaindustries.warps.commands.permissions.IPermission;
 import com.sebbaindustries.warps.warp.Warp;
 import com.sebbaindustries.warps.warp.WarpLocation;
 import org.bukkit.Bukkit;
@@ -14,6 +15,7 @@ public class WarpChange extends ICommand {
 
     public WarpChange() {
         super("change", "", 1);
+        permissions().add(IPermission.ROOT);
     }
 
     @Override
