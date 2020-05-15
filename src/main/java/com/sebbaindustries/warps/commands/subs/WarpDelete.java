@@ -15,7 +15,8 @@ public class WarpDelete extends ICommand {
 
     public WarpDelete() {
         super("delete", "delete [warp]", 1);
-        permissions().add(IPermission.ROOT);
+        permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.DELETE);
+        setPlayerOnly();
     }
 
     @Override

@@ -23,7 +23,7 @@ public enum IPermission {
     CREATE("warps.commands.set"), // /warp create
     DELETE("warps.commands.delete"), // /warp delete
     MOVE("warps.command.move"), // /warp move
-
+    TELEPORT("warps.command.teleport"),
     ;
 
     public String permission;

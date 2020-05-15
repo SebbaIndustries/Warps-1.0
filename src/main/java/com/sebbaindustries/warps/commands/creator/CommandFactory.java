@@ -4,6 +4,7 @@ import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.subs.WarpChange;
 import com.sebbaindustries.warps.commands.subs.WarpCreate;
 import com.sebbaindustries.warps.commands.subs.WarpDelete;
+import com.sebbaindustries.warps.commands.subs.WarpTeleportation;
 import com.sebbaindustries.warps.utils.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -43,7 +44,8 @@ public class CommandFactory implements CommandExecutor {
         iCommands = Stream.of(
                 new WarpCreate(),
                 new WarpChange(),
-                new WarpDelete()
+                new WarpDelete(),
+                new WarpTeleportation()
         ).collect(Collectors.toSet());
         // Find "default" command
         defaultICommand = iCommands.stream().filter(ICommand::isDef).findAny().orElseThrow(NoDefaultCommandException::new);

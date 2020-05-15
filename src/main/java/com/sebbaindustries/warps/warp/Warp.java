@@ -23,6 +23,7 @@ public class Warp {
     private final UUID ID;
     private String name;
     private Type type;
+    private boolean accessibility = true;
 
     private Player owner;
 
@@ -123,6 +124,22 @@ public class Warp {
      */
     public final void setType(final @NotNull Type type) {
         this.type = type;
+    }
+
+    /**
+     * @return Accessibility of the warp
+     */
+    public final boolean getAccessibility() {
+        return accessibility;
+    }
+
+    /**
+     * Changes warp accessibility
+     * Defaults to true!
+     * @param accessibility public/private
+     */
+    public final void setAccessibility(final @NotNull Boolean accessibility) {
+        this.accessibility = accessibility;
     }
 
     /**
