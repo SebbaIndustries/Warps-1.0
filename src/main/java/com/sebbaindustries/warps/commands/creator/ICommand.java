@@ -18,10 +18,11 @@ public abstract class ICommand {
 
     private final String argument;
     private final String usage;
-    private Integer minArgs = null;
-    private Integer maxArgs = null;
+    private Integer minArgs = 0;
+    private Integer maxArgs;
     private boolean def = false;
     private boolean playerOnly = false;
+    private boolean placeholders = false;
     private final Permissions permissions = new Permissions();
 
     /**
@@ -34,6 +35,7 @@ public abstract class ICommand {
         this.argument = argument;
         this.usage = usage;
         this.minArgs = minArgs;
+        this.maxArgs = argument.split(" ").length;
     }
 
     /**
@@ -94,6 +96,17 @@ public abstract class ICommand {
     public void setDef() {
         this.def = true;
     }
+
+    /**
+     * Changes whether or not the command contains %s placeholders
+     * @param placeholders true/false
+     */
+    public void setPlaceholders() { this.placeholders = true; }
+
+    /**
+     * @return true if command contains placeholders
+     */
+    public boolean getPlaceholders() { return placeholders; }
 
     /**
      * // TODO add something like this for consoles, ask frosty, maybe for sql stuff?

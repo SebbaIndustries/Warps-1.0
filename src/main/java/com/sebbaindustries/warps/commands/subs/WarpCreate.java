@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 public class WarpCreate extends ICommand {
 
     public WarpCreate() {
-        super("create", "create [name] (SERVER/PLAYER)", 1);
+        super("create", "create [name] (SERVER/PLAYER)", 0);
         permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.CREATE);
         setPlayerOnly();
     }

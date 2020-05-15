@@ -32,7 +32,7 @@ public class WarpChange extends ICommand {
     public void execute(@NotNull CommandSender sender, String[] args) {
         final Player player = (Player) sender;
         final String name = args.length >= 1 ? args[0] : player.getName();
-        final String argument = args[1].toLowerCase();
+        final String argument = args.length == 2 ? args[1].toLowerCase() : "status";
         final Warp warp = Core.gCore.warpStorage.getWarp(name);
 
         if (warp == null) {
