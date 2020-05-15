@@ -24,6 +24,7 @@ public enum IPermission {
     DELETE("warps.commands.delete"), // /warp delete
     MOVE("warps.command.move"), // /warp move
     TELEPORT("warps.command.teleport"),
+    MENU("warps.command.menu"),
     ;
 
     public String permission;

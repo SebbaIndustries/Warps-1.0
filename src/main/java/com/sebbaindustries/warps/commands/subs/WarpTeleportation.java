@@ -17,7 +17,6 @@ public class WarpTeleportation extends ICommand {
         super("teleport", "teleport [warp]", 1);
         permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.TELEPORT);
         setPlayerOnly();
-        setDef();
     }
 
     @Override
