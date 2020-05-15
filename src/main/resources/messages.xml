@@ -55,8 +55,8 @@ SOFTWARE.
 
     <!-- Prefix for messages -->
     <prefix>
-        <msg lang="EN">§8[§dWarps§8]§r </msg>
-        <msg lang="SI">§8[§dWarpi§8]§r </msg>
+        <msg lang="EN">§8[§dWarps§8]§r</msg>
+        <msg lang="SI">§8[§dWarpi§8]§r</msg>
     </prefix>
 
     <!-- No permission message -->
@@ -77,12 +77,33 @@ SOFTWARE.
 
     <!-- Successfully created warp message -->
     <message id="3">
-        <msg lang="EN" prefix="true">§aSuccessfully created warp ({warp-name}, {warp-location}, {warp-environment})</msg>
+        <msg lang="EN" prefix="true">§aSuccessfully created warp ({warp-name}, {warp-location}, {warp-world})</msg>
     </message>
 
     <!-- Invalid warp location -->
     <message id="4">
         <msg lang="EN" prefix="true">Failed to create warp, due to invalid location</msg>
     </message>
+
+    <!-- Invalid warp message -->
+    <message id="5">
+        <msg lang="EN" prefix="true">Invalid warp!</msg>
+    </message>
+
+    <!-- Not warp owner message -->
+    <message id="6">
+        <msg lang="EN" prefix="true">You do not own this warp! ({warp-owner}</msg>
+    </message>
+
+    <!-- Error when removing a warp -->
+    <message id="7">
+        <msg lang="EN" prefix="true">Failed to remove warp! (Contact admin)</msg>
+    </message>
+
+    <!-- -->
+    <message id="8">
+        <msg lang="EN" prefix="true">Deleted warp ({warp-name}, {warp-location})</msg>
+    </message>
+
 
 </messages>

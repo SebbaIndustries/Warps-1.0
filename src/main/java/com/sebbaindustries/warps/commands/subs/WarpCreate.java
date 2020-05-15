@@ -4,12 +4,11 @@ import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.IPermission;
 import com.sebbaindustries.warps.message.IMessage;
-import com.sebbaindustries.warps.utils.Color;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.SafetyCheck;
 import com.sebbaindustries.warps.warp.Warp;
-import com.sebbaindustries.warps.warp.WarpLocation;
 import com.sebbaindustries.warps.warp.WarpSettings;
+import com.sebbaindustries.warps.warp.WarpUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -28,8 +27,8 @@ public class WarpCreate extends ICommand {
     @Override
     public void execute(final @NotNull CommandSender sender, final String[] args) {
         final Player player = (Player) sender;
-        final String name = args.length == 1 ? args[0] : player.getName();
-        final Warp.Type type = args.length == 2 ? Warp.Type.valueOf(args[1]) : Warp.Type.PLAYER;
+        final String name = args.length >= 1 ? args[0] : player.getName();
+        final Warp.Type type = args.length <= 2 ? Warp.Type.valueOf(args[1].toUpperCase()) : Warp.Type.PLAYER;
 
         /*
          * Checks whether the warp name contains a blacklisted word
@@ -38,9 +37,9 @@ public class WarpCreate extends ICommand {
          * @return blacklisted name message
          */
         if (WarpSettings.blacklistedWarpNames().contains(name) && !name.equalsIgnoreCase(player.getName())) {
-            player.sendMessage(Color.chat(Replace.replaceString(
+            player.sendMessage(Replace.replaceString(
                     Core.gCore.message.get(IMessage.BLACKLISTED_WARP_NAME)
-                    , "{warp-name}", name)));
+                    , "{warp-name}", name));
             return;
         }
 
@@ -56,7 +55,7 @@ public class WarpCreate extends ICommand {
          * @return invalid location message
          */
         if (!SafetyCheck.isLocationSafe(warp.getLocation())) {
-            player.sendMessage(Color.chat(Core.gCore.message.get(IMessage.INVALID_LOCATION_MESSAGE)));
+            player.sendMessage(Core.gCore.message.get(IMessage.INVALID_LOCATION));
             return;
         }
         /*
@@ -67,11 +66,11 @@ public class WarpCreate extends ICommand {
          @placeholder world = {warp-environment}
           */
         if (Core.gCore.warpStorage.addWarp(warp)) {
-            player.sendMessage(Color.chat(Replace.replaceString(
+            player.sendMessage(Replace.replaceString(
                     Core.gCore.message.get(IMessage.SUCCESSFULLY_CREATED_WARP)
                     , "{warp-name}", warp.getName()
-                    , "{warp-location}", getLocationString(warp.getLocation())
-                    , "{warp-world}", getWorldString(warp.getLocation().getWorld()))));
+                    , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
+                    , "{warp-world}", getWorldString(warp.getLocation().getWorld())));
             return;
         }
 
@@ -79,10 +78,10 @@ public class WarpCreate extends ICommand {
          *
          * @placeholder warpName = {warp-name}
          * @placeholder reason = {reason} - Reason for failure to create the warp - beautified
-        */
-        player.sendMessage(Color.chat(Replace.replaceString(Core.gCore.message.get(IMessage.FAILED_WARP_CREATION)
+         */
+        player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.FAILED_WARP_CREATION)
                 , "{warp-name}", name
-                , "{reason}", getReason())));
+                , "{reason}", getReason()));
     }
 
     /*
@@ -90,10 +89,6 @@ public class WarpCreate extends ICommand {
      */
     private String getReason() {
         return "warp already exists!";
-    }
-
-    private String getLocationString(final WarpLocation location) {
-        return "Location -> X: " + location.getX() + ", Y: " + location.getY() + ", Z: " + location.getZ();
     }
 
     private String getWorldString(final World world) {

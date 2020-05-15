@@ -12,8 +12,14 @@ public class SafetyCheck {
 
     /*
     List containing blacklisted materials
+    TODO: add config list
      */
     private static final List<Material> blacklisted = new ArrayList<>(Arrays.asList(Material.POLISHED_GRANITE, Material.STONE));
+
+    /*
+    TODO: add config option
+    */
+    private static final int radius = 1;
 
     /*
     Performs necessary safety checks around the warp, to ensure it's safe
@@ -24,13 +30,39 @@ public class SafetyCheck {
             return false;
         }
 
-        for (int x = (int) location.getX() - 1; x < location.getX() + 1; x++) {
-            for (int y = (int) location.getY() - 1; y < location.getY() + 2; y++) {
-                for (int z = (int) location.getZ() - 1; z < location.getZ() + 1; z++) {
-                    final Location l = new Location(location.getWorld(), x, y, z);
-                    final Block block = location.getWorld().getBlockAt(l);
+        final Location loc = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
 
-                    if (blacklisted.stream().anyMatch(m -> m.equals(block.getType()))) {
+        for (Material m : blacklisted) {
+            for (int i = -1; i <= 2; i++) {
+                Block b;
+                switch (i) {
+                    case -1:
+                        b = loc.clone().subtract(0, 1, 1).getBlock();
+                        if (b.getType().equals(m)) {
+                            return false;
+                        }
+                        break;
+                    case 2:
+                        b = loc.clone().add(0, 2, 0).getBlock();
+                        if (b.getType().equals(m)) {
+                            return false;
+                        }
+                    case 1:
+                    case 0:
+                        b = loc.clone().add(0, i, 0).getBlock();
+                        if (!b.getType().equals(Material.AIR)) {
+                            return false;
+                        }
+                }
+            }
+        }
+
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    final Block check = loc.clone().add(x, y, z).getBlock();
+
+                    if (blacklisted.stream().anyMatch(m -> m.equals(check.getType()))) {
                         return false;
                     }
                 }

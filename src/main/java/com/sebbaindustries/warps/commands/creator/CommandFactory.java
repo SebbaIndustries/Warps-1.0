@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -94,7 +95,7 @@ public class CommandFactory implements CommandExecutor {
         }
 
         // Finally execute this sub-command
-        cmd.execute(sender, args);
+        cmd.execute(sender, Arrays.copyOfRange(args, 1, args.length));
         return true;
 
     }
