@@ -3,8 +3,12 @@ package com.sebbaindustries.warps.commands.subs;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.IPermission;
+import com.sebbaindustries.warps.message.IMessage;
+import com.sebbaindustries.warps.utils.Replace;
+import com.sebbaindustries.warps.warp.SafetyCheck;
 import com.sebbaindustries.warps.warp.Warp;
 import com.sebbaindustries.warps.warp.WarpLocation;
+import com.sebbaindustries.warps.warp.WarpUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -26,18 +30,12 @@ public class WarpChange extends ICommand {
         final Warp warp = Core.gCore.warpStorage.getWarp(name);
 
         if (warp == null) {
-            /*
-             TODO: Invalid warp message
-             */
-
+            player.sendMessage(Core.gCore.message.get(IMessage.INVALID_WARP));
             return;
         }
 
         if (!warp.getOwner().equals(player)) {
-            /*
-            TODO: Not warp owner message
-             */
-
+            player.sendMessage(Core.gCore.message.get(IMessage.NOT_WARP_OWNER));
             return;
         }
 
@@ -51,28 +49,34 @@ public class WarpChange extends ICommand {
 
                 break;
             case "location":
-                /*
-                TODO: rename "thing" variable to something more appropriate
-                 */
-                final String thing = args.length >= 3 ? args[2].toLowerCase() : null;
+                final String parameter = args.length >= 3 ? args[2].toLowerCase() : null;
 
-                if (thing == null) {
+                if (parameter == null) {
                     /*
                     Set the new warp location to the users location
                      */
                     final Location location = player.getLocation();
                     final WarpLocation warpLocation = new WarpLocation(player.getWorld(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 
+                    if (!SafetyCheck.isLocationSafe(warpLocation)) {
+                        player.sendMessage(Core.gCore.message.get(IMessage.INVALID_LOCATION));
+                        return;
+                    }
+
                     /*
-                    TODO: add safety check when assigning the new location, add location change message
+                    @placeholder {warp-location}
                      */
+                    player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_CHANGED_LOCATION)
+                            , "{warp-location}", WarpUtils.getLocationString(warpLocation)));
                     warp.setLocation(warpLocation);
                     return;
                 }
 
-                switch (thing) {
+
+
+                switch (parameter) {
                     case "x":
-                        // change x
+
                         break;
                     case "y":
                         // change y
@@ -90,21 +94,29 @@ public class WarpChange extends ICommand {
                 final String targetName = args.length == 3 ? args[2] : null;
 
                 if (targetName == null) {
-                    /*
-                    TODO: send invalid arg message
-                     */
+                    player.sendMessage(Core.gCore.message.get(IMessage.INVALID_COMMAND_ARGUMENT));
                     return;
                 }
                 final Player target = Bukkit.getPlayerExact(targetName);
 
                 if (target == null) {
-                    /*
-                    TODO: send invalid player message
-                     */
+                    player.sendMessage(Core.gCore.message.get(IMessage.INVALID_PLAYER));
+                    return;
+                }
+
+                if (target.equals(player)) {
+                    player.sendMessage(Core.gCore.message.get(IMessage.NEW_OWNER_CANNOT_BE_OLD_OWNER));
                     return;
                 }
 
                 warp.setOwner(target);
+                /*
+                @placeholder {warp-previous-owner}
+                @placeholder {warp-new-owner}
+                 */
+                player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_CHANGED_WARP_OWNER)
+                        , "{warp-previous-owner}", player.getName()
+                        , "{warp-new-owner}", target.getName()));
                 /*
                 TODO: send owner change message, request some confirmation to ensure owner changes are intentional!
                  */

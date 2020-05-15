@@ -28,7 +28,7 @@ public class WarpCreate extends ICommand {
     public void execute(final @NotNull CommandSender sender, final String[] args) {
         final Player player = (Player) sender;
         final String name = args.length >= 1 ? args[0] : player.getName();
-        final Warp.Type type = args.length <= 2 ? Warp.Type.valueOf(args[1].toUpperCase()) : Warp.Type.PLAYER;
+        final Warp.Type type = args.length == 2 ? Warp.Type.valueOf(args[1].toUpperCase()) : Warp.Type.PLAYER;
 
         /*
          * Checks whether the warp name contains a blacklisted word
@@ -36,7 +36,7 @@ public class WarpCreate extends ICommand {
          * @placeholder {warp-name}
          * @return blacklisted name message
          */
-        if (WarpSettings.blacklistedWarpNames().contains(name) && !name.equalsIgnoreCase(player.getName())) {
+        if (WarpSettings.blacklistedWarpNames().contains(name.toLowerCase()) && !name.equalsIgnoreCase(player.getName())) {
             player.sendMessage(Replace.replaceString(
                     Core.gCore.message.get(IMessage.BLACKLISTED_WARP_NAME)
                     , "{warp-name}", name));
@@ -59,8 +59,6 @@ public class WarpCreate extends ICommand {
             return;
         }
         /*
-         TODO: beautify the placeholder returns (environment capitalization, location toString)
-         TODO: Add a safety check to ensure the created warps location is safe for teleportation
          @placeholder warpMame = {warp-name}
          @placeholder location = {warp-world}
          @placeholder world = {warp-environment}

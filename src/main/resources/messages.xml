@@ -95,15 +95,39 @@ SOFTWARE.
         <msg lang="EN" prefix="true">You do not own this warp! ({warp-owner}</msg>
     </message>
 
-    <!-- Error when removing a warp -->
+    <!-- Error when removing a warp message -->
     <message id="7">
         <msg lang="EN" prefix="true">Failed to remove warp! (Contact admin)</msg>
     </message>
 
-    <!-- -->
+    <!-- Successfully deleted warp message -->
     <message id="8">
         <msg lang="EN" prefix="true">Deleted warp ({warp-name}, {warp-location})</msg>
     </message>
 
+    <!-- Successfully changed warps location message -->
+    <message id="9">
+        <msg lang="EN" prefix="true">You have successfully changed this warps location! (New {warp-location})</msg>
+    </message>
+
+    <!-- Invalid command argument message -->
+    <message id="10">
+        <msg lang="EN" prefix="true">Invalid command argument!</msg>
+    </message>
+
+    <!-- Invalid player message -->
+    <message id="11">
+        <msg lang="EN" prefix="true">Invalid player</msg>
+    </message>
+
+    <!-- Changed warp owner message -->
+    <message id="12">
+        <msg lang="EN" prefix="true">Successfully changed warp owner! (Old: {warp-previous-owner}, New: {warp-new-owner}</msg>
+    </message>
+
+    <!-- New owner cannot be previous owner message -->
+    <message id="13">
+        <msg lang="EN" prefix="true">You cannot give yourself owner again Bimbo..</msg>
+    </message>
 
 </messages>

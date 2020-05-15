@@ -7,7 +7,7 @@ import java.util.List;
 public class WarpSettings {
 
     public static List<?> blacklistedWarpNames() {
-        return new ArrayList<>(Arrays.asList("Fuck", "Cunt", "Etc.."));
+        return new ArrayList<>(Arrays.asList("fuck", "cunt", "etc.."));
     }
 
 }

@@ -26,7 +26,7 @@ main: com.sebbaindustries.warps.Core
 prefix: 'Warps'
 load: STARTUP
 api-version: '1.15'
-author: 'SebbaIndustries'
+authors: ["SebbaIndustries", "Frcsty"]
 description: ${project.description}
 
 commands:
