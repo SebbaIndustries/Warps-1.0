@@ -5,6 +5,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -14,9 +16,11 @@ import java.util.UUID;
  * Type of the warp - Enum Type<br>
  * Location of the warp - WarpLocation Class<br>
  * Owner of the warp - owner<br>
+ * Warp accessibility - accessibility<br>
+ * Warp ratings - ratings<br>
  * <br>
  * @author sebbaindustries
- * @version 1.0
+ * @version 1.1
  */
 public class Warp {
 
@@ -28,6 +32,7 @@ public class Warp {
     private Player owner;
 
     private WarpLocation warpLocation;
+    private final Map<UUID, Integer> ratings = new HashMap<>();
 
     /**
      * Generates random UUID, frosty said that they won't repeat, so :/
@@ -171,6 +176,22 @@ public class Warp {
      */
     public final void setLocation(WarpLocation warpLocation) {
         this.warpLocation = warpLocation;
+    }
+
+    /**
+     * Adds a rating to the warp (resets old users rating)
+     * @param rater rater's uuid
+     * @param rate int (1-10)
+     */
+    public final void setRating(final UUID rater, final int rate) {
+        this.ratings.put(rater, rate);
+    }
+
+    /**
+     * Gets the warps ratings
+     */
+    public Map<UUID, Integer> getRatings() {
+        return ratings;
     }
 
     /**
