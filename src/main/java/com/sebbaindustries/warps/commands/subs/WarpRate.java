@@ -4,6 +4,8 @@ import com.google.common.primitives.Ints;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.IPermission;
+import com.sebbaindustries.warps.message.IMessage;
+import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.Warp;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,11 +27,25 @@ public class WarpRate extends ICommand {
         final Warp warp = Core.gCore.warpStorage.getWarp(name);
 
         if (warp == null) {
-            // Invalid warp
+            player.sendMessage(Core.gCore.message.get(IMessage.INVALID_WARP));
+            return;
+        }
+
+        if (!warp.getOwner().equals(player)) {
+            player.sendMessage(Core.gCore.message.get(IMessage.CANT_RATE_OWN_WARP));
+            return;
+        }
+
+        if (!warp.getAccessibility()) {
+            player.sendMessage(Core.gCore.message.get(IMessage.PRIVATE_WARP_RATING));
             return;
         }
 
         warp.setRating(player.getUniqueId(), rate);
+        player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.RATED_WARP)
+                , "{warp-owner}", warp.getOwner().getName()
+                , "{warp-name}", warp.getName()
+                , "{rating}", String.valueOf(rate)));
         // rated warp (message & broadcast)
     }
 }

@@ -25,6 +25,9 @@ public enum IMessage {
     PRIVATE_WARP(15),
     UNSAFE_TELEPORT_LOCATION(16),
     TELEPORTATION_STARTED(17),
+    PRIVATE_WARP_RATING(18),
+    RATED_WARP(19),
+    CANT_RATE_OWN_WARP(20),
     ;
 
     public Integer ID;

@@ -150,4 +150,18 @@ SOFTWARE.
         <msg lang="EN" prefix="true">Starting warp teleportation!!!!!!!</msg>
     </message>
 
+    <!-- Cannot rate a private warp message -->
+    <message id="18">
+        <msg lang="EN" prefix="true">Unable to rate a private warp!</msg>
+    </message>
+
+    <!-- Successfully rates a warp message -->
+    <message id="19">
+        <msg lang="EN" prefix="true">You have rated {warp-owner}'s warp ({warp-name}) with {rating}</msg>
+    </message>
+
+    <!-- Unable to rate your own warp message -->
+    <message id="20">
+        <msg lang="EN" prefix="true">You can't rate your own warp..</msg>
+    </message>
 </messages>
