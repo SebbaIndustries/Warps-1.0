@@ -55,6 +55,16 @@ public class Settings extends SettingsFactory{
     }
 
     /**
+     * gets setting and returns it as array
+     * @see ISettings
+     * @param iSettings ISetting enum
+     * @return Setting in String array datatype
+     */
+    public String[] getStrArray(ISettings iSettings) {
+        return get(iSettings).split(" ");
+    }
+
+    /**
      * Reloads and saves setting to server memory
      */
     @Override

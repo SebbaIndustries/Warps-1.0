@@ -26,7 +26,7 @@ public abstract class SettingsFactory {
      * @param attributeName name of a attribute that contains data we need
      * @return Value of a attribute, if not found <b>$ERROR_NOT_FOUND</b> and if file encounters an exception <b>$ERROR_STACK</b>
      */
-    protected String prepareXML(@NotNull final String elementName, @NotNull final String attributeName) {
+    protected String prepareXML(@NotNull final String elementName, final String attributeName) {
         try {
             XMLInputFactory iFactory = XMLInputFactory.newInstance();
             XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.settings));
@@ -38,8 +38,13 @@ public abstract class SettingsFactory {
                 if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
                     //message tag - opened
                     if (sReader.getLocalName().equalsIgnoreCase(elementName)) {
-
-                        //Read attributes within message tag
+                        // Read message inside the tags if string is null
+                        if (attributeName == null) {
+                            final String s = sReader.getElementText();
+                            sReader.close();
+                            return s;
+                        }
+                        // Read attributes within message tag
                         if (sReader.getAttributeCount() > 0) {
                             final String s = sReader.getAttributeValue(null, attributeName);
                             sReader.close();
