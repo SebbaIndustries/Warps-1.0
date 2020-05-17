@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<menu page-size="45" rows="5" display="§8${type} Warps §2${warp-amount}">
+
+    <warp>
+        <material>DIAMOND</material>
+        <display>${warp-name} Warp</display>
+        <lore>
+
+            §8* §bOwner§8: §f${warp-owner}
+            §8* §bStatus§8: §f${warp-status}
+
+            §8* §bRating§: §f${warp-rating}
+            §8* §bLocation§: §f${warp-location} §8-> §f${warp-world}
+
+            §fClick to teleport to this warp.
+
+        </lore>
+    </warp>
+
+    <pages>
+        <next page="next" slot="52">
+            <material>SPECTRAL_ARROW</material>
+            <display>§8Next Page</display>
+            <lore></lore>
+        </next>
+        <previous page="previous" slot="46">
+            <material>SPECTRAL_ARROW</material>
+            <display>§8Previous Page</display>
+        </previous>
+    </pages>
+
+    <other>
+        <info slot="49">
+            <material>KNOWLEDGE_BOOK</material>
+            <display>§8Some info tralala</display>
+            <lore>info.</lore>
+        </info>
+        <blue slots="45,47,48,50,51,53">
+            <material>LIGHT_BLUE_STAINED_GLASS_PANE</material>
+            <display></display>
+            <lore></lore>
+        </blue>
+    </other>
+
+</menu>
