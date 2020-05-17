@@ -218,7 +218,7 @@ public abstract class BaseGui implements InventoryHolder {
      * @param player The player to close the GUI to
      */
     public void close(@NotNull final Player player) {
-        Bukkit.getScheduler().runTaskLater(plugin, () -> player.closeInventory(), 2L);
+        Bukkit.getScheduler().runTaskLater(plugin, (@NotNull Runnable) player::closeInventory, 2L);
     }
 
     /**
