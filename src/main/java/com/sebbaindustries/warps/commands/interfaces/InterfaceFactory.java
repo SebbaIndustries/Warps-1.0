@@ -1,4 +1,4 @@
 package com.sebbaindustries.warps.commands.interfaces;
 
-public class InterfaceFactory {
+public abstract class InterfaceFactory {
 }
