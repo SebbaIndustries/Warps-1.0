@@ -55,8 +55,8 @@ SOFTWARE.
 
     <!-- Prefix for messages -->
     <prefix>
-        <msg lang="EN">§8[§dWarps§8]§r </msg>
-        <msg lang="SI">§8[§dWarpi§8]§r </msg>
+        <msg lang="EN">§8[§dWarps§8]§r</msg>
+        <msg lang="SI">§8[§dWarpi§8]§r</msg>
     </prefix>
 
     <!-- No permission message -->
@@ -65,4 +65,103 @@ SOFTWARE.
         <msg lang="SI" prefix="true">§7Nimas dovoljenja za uporabo te komande!</msg>
     </message>
 
+    <!-- Already existing warp message -->
+    <message id="1">
+        <msg lang="EN" prefix="true">§7Failed to create specified warp! ({warp-name}, {reason})</msg>
+    </message>
+
+    <!-- Blacklisted Warp name message -->
+    <message id="2">
+        <msg lang="EN" prefix="true">§cFailed to create warp as it contains a blacklisted word! ({warp-name}</msg>
+    </message>
+
+    <!-- Successfully created warp message -->
+    <message id="3">
+        <msg lang="EN" prefix="true">§aSuccessfully created warp ({warp-name}, {warp-location}, {warp-world})</msg>
+    </message>
+
+    <!-- Invalid warp location -->
+    <message id="4">
+        <msg lang="EN" prefix="true">Failed to create warp, due to invalid location</msg>
+    </message>
+
+    <!-- Invalid warp message -->
+    <message id="5">
+        <msg lang="EN" prefix="true">Invalid warp!</msg>
+    </message>
+
+    <!-- Not warp owner message -->
+    <message id="6">
+        <msg lang="EN" prefix="true">You do not own this warp! ({warp-owner}</msg>
+    </message>
+
+    <!-- Error when removing a warp message -->
+    <message id="7">
+        <msg lang="EN" prefix="true">Failed to remove warp! (Contact admin)</msg>
+    </message>
+
+    <!-- Successfully deleted warp message -->
+    <message id="8">
+        <msg lang="EN" prefix="true">Deleted warp ({warp-name}, {warp-location})</msg>
+    </message>
+
+    <!-- Successfully changed warps location message -->
+    <message id="9">
+        <msg lang="EN" prefix="true">You have successfully changed this warps location! (New {warp-location})</msg>
+    </message>
+
+    <!-- Invalid command argument message -->
+    <message id="10">
+        <msg lang="EN" prefix="true">Invalid command argument!</msg>
+    </message>
+
+    <!-- Invalid player message -->
+    <message id="11">
+        <msg lang="EN" prefix="true">Invalid player</msg>
+    </message>
+
+    <!-- Changed warp owner message -->
+    <message id="12">
+        <msg lang="EN" prefix="true">Successfully changed warp owner! (Old: {warp-previous-owner}, New: {warp-new-owner}</msg>
+    </message>
+
+    <!-- New owner cannot be previous owner message -->
+    <message id="13">
+        <msg lang="EN" prefix="true">You cannot give yourself owner again Bimbo..</msg>
+    </message>
+
+    <!-- Changed warp status -->
+    <message id="14">
+        <msg lang="EN" prefix="true">Changed {warp-name} warp status to {warp-status}</msg>
+    </message>
+
+    <!-- Private warp -->
+    <message id="15">
+        <msg lang="EN" prefix="true">Cannot teleport to specified warp as it is private! Ask {warp-owner} to make it public</msg>
+    </message>
+
+    <!-- Unsafe location teleport message -->
+    <message id="16">
+        <msg lang="EN" prefix="true">Cannot teleport as the warps location is unsafe! Contact {warp-owner} and tell me to jump off a cliff</msg>
+    </message>
+
+    <!-- Warp teleportation started message -->
+    <message id="17">
+        <msg lang="EN" prefix="true">Starting warp teleportation!!!!!!!</msg>
+    </message>
+
+    <!-- Cannot rate a private warp message -->
+    <message id="18">
+        <msg lang="EN" prefix="true">Unable to rate a private warp!</msg>
+    </message>
+
+    <!-- Successfully rates a warp message -->
+    <message id="19">
+        <msg lang="EN" prefix="true">You have rated {warp-owner}'s warp ({warp-name}) with {rating}</msg>
+    </message>
+
+    <!-- Unable to rate your own warp message -->
+    <message id="20">
+        <msg lang="EN" prefix="true">You can't rate your own warp..</msg>
+    </message>
 </messages>

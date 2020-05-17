@@ -5,6 +5,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -14,19 +16,23 @@ import java.util.UUID;
  * Type of the warp - Enum Type<br>
  * Location of the warp - WarpLocation Class<br>
  * Owner of the warp - owner<br>
+ * Warp accessibility - accessibility<br>
+ * Warp ratings - ratings<br>
  * <br>
  * @author sebbaindustries
- * @version 1.0
+ * @version 1.1
  */
 public class Warp {
 
     private final UUID ID;
     private String name;
     private Type type;
+    private boolean accessibility = true;
 
     private Player owner;
 
     private WarpLocation warpLocation;
+    private final Map<UUID, Integer> ratings = new HashMap<>();
 
     /**
      * Generates random UUID, frosty said that they won't repeat, so :/
@@ -49,7 +55,7 @@ public class Warp {
         this.owner = owner;
 
         Location loc = owner.getLocation();
-        warpLocation = new WarpLocation(loc.getWorld().getEnvironment(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+        warpLocation = new WarpLocation(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 
         // check for name
         if (name == null) {
@@ -64,21 +70,21 @@ public class Warp {
      * @param type Type of warp
      * @param owner Owner of the warp
      * @param name Name of the warp
-     * @param environment World.Environment
+     * @param world warps world
      * @param x X coordinate
      * @param y Y coordinate
      * @param z Z coordinate
      * @param yaw Yaw coordinate
      * @param pitch Pitch coordinate
      */
-    public Warp(final @NotNull Type type, final @NotNull Player owner, final String name, final @NotNull World.Environment environment,
-                final double x, final double y, final double z, final float yaw, final float pitch) {
+    public Warp(final @NotNull Type type, final @NotNull Player owner, final String name
+                , final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
         this.ID = generateID();
 
         this.type = type;
         this.owner = owner;
 
-        warpLocation = new WarpLocation(environment, x, y, z, yaw, pitch);
+        warpLocation = new WarpLocation(world, x, y, z, yaw, pitch);
 
         // check for name
         if (name == null) {
@@ -126,6 +132,22 @@ public class Warp {
     }
 
     /**
+     * @return Accessibility of the warp
+     */
+    public final boolean getAccessibility() {
+        return accessibility;
+    }
+
+    /**
+     * Changes warp accessibility
+     * Defaults to true!
+     * @param accessibility public/private
+     */
+    public final void setAccessibility(final @NotNull Boolean accessibility) {
+        this.accessibility = accessibility;
+    }
+
+    /**
      * @return Owner of the warp
      */
     public final Player getOwner() {
@@ -154,6 +176,22 @@ public class Warp {
      */
     public final void setLocation(WarpLocation warpLocation) {
         this.warpLocation = warpLocation;
+    }
+
+    /**
+     * Adds a rating to the warp (resets old users rating)
+     * @param rater rater's uuid
+     * @param rate int (1-10)
+     */
+    public final void setRating(final UUID rater, final int rate) {
+        this.ratings.put(rater, rate);
+    }
+
+    /**
+     * Gets the warps ratings
+     */
+    public Map<UUID, Integer> getRatings() {
+        return ratings;
     }
 
     /**

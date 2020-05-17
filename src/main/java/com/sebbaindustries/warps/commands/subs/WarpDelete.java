@@ -2,9 +2,11 @@ package com.sebbaindustries.warps.commands.subs;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
-import com.sebbaindustries.warps.utils.Color;
+import com.sebbaindustries.warps.commands.permissions.IPermission;
+import com.sebbaindustries.warps.message.IMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.Warp;
+import com.sebbaindustries.warps.warp.WarpUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +15,8 @@ public class WarpDelete extends ICommand {
 
     public WarpDelete() {
         super("delete", "delete [warp]", 1);
+        permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.DELETE);
+        setPlayerOnly();
     }
 
     @Override
@@ -23,34 +27,36 @@ public class WarpDelete extends ICommand {
 
         if (warp == null) {
             /*
-            TODO: Invalid warp message
-            @placeholder warpName = {warp-name}
+             * @placeholder warpName = {warp-name}
              */
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.INVALID_WARP), "{warp-name}", name));
             return;
         }
 
         if (!warp.getOwner().equals(player)) {
             /*
-            TODO: Not owner message
             @placeholder warpName = {warp-name}
             @placeholder warpOwner = {warp-owner}
              */
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.NOT_WARP_OWNER)
+                    , "{warp-name}", name
+                    , "{warp-owner}", warp.getOwner().getName()));
             return;
         }
 
         if (Core.gCore.warpStorage.deleteWarp(name)) {
             /*
-            TODO: Beautify warp location (toString)
             @placeholder warpName = {warp-name}
             @placeholder warpLocation = {warp-location}
+            @placeholder warpWorld = {warp-world}
             */
-            player.sendMessage(Color.chat(Replace.replaceString("Some remove message", "{warp-name}", name, "{warp-location}", warp.getLocation().toString())));
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_REMOVED_WARP)
+                    , "{warp-name}", name
+                    , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
+                    , "{warp-world}", warp.getLocation().getWorld().getName()));
             return;
         }
 
-        /*
-        TODO: Add some message of why the deletion failed
-         */
-        player.sendMessage(Color.chat("Failed to remove warp"));
+        player.sendMessage(Core.gCore.message.get(IMessage.FAILED_TO_REMOVE_WARP));
     }
 }

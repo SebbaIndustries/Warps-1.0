@@ -26,7 +26,7 @@ main: com.sebbaindustries.warps.Core
 prefix: 'Warps'
 load: STARTUP
 api-version: '1.15'
-author: 'SebbaIndustries'
+authors: ["SebbaIndustries", "Frcsty"]
 description: ${project.description}
 
 commands:
@@ -34,4 +34,4 @@ commands:
     permission: warps.command.warp
     aliases:
       - warps
-    description: "Frosty nekej tu napisi pametnega"
+    description: "https://cdn.discordapp.com/attachments/695431668944732270/710494721033633822/5af.png"

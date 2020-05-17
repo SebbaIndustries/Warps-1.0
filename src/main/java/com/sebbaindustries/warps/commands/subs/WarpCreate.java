@@ -2,10 +2,16 @@ package com.sebbaindustries.warps.commands.subs;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
-import com.sebbaindustries.warps.utils.Color;
+import com.sebbaindustries.warps.commands.permissions.IPermission;
+import com.sebbaindustries.warps.message.IMessage;
+import com.sebbaindustries.warps.settings.ISettings;
 import com.sebbaindustries.warps.utils.Replace;
+import com.sebbaindustries.warps.warp.SafetyCheck;
 import com.sebbaindustries.warps.warp.Warp;
 import com.sebbaindustries.warps.warp.WarpSettings;
+import com.sebbaindustries.warps.warp.WarpUtils;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -13,49 +19,78 @@ import org.jetbrains.annotations.NotNull;
 public class WarpCreate extends ICommand {
 
     public WarpCreate() {
-        super("create", "create [name]", 1);
+        super("create", "create [name] (SERVER/PLAYER)", 0);
+        permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.CREATE);
+        setPlayerOnly();
     }
 
     @Override
     public void execute(final @NotNull CommandSender sender, final String[] args) {
         final Player player = (Player) sender;
-        final String name = args.length == 1 ? args[0] : player.getName();
+        final String name = args.length >= 1 ? args[0] : player.getName();
+        final Warp.Type type = args.length == 2 ? Warp.Type.valueOf(args[1].toUpperCase()) : Warp.Type.PLAYER;
 
-        if (WarpSettings.blacklistedWarpNames().contains(name) && !name.equalsIgnoreCase(player.getName())) {
-            /*
-            TODO: Blacklisted warp name - handle appropriately (by not creating the warp)
-            @placeholder warpName = {warp-name}
-             */
-            player.sendMessage(Color.chat(Replace.replaceString(
-                    "You may not create a warp with an inappropriate name! ({warp-name}"
-                    , "{warp-name}", name)));
+        /*
+         * Checks whether the warp name contains a blacklisted word
+         *
+         * @placeholder {warp-name}
+         * @return blacklisted name message
+         */
+        if (Core.gCore.settings.getList(ISettings.BLACKLISTED_WARP_NAMES).contains(name.toLowerCase()) && !name.equalsIgnoreCase(player.getName())) {
+            player.sendMessage(Replace.replaceString(
+                    Core.gCore.message.get(IMessage.BLACKLISTED_WARP_NAME)
+                    , "{warp-name}", name));
             return;
         }
 
-        final Warp warp = new Warp(Warp.Type.PLAYER, player, name);
         /*
-         TODO: beautify the placeholder returns (environment capitalization, location toString)
-         TODO: Add a safety check to ensure the created warps location is safe for teleportation
+         * Creates a new warp instance using the given arguments
+         */
+        final Warp warp = new Warp(type, player, name);
+
+        /*
+         * Checks if the warps location is a safe area
+         *
+         * @see SafetyCheck
+         * @return invalid location message
+         */
+        if (!SafetyCheck.isLocationSafe(warp.getLocation())) {
+            player.sendMessage(Core.gCore.message.get(IMessage.INVALID_LOCATION));
+            return;
+        }
+        /*
          @placeholder warpMame = {warp-name}
-         @placeholder location = {warp-location}
+         @placeholder location = {warp-world}
          @placeholder world = {warp-environment}
           */
         if (Core.gCore.warpStorage.addWarp(warp)) {
-            player.sendMessage(Color.chat(Replace.replaceString(
-                    "Some message ({warp-name}, {warp-location}, {warp-environment}"
+            player.sendMessage(Replace.replaceString(
+                    Core.gCore.message.get(IMessage.SUCCESSFULLY_CREATED_WARP)
                     , "{warp-name}", warp.getName()
-                    , "{warp-location}", warp.getLocation().toString()
-                    , "{warp-environment}", String.valueOf(warp.getLocation().getEnvironment()))));
-
+                    , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
+                    , "{warp-world}", getWorldString(warp.getLocation().getWorld())));
             return;
         }
 
         /*
-        TODO: Denial message (warp unable to be created - already exists, invalid name)
-        @placeholder warpName = {warp-name}
-        @placeholder reason = {reason} - Reason for failure to create the warp - beautified
-        */
-        player.sendMessage(Color.chat("Failed to create {warp-name}, reason: {reason}"));
+         *
+         * @placeholder warpName = {warp-name}
+         * @placeholder reason = {reason} - Reason for failure to create the warp - beautified
+         */
+        player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.FAILED_WARP_CREATION)
+                , "{warp-name}", name
+                , "{reason}", getReason()));
+    }
+
+    /*
+    TODO: Add actual reason creation (dynamic)
+     */
+    private String getReason() {
+        return "warp already exists!";
+    }
+
+    private String getWorldString(final World world) {
+        return StringUtils.capitalize(world.getName().toLowerCase());
     }
 
 }

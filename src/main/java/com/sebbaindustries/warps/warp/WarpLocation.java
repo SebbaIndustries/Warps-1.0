@@ -4,50 +4,50 @@ import org.bukkit.World;
 
 /**
  * <b>This class contains warp location and access to it</b><br>
+ *
  * @author sebbaindustries
  * @version 1.0
  */
 public class WarpLocation {
-
-    /**
-     * Warp location constructor, sets all variables
-     * @param environment World.Environment
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
-     * @param yaw Yaw coordinate
-     * @param pitch Pitch coordinate
-     */
-    public WarpLocation(World.Environment environment, final double x, final double y, final double z, final float yaw, final float pitch) {
-        this.environment = environment;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.yaw = yaw;
-        this.pitch = pitch;
-    }
-
 
     private double x;
     private double y;
     private double z;
     private float yaw;
     private float pitch;
-    private World.Environment environment;
+    private World world;
 
     /**
-     * @return Environment of the warp
+     * Warp location constructor, sets all variables
+     *
+     * @param world world
+     * @param x     X coordinate
+     * @param y     Y coordinate
+     * @param z     Z coordinate
+     * @param yaw   Yaw coordinate
+     * @param pitch Pitch coordinate
      */
-    public World.Environment getEnvironment() {
-        return environment;
+    public WarpLocation(final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.yaw = yaw;
+        this.pitch = pitch;
+        this.world = world;
     }
 
     /**
-     * Changes environment of the warp
-     * @param environment World.Environment
+     * @return World of the warp
      */
-    public void setEnvironment(World.Environment environment) {
-        this.environment = environment;
+    public World getWorld() {
+        return world;
+    }
+
+    /**
+     * Changes the world of the warp
+     */
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     /**
@@ -59,6 +59,7 @@ public class WarpLocation {
 
     /**
      * Changes X coordinate of the warp
+     *
      * @param x X Coordinate
      */
     public void setX(double x) {
@@ -74,6 +75,7 @@ public class WarpLocation {
 
     /**
      * Changes Y coordinate of the warp
+     *
      * @param y Y Coordinate
      */
     public void setY(double y) {
@@ -89,6 +91,7 @@ public class WarpLocation {
 
     /**
      * Changes Z coordinate of the warp
+     *
      * @param z Z Coordinate
      */
     public void setZ(double z) {
@@ -104,6 +107,7 @@ public class WarpLocation {
 
     /**
      * Changes Yaw coordinate of the warp
+     *
      * @param yaw Yaw Coordinate
      */
     public void setYaw(float yaw) {
@@ -119,6 +123,7 @@ public class WarpLocation {
 
     /**
      * Changes Pitch coordinate of the warp
+     *
      * @param pitch Pitch Coordinate
      */
     public void setPitch(float pitch) {

@@ -23,5 +23,81 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <settings>
+    <warp-settings
+            permission="warp.rank.default"
+            maxwarps="1"
+            Environment.NORMAL="true"
+            Environment.NETHER="false"
+            Environment.THE_END="false"
+            teleport-wait-time="60"
+    />
+    <warp-settings
+            permission="warp.rank.iron"
+            maxwarps="2"
+            Environment.NORMAL="true"
+            Environment.NETHER="false"
+            Environment.THE_END="false"
+            teleport-wait-time="60"
+    />
+    <warp-settings
+            permission="warp.rank.gold"
+            maxwarps="3"
+            Environment.NORMAL="true"
+            Environment.NETHER="true"
+            Environment.THE_END="false"
+            teleport-wait-time="60"
+    />
+    <warp-settings
+            permission="warp.rank.diamond"
+            maxwarps="4"
+            Environment.NORMAL="true"
+            Environment.NETHER="true"
+            Environment.THE_END="false"
+            teleport-wait-time="60"
+    />
+    <warp-settings
+            permission="warp.rank.emerald"
+            maxwarps="5"
+            Environment.NORMAL="true"
+            Environment.NETHER="true"
+            Environment.THE_END="true"
+            teleport-wait-time="60"
+    />
+
+    <blacklisted-warp-names>fuck me I hate this shit please kill me</blacklisted-warp-names>
+    <safety-check>
+        <blacklisted-items allow-in-air-warps="false">PRESSURE_PLATE TRAPDOOR LAVA</blacklisted-items>
+        <ring-check radius="1">LAVA WATER CACTUS</ring-check>
+    </safety-check>
+
+    <teleport
+            confirm-availability-time="500"
+    />
+
+    <teleport-display
+            method="title"
+            use-progress-bar="true"
+            completed-color="§3"
+            uncompleted-color="§f"
+            progress-bar-symbol="|"
+            progress-bar-length="42"
+    />
+    <teleport-method>
+        <title
+                top="${time}"
+                sub="${time}"
+                fadein="10"
+                fadeout="10"
+        />
+
+        <actionbar
+                text="Teleporting in %time%"
+        />
+
+        <chat
+                text="Teleporting in %time% seconds"
+                text-send-frequency="20"
+        />
+    </teleport-method>
 
 </settings>
