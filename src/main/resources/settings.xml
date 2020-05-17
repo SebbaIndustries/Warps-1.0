@@ -72,7 +72,6 @@ SOFTWARE.
 
     <teleport
             confirm-availability-time="500"
-            default-teleport-wait-time="60"
     />
 
     <teleport-display
@@ -85,8 +84,8 @@ SOFTWARE.
     />
     <teleport-method>
         <title
-                top="%time%"
-                sub="§2Teleporting"
+                top="§2Teleporting"
+                sub="${time}"
                 fadein="10"
                 fadeout="10"
         />

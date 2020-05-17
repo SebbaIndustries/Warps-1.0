@@ -14,7 +14,6 @@ public enum ISettings {
     RING_CHECK_ITEMS(5, "ring-check", null),
 
     TELEPORT_CONFIRM_TIME(6, "teleport", "confirm-availability-time"),
-    TELEPORT_WAIT_TIME(7, "teleport", "default-teleport-wait-time"),
 
     TELEPORT_METHOD(8, "teleport-display", "method"),
 

@@ -4,6 +4,7 @@ import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.IPermission;
 import com.sebbaindustries.warps.message.IMessage;
+import com.sebbaindustries.warps.settings.ISettings;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.SafetyCheck;
 import com.sebbaindustries.warps.warp.Warp;
@@ -35,7 +36,7 @@ public class WarpCreate extends ICommand {
          * @placeholder {warp-name}
          * @return blacklisted name message
          */
-        if (WarpSettings.blacklistedWarpNames().contains(name.toLowerCase()) && !name.equalsIgnoreCase(player.getName())) {
+        if (Core.gCore.settings.getList(ISettings.BLACKLISTED_WARP_NAMES).contains(name.toLowerCase()) && !name.equalsIgnoreCase(player.getName())) {
             player.sendMessage(Replace.replaceString(
                     Core.gCore.message.get(IMessage.BLACKLISTED_WARP_NAME)
                     , "{warp-name}", name));
