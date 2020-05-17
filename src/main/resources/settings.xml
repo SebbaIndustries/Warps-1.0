@@ -84,7 +84,7 @@ SOFTWARE.
     />
     <teleport-method>
         <title
-                top="§2Teleporting"
+                top="${time}"
                 sub="${time}"
                 fadein="10"
                 fadeout="10"

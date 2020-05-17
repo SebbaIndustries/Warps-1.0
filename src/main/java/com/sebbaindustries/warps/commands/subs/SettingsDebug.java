@@ -31,6 +31,6 @@ public class SettingsDebug extends ICommand {
         System.out.println(warpSettings.getPermission());
 
          */
-        new WarpTeleportationThread((Player) sender, 5).start();
+        new WarpTeleportationThread((Player) sender).start();
     }
 }
