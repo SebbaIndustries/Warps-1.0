@@ -45,7 +45,8 @@ public class CommandFactory implements CommandExecutor {
                 new WarpTeleportation(),
                 new WarpsMenu(),
                 new WarpRate(),
-                new SettingsDebug()
+                new WarpDescription()
+                /*new SettingsDebug()*/
                 ).collect(Collectors.toSet());
         // Find "default" command
         defaultICommand = iCommands.stream().filter(ICommand::isDef).findAny().orElseThrow(NoDefaultCommandException::new);

@@ -34,6 +34,7 @@ public class Warp {
 
     private WarpLocation warpLocation;
     private final Map<UUID, Integer> ratings = new HashMap<>();
+    private String description;
 
     /**
      * Generates random UUID, frosty said that they won't repeat, so :/
@@ -191,9 +192,21 @@ public class Warp {
     /**
      * Gets the warps ratings
      */
-    public Map<UUID, Integer> getRatings() {
+    public final Map<UUID, Integer> getRatings() {
         return ratings;
     }
+
+    /**
+     * Gets the warps description
+     */
+    public final String getDescription() { return description; }
+
+    /**
+     * Sets the warps description
+     *
+     * @param description warps new description
+     */
+    public final void setDescription(final String description) { this.description = description; }
 
     /**
      * Enum containing types of the warp

@@ -164,4 +164,19 @@ SOFTWARE.
     <message id="20">
         <msg lang="EN" prefix="true">You can't rate your own warp..</msg>
     </message>
+
+    <!-- Too long warp description -->
+    <message id="21">
+        <msg lang="EN" prefix="true">Inputted description is too long.</msg>
+    </message>
+
+    <!-- Successfully set warps description -->
+    <message id="22">
+        <msg lang="EN" prefix="true">Successfully set warps description to: {warp-description}</msg>
+    </message>
+
+    <!-- Removed warps description -->
+    <message id="23">
+        <msg lang="EN" prefix="true">Successfully removed {warp-name} Warp's description!</msg>
+    </message>
 </messages>
