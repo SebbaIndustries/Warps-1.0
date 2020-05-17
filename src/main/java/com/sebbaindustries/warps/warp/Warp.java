@@ -1,5 +1,6 @@
 package com.sebbaindustries.warps.warp;
 
+import com.sebbaindustries.warps.warp.components.WarpLocation;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

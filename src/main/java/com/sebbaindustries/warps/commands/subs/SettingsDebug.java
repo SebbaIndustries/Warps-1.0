@@ -1,12 +1,8 @@
 package com.sebbaindustries.warps.commands.subs;
 
-import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.IPermission;
-import com.sebbaindustries.warps.settings.ISettings;
-import com.sebbaindustries.warps.settings.Settings;
-import com.sebbaindustries.warps.warp.WarpSettings;
-import com.sebbaindustries.warps.warp.WarpTeleportationThread;
+import com.sebbaindustries.warps.warp.components.WarpTeleportationThread;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

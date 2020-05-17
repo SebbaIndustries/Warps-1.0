@@ -25,6 +25,7 @@ public class FileManager {
         generateMessages();
         generateSettings();
         generateConfiguration();
+        generateWarpInterface();
     }
 
     /*
@@ -75,6 +76,24 @@ public class FileManager {
         }
         if (!settings.exists()) {
             core.saveResource("settings.xml", false);
+        }
+    }
+
+    /*
+    warpInterface.xml
+     */
+
+    public File warpInterface;
+
+    /**
+     * Generates warpInterface.xml File
+     */
+    public final void generateWarpInterface() {
+        if (warpInterface == null) {
+            warpInterface = new File(core.getDataFolder(), "warpInterface.xml");
+        }
+        if (!warpInterface.exists()) {
+            core.saveResource("warpInterface.xml", false);
         }
     }
 

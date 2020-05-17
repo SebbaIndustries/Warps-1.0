@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.warp;
+package com.sebbaindustries.warps.warp.components;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.settings.ISettings;

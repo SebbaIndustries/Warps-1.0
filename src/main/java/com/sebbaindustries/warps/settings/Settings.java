@@ -1,6 +1,6 @@
 package com.sebbaindustries.warps.settings;
 
-import com.sebbaindustries.warps.warp.WarpSettings;
+import com.sebbaindustries.warps.warp.components.WarpSettings;
 import org.apache.commons.lang.BooleanUtils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

@@ -30,6 +30,7 @@ SOFTWARE.
             Environment.NETHER="false"
             Environment.THE_END="false"
             teleport-wait-time="60"
+            max-description-length="50"
     />
     <warp-settings
             permission="warp.rank.iron"
@@ -38,6 +39,7 @@ SOFTWARE.
             Environment.NETHER="false"
             Environment.THE_END="false"
             teleport-wait-time="60"
+            max-description-length="50"
     />
     <warp-settings
             permission="warp.rank.gold"
@@ -46,6 +48,7 @@ SOFTWARE.
             Environment.NETHER="true"
             Environment.THE_END="false"
             teleport-wait-time="60"
+            max-description-length="50"
     />
     <warp-settings
             permission="warp.rank.diamond"
@@ -54,6 +57,7 @@ SOFTWARE.
             Environment.NETHER="true"
             Environment.THE_END="false"
             teleport-wait-time="60"
+            max-description-length="50"
     />
     <warp-settings
             permission="warp.rank.emerald"
@@ -62,6 +66,7 @@ SOFTWARE.
             Environment.NETHER="true"
             Environment.THE_END="true"
             teleport-wait-time="60"
+            max-description-length="50"
     />
 
     <blacklisted-warp-names>fuck me I hate this shit please kill me</blacklisted-warp-names>

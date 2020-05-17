@@ -1,5 +1,6 @@
-package com.sebbaindustries.warps.warp;
+package com.sebbaindustries.warps.warp.components;
 
+import com.sebbaindustries.warps.warp.components.WarpLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

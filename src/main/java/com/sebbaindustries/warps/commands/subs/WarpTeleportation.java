@@ -6,6 +6,7 @@ import com.sebbaindustries.warps.commands.permissions.IPermission;
 import com.sebbaindustries.warps.message.IMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.*;
+import com.sebbaindustries.warps.warp.components.SafetyCheck;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

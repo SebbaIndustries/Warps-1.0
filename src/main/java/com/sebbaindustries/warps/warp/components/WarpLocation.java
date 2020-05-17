@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.warp;
+package com.sebbaindustries.warps.warp.components;
 
 import org.bukkit.World;
 

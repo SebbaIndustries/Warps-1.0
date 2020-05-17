@@ -1,7 +1,7 @@
 package com.sebbaindustries.warps.settings;
 
 import com.sebbaindustries.warps.Core;
-import com.sebbaindustries.warps.warp.WarpSettings;
+import com.sebbaindustries.warps.warp.components.WarpSettings;
 import org.apache.commons.lang.BooleanUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -100,7 +100,8 @@ public abstract class SettingsFactory {
                 BooleanUtils.toBoolean(sReader.getAttributeValue(null, "Environment.NORMAL")),
                 BooleanUtils.toBoolean(sReader.getAttributeValue(null, "Environment.NETHER")),
                 BooleanUtils.toBoolean(sReader.getAttributeValue(null, "Environment.THE_END")),
-                Integer.parseInt(sReader.getAttributeValue(null, "teleport-wait-time"))
+                Integer.parseInt(sReader.getAttributeValue(null, "teleport-wait-time")),
+                Integer.parseInt(sReader.getAttributeValue(null, "max-description-length"))
         );
     }
 
