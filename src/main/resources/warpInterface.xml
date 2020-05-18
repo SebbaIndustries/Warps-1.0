@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<interface page-size="45" rows="5" display="§8${type} Warps §2${warp-amount}">
+<interface rows="5" display="§8${type} Warps §2${warp-amount}">
     <pages>
 
         <warps slots="0,1,2,3,4,5,6,7,8">
@@ -36,9 +36,7 @@
             <lore>info.</lore>
         </button>
 
-        <backround>
-            <material>LIGHT_BLUE_STAINED_GLASS_PANE</material>
-        </backround>
+        <background material="LIGHT_BLUE_STAINED_GLASS_PANE" />
 
     </pages>
 </interface>

@@ -64,5 +64,6 @@ public final class Core extends JavaPlugin {
         gCore = new GlobalCore(Core.getPlugin(Core.class));
         gCore.settings.reloadSettings();
         gCore.message.reloadMessages();
+        gCore.guiInterface.reloadInterface();
     }
 }

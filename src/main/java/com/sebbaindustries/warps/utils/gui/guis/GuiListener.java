@@ -1,5 +1,6 @@
 package com.sebbaindustries.warps.utils.gui.guis;
 
+import com.sebbaindustries.warps.interfaces.graphics.GuiItem;
 import com.sebbaindustries.warps.utils.gui.components.GuiAction;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -72,7 +73,7 @@ public final class GuiListener implements Listener {
         if (isntGuiItem(event.getCurrentItem(), guiItem)) return;
 
         // Executes the action of the item
-        guiItem.getAction().execute(event);
+        //guiItem.getAction().execute(event);
 
     }
 
@@ -138,10 +139,12 @@ public final class GuiListener implements Listener {
      * @param guiItem     The GUI item in the slot
      * @return Whether it is or not a GUI item
      */
+    @Deprecated
     private boolean isntGuiItem(final ItemStack currentItem, final GuiItem guiItem) {
         if (guiItem == null) return true;
         // Checks whether or not the Item is truly a GUI Item
-        return !getNBTTag(currentItem, "mf-gui").equals(guiItem.getUuid().toString());
+        //return !getNBTTag(currentItem, "mf-gui").equals(guiItem.getUuid().toString());
+        return false;
     }
 
 }
