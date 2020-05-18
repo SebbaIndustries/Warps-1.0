@@ -1,6 +1,6 @@
 package com.sebbaindustries.warps.interfaces;
 
-import com.sebbaindustries.warps.interfaces.components.IAction;
+import com.sebbaindustries.warps.interfaces.components.EAction;
 import com.sebbaindustries.warps.interfaces.graphics.GuiItem;
 import org.bukkit.inventory.ItemStack;
 
@@ -20,7 +20,7 @@ public class Interface extends InterfaceFactory {
     public List<Integer> getWarpSlots() {
         List<Integer> warpSlots = new ArrayList<>();
         for (GuiItem item : guiInterfaceMap.values()) {
-            if (item.getIAction() == IAction.WARP) warpSlots.add(item.getSlot());
+            if (item.getIAction() == EAction.WARP) warpSlots.add(item.getSlot());
         }
         return warpSlots;
     }
@@ -34,7 +34,7 @@ public class Interface extends InterfaceFactory {
     public List<Integer> getBackgroundSlots() {
         List<Integer> backgroundSlots = new ArrayList<>();
         for (GuiItem item : guiInterfaceMap.values()) {
-            if (item.getIAction() == IAction.BACKGROUND) backgroundSlots.add(item.getSlot());
+            if (item.getIAction() == EAction.BACKGROUND) backgroundSlots.add(item.getSlot());
         }
         return backgroundSlots;
     }
@@ -43,7 +43,7 @@ public class Interface extends InterfaceFactory {
     public List<Integer> getButtonSlots() {
         List<Integer> warpSlots = new ArrayList<>();
         for (GuiItem item : guiInterfaceMap.values()) {
-            if (item.getIAction() == IAction.PAGE_NEXT || item.getIAction() == IAction.PAGE_PREV || item.getIAction() == IAction.NONE) {
+            if (item.getIAction() == EAction.PAGE_NEXT || item.getIAction() == EAction.PAGE_PREV || item.getIAction() == EAction.NONE) {
                 warpSlots.add(item.getSlot());
             }
         }
@@ -57,7 +57,7 @@ public class Interface extends InterfaceFactory {
         display = getInterfaceAttributes("display");
         ItemStack background = getBackground();
         for (int i = 0; i < guiSize; i++) {
-            guiInterfaceMap.put(i, new GuiItem(IAction.BACKGROUND, background, i, "", ""));
+            guiInterfaceMap.put(i, new GuiItem(EAction.BACKGROUND, background, i, "", ""));
         }
         for (GuiItem item : getButtons()) {
             guiInterfaceMap.put(item.getSlot(), item);

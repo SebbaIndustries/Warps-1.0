@@ -20,7 +20,7 @@ import java.util.List;
  */
 public abstract class SettingsFactory {
 
-    public abstract String get(ISettings iSettings);
+    public abstract String get(ESettings eSettings);
     public abstract void reloadSettings();
     protected abstract void getWarpSettings();
 

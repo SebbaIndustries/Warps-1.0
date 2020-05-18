@@ -5,7 +5,7 @@ package com.sebbaindustries.warps.settings;
  * @author sebbaindustries
  * @version 1.0
  */
-public enum ISettings {
+public enum ESettings {
 
     BLACKLISTED_WARP_NAMES(1, "blacklisted-warp-names", null),
     ALLOW_IN_AIR_WARPS(2, "blacklisted-items", "allow-in-air-warps"),
@@ -38,7 +38,7 @@ public enum ISettings {
     public String elementName;
     public String attributeName;
 
-    ISettings(Integer ID, String elementName, String attributeName) {
+    ESettings(Integer ID, String elementName, String attributeName) {
         this.ID = ID;
         this.elementName = elementName;
         this.attributeName = attributeName;

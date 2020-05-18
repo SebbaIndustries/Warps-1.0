@@ -2,9 +2,9 @@ package com.sebbaindustries.warps.commands.subs;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
-import com.sebbaindustries.warps.commands.permissions.IPermission;
-import com.sebbaindustries.warps.message.IMessage;
-import com.sebbaindustries.warps.settings.ISettings;
+import com.sebbaindustries.warps.commands.permissions.EPermission;
+import com.sebbaindustries.warps.message.EMessage;
+import com.sebbaindustries.warps.settings.ESettings;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.components.SafetyCheck;
 import com.sebbaindustries.warps.warp.Warp;
@@ -19,7 +19,7 @@ public class WarpCreate extends ICommand {
 
     public WarpCreate() {
         super("create", "create [name] (SERVER/PLAYER)", 0);
-        permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.CREATE);
+        permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.CREATE);
         setPlayerOnly();
     }
 
@@ -35,9 +35,9 @@ public class WarpCreate extends ICommand {
          * @placeholder {warp-name}
          * @return blacklisted name message
          */
-        if (Core.gCore.settings.getList(ISettings.BLACKLISTED_WARP_NAMES).contains(name.toLowerCase()) && !name.equalsIgnoreCase(player.getName())) {
+        if (Core.gCore.settings.getList(ESettings.BLACKLISTED_WARP_NAMES).contains(name.toLowerCase()) && !name.equalsIgnoreCase(player.getName())) {
             player.sendMessage(Replace.replaceString(
-                    Core.gCore.message.get(IMessage.BLACKLISTED_WARP_NAME)
+                    Core.gCore.message.get(EMessage.BLACKLISTED_WARP_NAME)
                     , "{warp-name}", name));
             return;
         }
@@ -54,7 +54,7 @@ public class WarpCreate extends ICommand {
          * @return invalid location message
          */
         if (!SafetyCheck.isLocationSafe(warp.getLocation())) {
-            player.sendMessage(Core.gCore.message.get(IMessage.INVALID_LOCATION));
+            player.sendMessage(Core.gCore.message.get(EMessage.INVALID_LOCATION));
             return;
         }
         /*
@@ -64,7 +64,7 @@ public class WarpCreate extends ICommand {
           */
         if (Core.gCore.warpStorage.addWarp(warp)) {
             player.sendMessage(Replace.replaceString(
-                    Core.gCore.message.get(IMessage.SUCCESSFULLY_CREATED_WARP)
+                    Core.gCore.message.get(EMessage.SUCCESSFULLY_CREATED_WARP)
                     , "{warp-name}", warp.getName()
                     , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
                     , "{warp-world}", getWorldString(warp.getLocation().getWorld())));
@@ -76,7 +76,7 @@ public class WarpCreate extends ICommand {
          * @placeholder warpName = {warp-name}
          * @placeholder reason = {reason} - Reason for failure to create the warp - beautified
          */
-        player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.FAILED_WARP_CREATION)
+        player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.FAILED_WARP_CREATION)
                 , "{warp-name}", name
                 , "{reason}", getReason()));
     }

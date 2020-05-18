@@ -5,7 +5,7 @@ package com.sebbaindustries.warps.commands.permissions;
  * @author sebbaindustries
  * @version 1.0
  */
-public enum IPermission {
+public enum EPermission {
 
     /*
     TIER 0 - Access to everything
@@ -31,7 +31,7 @@ public enum IPermission {
 
     public String permission;
 
-    IPermission(String permission) {
+    EPermission(String permission) {
         this.permission = permission;
     }
 }

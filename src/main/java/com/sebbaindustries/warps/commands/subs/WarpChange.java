@@ -2,8 +2,8 @@ package com.sebbaindustries.warps.commands.subs;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
-import com.sebbaindustries.warps.commands.permissions.IPermission;
-import com.sebbaindustries.warps.message.IMessage;
+import com.sebbaindustries.warps.commands.permissions.EPermission;
+import com.sebbaindustries.warps.message.EMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.components.SafetyCheck;
 import com.sebbaindustries.warps.warp.Warp;
@@ -19,7 +19,7 @@ public class WarpChange extends ICommand {
 
     public WarpChange() {
         super("change", "change [warp] (status/location/owner) <input/x/y/z/pitch/yaw> {x/y/z/pitch/yaw}", 1);
-        permissions().add(IPermission.ROOT, IPermission.COMMANDS);
+        permissions().add(EPermission.ROOT, EPermission.COMMANDS);
         setPlayerOnly();
     }
 
@@ -36,12 +36,12 @@ public class WarpChange extends ICommand {
         final Warp warp = Core.gCore.warpStorage.getWarp(name);
 
         if (warp == null) {
-            player.sendMessage(Core.gCore.message.get(IMessage.INVALID_WARP));
+            player.sendMessage(Core.gCore.message.get(EMessage.INVALID_WARP));
             return;
         }
 
         if (!warp.getOwner().equals(player)) {
-            player.sendMessage(Core.gCore.message.get(IMessage.NOT_WARP_OWNER));
+            player.sendMessage(Core.gCore.message.get(EMessage.NOT_WARP_OWNER));
             return;
         }
 
@@ -55,7 +55,7 @@ public class WarpChange extends ICommand {
                 @placeholder {warp-status}
                  */
                 warp.setAccessibility(status);
-                player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.CHANGED_WARP_STATUS)
+                player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.CHANGED_WARP_STATUS)
                         ,"{warp-name}", warp.getName()
                         ,"{warp-status}", WarpUtils.getBooleanString(warp.getAccessibility())));
                 break;
@@ -70,14 +70,14 @@ public class WarpChange extends ICommand {
                     final WarpLocation warpLocation = new WarpLocation(player.getWorld(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 
                     if (!SafetyCheck.isLocationSafe(warpLocation)) {
-                        player.sendMessage(Core.gCore.message.get(IMessage.INVALID_LOCATION));
+                        player.sendMessage(Core.gCore.message.get(EMessage.INVALID_LOCATION));
                         return;
                     }
 
                     /*
                     @placeholder {warp-location}
                      */
-                    player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_CHANGED_LOCATION)
+                    player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                             , "{warp-location}", WarpUtils.getLocationString(warpLocation)));
                     warp.setLocation(warpLocation);
                     return;
@@ -90,35 +90,35 @@ public class WarpChange extends ICommand {
                         subParameter = args.length == 4 ? Double.valueOf(args[3]) : warp.getLocation().getX();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), subParameter, warp.getLocation().getY(), warp.getLocation().getZ(), warp.getLocation().getYaw(), warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
-                        player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_CHANGED_LOCATION)
+                        player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
                     case "y":
                         subParameter = args.length == 4 ? Double.valueOf(args[3]) : warp.getLocation().getY();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), subParameter, warp.getLocation().getZ(), warp.getLocation().getYaw(), warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
-                        player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_CHANGED_LOCATION)
+                        player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
                     case "z":
                         subParameter = args.length == 4 ? Double.valueOf(args[3]) : warp.getLocation().getZ();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), warp.getLocation().getY(), subParameter, warp.getLocation().getYaw(), warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
-                        player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_CHANGED_LOCATION)
+                        player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
                     case "yaw":
                         subParameter = args.length == 4 ? Double.valueOf(args[3]) : warp.getLocation().getYaw();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), warp.getLocation().getY(), warp.getLocation().getZ(), (float) subParameter, warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
-                        player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_CHANGED_LOCATION)
+                        player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
                     case "pitch":
                         subParameter = args.length == 4 ? Double.valueOf(args[3]) : warp.getLocation().getPitch();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), warp.getLocation().getY(), warp.getLocation().getZ(), warp.getLocation().getYaw(), (float) subParameter);
                         warp.setLocation(warpLocation);
-                        player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_CHANGED_LOCATION)
+                        player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
                 }
@@ -127,18 +127,18 @@ public class WarpChange extends ICommand {
                 final String targetName = args.length == 3 ? args[2] : null;
 
                 if (targetName == null) {
-                    player.sendMessage(Core.gCore.message.get(IMessage.INVALID_COMMAND_ARGUMENT));
+                    player.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
                     return;
                 }
                 final Player target = Bukkit.getPlayerExact(targetName);
 
                 if (target == null) {
-                    player.sendMessage(Core.gCore.message.get(IMessage.INVALID_PLAYER));
+                    player.sendMessage(Core.gCore.message.get(EMessage.INVALID_PLAYER));
                     return;
                 }
 
                 if (target.equals(player)) {
-                    player.sendMessage(Core.gCore.message.get(IMessage.NEW_OWNER_CANNOT_BE_OLD_OWNER));
+                    player.sendMessage(Core.gCore.message.get(EMessage.NEW_OWNER_CANNOT_BE_OLD_OWNER));
                     return;
                 }
 
@@ -147,7 +147,7 @@ public class WarpChange extends ICommand {
                 @placeholder {warp-previous-owner}
                 @placeholder {warp-new-owner}
                  */
-                player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_CHANGED_WARP_OWNER)
+                player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_WARP_OWNER)
                         , "{warp-previous-owner}", player.getName()
                         , "{warp-new-owner}", target.getName()));
                 /*

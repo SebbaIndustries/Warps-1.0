@@ -2,8 +2,8 @@ package com.sebbaindustries.warps.commands.subs;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
-import com.sebbaindustries.warps.commands.permissions.IPermission;
-import com.sebbaindustries.warps.message.IMessage;
+import com.sebbaindustries.warps.commands.permissions.EPermission;
+import com.sebbaindustries.warps.message.EMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.Warp;
 import com.sebbaindustries.warps.warp.WarpUtils;
@@ -15,7 +15,7 @@ public class WarpDelete extends ICommand {
 
     public WarpDelete() {
         super("delete", "delete [warp]", 1);
-        permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.DELETE);
+        permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.DELETE);
         setPlayerOnly();
     }
 
@@ -29,7 +29,7 @@ public class WarpDelete extends ICommand {
             /*
              * @placeholder warpName = {warp-name}
              */
-            player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.INVALID_WARP), "{warp-name}", name));
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.INVALID_WARP), "{warp-name}", name));
             return;
         }
 
@@ -38,7 +38,7 @@ public class WarpDelete extends ICommand {
             @placeholder warpName = {warp-name}
             @placeholder warpOwner = {warp-owner}
              */
-            player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.NOT_WARP_OWNER)
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.NOT_WARP_OWNER)
                     , "{warp-name}", name
                     , "{warp-owner}", warp.getOwner().getName()));
             return;
@@ -50,13 +50,13 @@ public class WarpDelete extends ICommand {
             @placeholder warpLocation = {warp-location}
             @placeholder warpWorld = {warp-world}
             */
-            player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.SUCCESSFULLY_REMOVED_WARP)
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_REMOVED_WARP)
                     , "{warp-name}", name
                     , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
                     , "{warp-world}", warp.getLocation().getWorld().getName()));
             return;
         }
 
-        player.sendMessage(Core.gCore.message.get(IMessage.FAILED_TO_REMOVE_WARP));
+        player.sendMessage(Core.gCore.message.get(EMessage.FAILED_TO_REMOVE_WARP));
     }
 }

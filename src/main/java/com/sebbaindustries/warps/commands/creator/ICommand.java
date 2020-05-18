@@ -1,6 +1,6 @@
 package com.sebbaindustries.warps.commands.creator;
 
-import com.sebbaindustries.warps.commands.permissions.IPermission;
+import com.sebbaindustries.warps.commands.permissions.EPermission;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -136,21 +136,21 @@ public abstract class ICommand {
      */
     protected static class Permissions {
 
-        private List<IPermission> permissions = new ArrayList<>();
+        private List<EPermission> permissions = new ArrayList<>();
 
         /**
          * @return List of all permission command has
          */
-        public List<IPermission> getPermissions() {
+        public List<EPermission> getPermissions() {
             return permissions;
         }
 
         /**
          * Adds permission to the list <br>
-         * @see IPermission
-         * @param permissions IPermission enums
+         * @see EPermission
+         * @param permissions EPermission enums
          */
-        public void add(IPermission... permissions) {
+        public void add(EPermission... permissions) {
             this.permissions.addAll(Arrays.asList(permissions));
         }
     }

@@ -5,7 +5,7 @@ package com.sebbaindustries.warps.message;
  * @author sebbaindustries
  * @version 1.0
  */
-public enum IMessage {
+public enum EMessage {
 
     NO_PERMISSION(0),
     FAILED_WARP_CREATION(1),
@@ -35,7 +35,7 @@ public enum IMessage {
 
     public Integer ID;
 
-    IMessage(Integer ID) {
+    EMessage(Integer ID) {
         this.ID = ID;
     }
 }

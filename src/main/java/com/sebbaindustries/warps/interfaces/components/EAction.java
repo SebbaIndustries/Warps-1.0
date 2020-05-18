@@ -1,6 +1,6 @@
 package com.sebbaindustries.warps.interfaces.components;
 
-public enum IAction {
+public enum EAction {
 
     WARP("warps"),
     PAGE_NEXT("next-page"),
@@ -11,7 +11,7 @@ public enum IAction {
 
     public String action;
 
-    IAction(String action) {
+    EAction(String action) {
         this.action = action;
     }
 }

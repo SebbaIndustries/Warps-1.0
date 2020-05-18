@@ -1,7 +1,7 @@
 package com.sebbaindustries.warps.interfaces;
 
 import com.sebbaindustries.warps.Core;
-import com.sebbaindustries.warps.interfaces.components.IAction;
+import com.sebbaindustries.warps.interfaces.components.EAction;
 import com.sebbaindustries.warps.interfaces.graphics.GuiItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -67,7 +67,7 @@ public abstract class InterfaceFactory {
                         // Read attributes within message tag
                         if (sReader.getAttributeCount() > 0) {
                             int slot = Integer.parseInt(sReader.getAttributeValue(null, "slot"));
-                            IAction iAction = machIAction(sReader.getAttributeValue(null, "action"));
+                            EAction iAction = machIAction(sReader.getAttributeValue(null, "action"));
                             ItemStack mat = readMaterial(sReader);
                             String display = readDisplay(sReader);
                             String lore = readLore(sReader);
@@ -105,7 +105,7 @@ public abstract class InterfaceFactory {
                             String display = readDisplay(sReader);
                             String lore = readLore(sReader);
                             for (int slot : slots) {
-                                warpsList.add(new GuiItem(IAction.WARP, mat, slot, display, lore));
+                                warpsList.add(new GuiItem(EAction.WARP, mat, slot, display, lore));
                             }
                         }
                     }
@@ -149,11 +149,11 @@ public abstract class InterfaceFactory {
         }
     }
 
-    private IAction machIAction(String action) {
-        for (IAction iAction : IAction.values()) {
+    private EAction machIAction(String action) {
+        for (EAction iAction : EAction.values()) {
             if (iAction.action.equalsIgnoreCase(action)) return iAction;
         }
-        return IAction.NONE;
+        return EAction.NONE;
     }
 
     private int[] getSlots(String slotStr) {

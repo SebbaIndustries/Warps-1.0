@@ -1,7 +1,7 @@
 package com.sebbaindustries.warps.commands.subs;
 
 import com.sebbaindustries.warps.commands.creator.ICommand;
-import com.sebbaindustries.warps.commands.permissions.IPermission;
+import com.sebbaindustries.warps.commands.permissions.EPermission;
 import com.sebbaindustries.warps.warp.components.WarpTeleportationThread;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,7 +11,7 @@ public class SettingsDebug extends ICommand {
 
     public SettingsDebug() {
         super("debug", "debug", 0);
-        permissions().add(IPermission.ROOT);
+        permissions().add(EPermission.ROOT);
     }
 
     @Override

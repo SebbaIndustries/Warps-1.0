@@ -1,6 +1,6 @@
 package com.sebbaindustries.warps.interfaces.graphics;
 
-import com.sebbaindustries.warps.interfaces.components.IAction;
+import com.sebbaindustries.warps.interfaces.components.EAction;
 import org.apache.commons.lang.Validate;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +10,7 @@ public final class GuiItem {
     // The ItemStack of the GuiItem
     private ItemStack itemStack;
     private int slot;
-    private IAction iAction;
+    private EAction iAction;
     private String display;
     private String lore;
 
@@ -18,7 +18,7 @@ public final class GuiItem {
      * constructor with no action
      * @param itemStack The ItemStack to be used
      */
-    public GuiItem(@NotNull final IAction iAction, @NotNull final ItemStack itemStack, final int slot, String display, String lore) {
+    public GuiItem(@NotNull final EAction iAction, @NotNull final ItemStack itemStack, final int slot, String display, String lore) {
         this.itemStack = itemStack;
         this.slot = slot;
         this.display = display;
@@ -50,11 +50,11 @@ public final class GuiItem {
         this.slot = slot;
     }
 
-    public IAction getIAction() {
+    public EAction getIAction() {
         return iAction;
     }
 
-    public void setIAction(IAction iAction) {
+    public void setIAction(EAction iAction) {
         this.iAction = iAction;
     }
 

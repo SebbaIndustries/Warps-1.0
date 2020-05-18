@@ -1,7 +1,7 @@
 package com.sebbaindustries.warps.warp.components;
 
 import com.sebbaindustries.warps.Core;
-import com.sebbaindustries.warps.settings.ISettings;
+import com.sebbaindustries.warps.settings.ESettings;
 import com.sebbaindustries.warps.utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -51,21 +51,21 @@ public class WarpTeleportationThread extends Thread {
     }
 
     private void title() {
-        String titleTop = Color.chat(Core.gCore.settings.get(ISettings.TITLE_TOP)); // Main title
-        String titleSub = Color.chat(Core.gCore.settings.get(ISettings.TITLE_SUB)); // Sub title
-        int fadeout = Core.gCore.settings.getInt(ISettings.TITLE_FADEOUT);
+        String titleTop = Color.chat(Core.gCore.settings.get(ESettings.TITLE_TOP)); // Main title
+        String titleSub = Color.chat(Core.gCore.settings.get(ESettings.TITLE_SUB)); // Sub title
+        int fadeout = Core.gCore.settings.getInt(ESettings.TITLE_FADEOUT);
         try {
-            if (Core.gCore.settings.getBool(ISettings.USE_PROGRESS_BAR)) { // Using progress bar
-                String colorComplete = Color.chat(Core.gCore.settings.get(ISettings.PROGRESS_BAR_COMPLETED_COLOR));
-                String colorNotComplete = Color.chat(Core.gCore.settings.get(ISettings.PROGRESS_BAR_UNCOMPLETED_COLOR));
-                String symbol = Color.chat(Core.gCore.settings.get(ISettings.PROGRESS_BAR_SYMBOL));
-                int length = Core.gCore.settings.getInt(ISettings.PROGRESS_BAR_LENGTH);
+            if (Core.gCore.settings.getBool(ESettings.USE_PROGRESS_BAR)) { // Using progress bar
+                String colorComplete = Color.chat(Core.gCore.settings.get(ESettings.PROGRESS_BAR_COMPLETED_COLOR));
+                String colorNotComplete = Color.chat(Core.gCore.settings.get(ESettings.PROGRESS_BAR_UNCOMPLETED_COLOR));
+                String symbol = Color.chat(Core.gCore.settings.get(ESettings.PROGRESS_BAR_SYMBOL));
+                int length = Core.gCore.settings.getInt(ESettings.PROGRESS_BAR_LENGTH);
                 seconds = seconds * 10; // For Faster clock (progress bar)
                 // nice fade in first title
                 p.sendTitle(
                         titleTop.replace("${time}", getProgressBar(0, seconds, length, symbol, colorComplete, colorNotComplete)),
                         titleSub.replace("${time}", getProgressBar(0, seconds, length, symbol, colorComplete, colorNotComplete)),
-                        Core.gCore.settings.getInt(ISettings.TITLE_FADEIN),
+                        Core.gCore.settings.getInt(ESettings.TITLE_FADEIN),
                         10,
                         0
                 );
@@ -89,7 +89,7 @@ public class WarpTeleportationThread extends Thread {
             p.sendTitle(
                     titleTop.replace("${time}", String.valueOf(df.format(sec))),
                     titleSub.replace("${time}", String.valueOf(df.format(sec))),
-                    Core.gCore.settings.getInt(ISettings.TITLE_FADEIN),
+                    Core.gCore.settings.getInt(ESettings.TITLE_FADEIN),
                     10,
                     0
             );

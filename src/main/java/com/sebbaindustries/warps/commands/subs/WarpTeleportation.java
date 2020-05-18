@@ -2,8 +2,8 @@ package com.sebbaindustries.warps.commands.subs;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
-import com.sebbaindustries.warps.commands.permissions.IPermission;
-import com.sebbaindustries.warps.message.IMessage;
+import com.sebbaindustries.warps.commands.permissions.EPermission;
+import com.sebbaindustries.warps.message.EMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.*;
 import com.sebbaindustries.warps.warp.components.SafetyCheck;
@@ -16,7 +16,7 @@ public class WarpTeleportation extends ICommand {
 
     public WarpTeleportation() {
         super("teleport", "teleport [warp]", 1);
-        permissions().add(IPermission.ROOT, IPermission.COMMANDS, IPermission.TELEPORT);
+        permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.TELEPORT);
         setPlayerOnly();
     }
 
@@ -30,12 +30,12 @@ public class WarpTeleportation extends ICommand {
         Checks if the warp exists
         */
         if (warp == null) {
-            player.sendMessage(Core.gCore.message.get(IMessage.INVALID_WARP));
+            player.sendMessage(Core.gCore.message.get(EMessage.INVALID_WARP));
             return;
         }
 
         if (!warp.getAccessibility() && !warp.getOwner().equals(player)) {
-            player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.PRIVATE_WARP), "{warp-owner}", warp.getOwner().getName()));
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.PRIVATE_WARP), "{warp-owner}", warp.getOwner().getName()));
             return;
         }
 
@@ -45,7 +45,7 @@ public class WarpTeleportation extends ICommand {
         @placeholder {warp-owner}
          */
         if (!SafetyCheck.isLocationSafe(warp.getLocation())) {
-            player.sendMessage(Replace.replaceString(Core.gCore.message.get(IMessage.UNSAFE_TELEPORT_LOCATION)
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.UNSAFE_TELEPORT_LOCATION)
                     , "{warp-owner}", warp.getOwner().getName()));
             return;
         }
@@ -53,7 +53,7 @@ public class WarpTeleportation extends ICommand {
         /*
         TODO: If warp teleportation delay (set in config) is 0 don't send message
          */
-        player.sendMessage(Core.gCore.message.get(IMessage.TELEPORTATION_STARTED));
+        player.sendMessage(Core.gCore.message.get(EMessage.TELEPORTATION_STARTED));
         /*
         TODO: TIMER @Nzd
         */
