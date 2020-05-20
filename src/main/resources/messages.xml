@@ -179,4 +179,9 @@ SOFTWARE.
     <message id="23">
         <msg lang="EN" prefix="true">Successfully removed {warp-name} Warp's description!</msg>
     </message>
+
+    <!-- No warps message -->
+    <message id="24">
+        <msg lang="EN" prefix="true">There is no warps created!</msg>
+    </message>
 </messages>

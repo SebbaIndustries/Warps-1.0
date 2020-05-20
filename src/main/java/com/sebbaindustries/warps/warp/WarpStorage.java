@@ -1,10 +1,11 @@
 package com.sebbaindustries.warps.warp;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class WarpStorage {
 
-    private static HashMap<String, Warp> warpHashMap = new HashMap<>();
+    private Map<String, Warp> warpHashMap = new HashMap<>();
 
     public boolean addWarp(Warp warp) {
         if (getWarp(warp.getName()) != null) return false;
@@ -21,5 +22,7 @@ public class WarpStorage {
     public Warp getWarp(String warpName) {
         return warpHashMap.getOrDefault(warpName, null);
     }
+
+    public Map<String, Warp> getWarpHashMap() { return warpHashMap; }
 
 }

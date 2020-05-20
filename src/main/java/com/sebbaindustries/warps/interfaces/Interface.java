@@ -1,75 +1,48 @@
 package com.sebbaindustries.warps.interfaces;
 
-import com.sebbaindustries.warps.interfaces.components.EAction;
-import com.sebbaindustries.warps.interfaces.graphics.GuiItem;
+import com.sebbaindustries.warps.utils.gui.guis.GuiItem;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class Interface extends InterfaceFactory {
 
-    private static HashMap<Integer, GuiItem> guiInterfaceMap = new HashMap<>();
+    private static Map<Integer, GuiItem> items = new HashMap<>();
+
     private int guiRows;
-    private int guiSize;
     private String display;
     private int warpsPerPage;
+    private ItemStack warpItemStack;
 
     @Override
-    public List<Integer> getWarpSlots() {
-        List<Integer> warpSlots = new ArrayList<>();
-        for (GuiItem item : guiInterfaceMap.values()) {
-            if (item.getIAction() == EAction.WARP) warpSlots.add(item.getSlot());
-        }
-        return warpSlots;
-    }
-
-    @Override
-    public GuiItem getGuiItem(int slot) {
-        return guiInterfaceMap.get(slot);
-    }
-
-    @Override
-    public List<Integer> getBackgroundSlots() {
-        List<Integer> backgroundSlots = new ArrayList<>();
-        for (GuiItem item : guiInterfaceMap.values()) {
-            if (item.getIAction() == EAction.BACKGROUND) backgroundSlots.add(item.getSlot());
-        }
-        return backgroundSlots;
-    }
-
-    @Override
-    public List<Integer> getButtonSlots() {
-        List<Integer> warpSlots = new ArrayList<>();
-        for (GuiItem item : guiInterfaceMap.values()) {
-            if (item.getIAction() == EAction.PAGE_NEXT || item.getIAction() == EAction.PAGE_PREV || item.getIAction() == EAction.NONE) {
-                warpSlots.add(item.getSlot());
-            }
-        }
-        return warpSlots;
+    public void setWarpItemStack() {
+        this.warpItemStack = getWarp();
     }
 
     public void reloadInterface() {
-        guiInterfaceMap.clear();
+        items.clear();
+
+        setWarpItemStack();
+        warpsPerPage = Integer.parseInt(getInterfaceAttributes("warps"));
         guiRows = Integer.parseInt(getInterfaceAttributes("rows"));
-        guiSize = guiRows * 9;
         display = getInterfaceAttributes("display");
+
         ItemStack background = getBackground();
-        for (int i = 0; i < guiSize; i++) {
-            guiInterfaceMap.put(i, new GuiItem(EAction.BACKGROUND, background, i, "", ""));
+        for (int i = 0; i < guiRows * 9; i++) {
+            if (items.get(i) == null) items.put(i, new GuiItem(background));
         }
-        for (GuiItem item : getButtons()) {
-            guiInterfaceMap.put(item.getSlot(), item);
-        }
-        warpsPerPage = 0;
-        for (GuiItem item : getWarps()) {
-            guiInterfaceMap.put(item.getSlot(), item);
-            warpsPerPage++;
+
+        for (Integer slot : getButtons().keySet()) {
+            items.put(slot, getButtons().get(slot));
         }
     }
 
-    public String getDisplay() {
+    public ItemStack getWarpItemStack() {
+        return warpItemStack;
+    }
+
+    public String getMenuDisplay() {
         return display;
     }
 
@@ -77,11 +50,9 @@ public class Interface extends InterfaceFactory {
         return warpsPerPage;
     }
 
-    public int getGuiRows() {
+    public int getMenuRows() {
         return guiRows;
     }
 
-    public int getGuiSize() {
-        return guiSize;
-    }
+    public Map<Integer, GuiItem> getItems() { return items; }
 }

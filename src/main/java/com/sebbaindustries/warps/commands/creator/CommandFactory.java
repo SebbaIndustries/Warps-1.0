@@ -43,7 +43,7 @@ public class CommandFactory implements CommandExecutor {
                 new WarpChange(),
                 new WarpDelete(),
                 new WarpTeleportation(),
-                new WarpsMenu(),
+                new WarpsMenu(core),
                 new WarpRate(),
                 new WarpDescription()
                 /*new SettingsDebug()*/

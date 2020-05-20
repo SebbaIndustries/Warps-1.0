@@ -5,16 +5,25 @@ import com.sebbaindustries.warps.commands.creator.CommandFactory;
 import com.sebbaindustries.warps.interfaces.Interface;
 import com.sebbaindustries.warps.lang.Lang;
 import com.sebbaindustries.warps.message.Message;
-import com.sebbaindustries.warps.utils.FileManager;
 import com.sebbaindustries.warps.settings.Settings;
+import com.sebbaindustries.warps.utils.FileManager;
 import com.sebbaindustries.warps.warp.WarpStorage;
 
 /**
  * <b>This class links entire plugin together</b>
+ *
  * @author sebbaindustries
  * @version 1.0
  */
 public class GlobalCore {
+
+    public final FileManager fileManager;
+    public final Settings settings;
+    public final Lang lang;
+    public final CommandFactory commandFactory;
+    public final WarpStorage warpStorage;
+    public final Message message;
+    public final Interface guiInterface;
 
     public GlobalCore(Core core) {
         // fileManager needs to be initialized first
@@ -27,13 +36,5 @@ public class GlobalCore {
         warpStorage = new WarpStorage();
         guiInterface = new Interface();
     }
-
-    public final FileManager fileManager;
-    public final Settings settings;
-    public final Lang lang;
-    public final CommandFactory commandFactory;
-    public final WarpStorage warpStorage;
-    public final Message message;
-    public final Interface guiInterface;
 
 }

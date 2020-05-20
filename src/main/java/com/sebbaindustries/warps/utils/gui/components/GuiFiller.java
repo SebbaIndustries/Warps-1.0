@@ -1,7 +1,7 @@
 package com.sebbaindustries.warps.utils.gui.components;
 
 import com.sebbaindustries.warps.utils.gui.guis.BaseGui;
-import com.sebbaindustries.warps.interfaces.graphics.GuiItem;
+import com.sebbaindustries.warps.utils.gui.guis.GuiItem;
 import com.sebbaindustries.warps.utils.gui.guis.PaginatedGui;
 import org.jetbrains.annotations.NotNull;
 

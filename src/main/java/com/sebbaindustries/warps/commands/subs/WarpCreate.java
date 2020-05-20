@@ -67,7 +67,7 @@ public class WarpCreate extends ICommand {
                     Core.gCore.message.get(EMessage.SUCCESSFULLY_CREATED_WARP)
                     , "{warp-name}", warp.getName()
                     , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
-                    , "{warp-world}", getWorldString(warp.getLocation().getWorld())));
+                    , "{warp-world}", WarpUtils.getWorldString(warp.getLocation().getWorld())));
             return;
         }
 
@@ -86,10 +86,6 @@ public class WarpCreate extends ICommand {
      */
     private String getReason() {
         return "warp already exists!";
-    }
-
-    private String getWorldString(final World world) {
-        return StringUtils.capitalize(world.getName().toLowerCase());
     }
 
 }

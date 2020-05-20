@@ -1,7 +1,6 @@
 package com.sebbaindustries.warps.utils.gui.guis;
 
 
-import com.sebbaindustries.warps.interfaces.graphics.GuiItem;
 import com.sebbaindustries.warps.utils.gui.components.GuiAction;
 import com.sebbaindustries.warps.utils.gui.components.GuiException;
 import com.sebbaindustries.warps.utils.gui.components.GuiFiller;

@@ -1,6 +1,5 @@
 package com.sebbaindustries.warps.utils.gui.guis;
 
-import com.sebbaindustries.warps.interfaces.graphics.GuiItem;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;

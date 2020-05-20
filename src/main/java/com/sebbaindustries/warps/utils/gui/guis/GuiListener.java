@@ -1,14 +1,11 @@
 package com.sebbaindustries.warps.utils.gui.guis;
 
-import com.sebbaindustries.warps.interfaces.graphics.GuiItem;
 import com.sebbaindustries.warps.utils.gui.components.GuiAction;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
-
-import static com.sebbaindustries.warps.utils.gui.components.ItemNBT.getNBTTag;
 
 public final class GuiListener implements Listener {
 
