@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class WarpDescription extends ICommand {
 
     public WarpDescription() {
-        super("description", "description set/remove [warp] <description>", 2);
+        super("description", "description set/remove [warp] <description>", 1);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.DESCRIPTION);
         setPlayerOnly();
     }
@@ -24,7 +24,7 @@ public class WarpDescription extends ICommand {
     public void execute(@NotNull CommandSender sender, String[] args) {
         final Player player = (Player) sender;
         final String argument = args[0].toLowerCase();
-        final String name = args[1];
+        final String name = args.length >= 2 ? args[1] : player.getName();
         final Warp warp = Core.gCore.warpStorage.getWarp(name);
 
         if (warp == null) {

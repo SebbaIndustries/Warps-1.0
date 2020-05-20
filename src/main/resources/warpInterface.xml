@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<interface rows="5" warps="27" display="§8{type} Warps §2{warp-amount}">
+<interface rows="5" warps="27" display="§8{type} Warps (§2{warp-amount}§8)">
     <pages>
 
-        <warps>
+        <warps slots="10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34">
             <material>DIAMOND</material>
-            <display>{warp-name} Warp</display>
+            <display>§2Warp {warp-name}</display>
             <lore>
+  §8* §bOwner§8: §f{warp-owner}
+  §8* §bStatus§8: {warp-status}
+  §8* §bRating§8: §f{warp-rating}
+  §8* §bLocation§8: §f{warp-location}
+  §8* §bWorld§8: §f{warp-world}
 
-                §8* §bOwner§8: §f{warp-owner}
-                §8* §bStatus§8: §f{warp-status}
+  §8* §bDescription§8: §7{warp-description}
 
-                §8* §bRating§8: §f{warp-rating}
-                §8* §bLocation§8: §f{warp-location} §8-> §f{warp-world}
-
-                §8* §bDescription§8: §7{warp-description}
-
-                §fClick to teleport to this warp.
-
+  §fClick to teleport to this warp.
             </lore>
         </warps>
 
-        <button action="next-page" slot="1">
+        <button action="next-page" slot="41">
             <material>SPECTRAL_ARROW</material>
             <display>§8Next Page</display>
             <lore>$empty</lore>
         </button>
 
-        <button action="previous-page" slot="3">
+        <button action="previous-page" slot="39">
             <material>SPECTRAL_ARROW</material>
             <display>§8Next Page</display>
             <lore>$empty</lore>
         </button>
 
-        <button action="none" slot="4">
+        <button action="none" slot="40">
             <material>KNOWLEDGE_BOOK</material>
             <display>§8Some info tralala</display>
             <lore>info.</lore>

@@ -34,7 +34,7 @@ public class Warp {
 
     private WarpLocation warpLocation;
     private final Map<UUID, Integer> ratings = new HashMap<>();
-    private String description;
+    private String description = "/";
 
     /**
      * Generates random UUID, frosty said that they won't repeat, so :/

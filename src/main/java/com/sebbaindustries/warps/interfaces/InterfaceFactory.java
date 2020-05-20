@@ -70,7 +70,12 @@ public abstract class InterfaceFactory {
                             final ItemMeta meta = button.getItemMeta();
 
                             meta.setDisplayName(display);
-                            meta.setLore(lore);
+
+                            if (!lore.contains("$empty")) {
+                                meta.setLore(lore);
+                            }
+
+                            button.setItemMeta(meta);
 
                             button = ItemNBT.setNBTTag(button, "action", action);
 
@@ -98,6 +103,29 @@ public abstract class InterfaceFactory {
 
     protected String getMenuDisplay() {
         return getInterfaceAttributes("display");
+    }
+
+    List<Integer> getWarpSlots() {
+        final List<Integer> slots = new ArrayList<>();
+        try {
+            XMLInputFactory iFactory = XMLInputFactory.newInstance();
+            XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.warpInterface));
+
+            while (sReader.hasNext()) {
+                sReader.next();
+
+                if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
+                    if (sReader.getLocalName().equalsIgnoreCase("warps")) {
+                        sReader.close();
+                        Arrays.stream(getSlots(sReader.getAttributeValue(null, "slots"))).forEach(slot -> slots.add(slot));
+                    }
+                }
+            }
+        } catch (XMLStreamException | FileNotFoundException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+        return Collections.emptyList();
     }
 
     protected ItemStack getWarp() {
@@ -173,7 +201,7 @@ public abstract class InterfaceFactory {
                 sReader.next();
                 if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
                     if (sReader.getLocalName().equalsIgnoreCase("lore")) {
-                        return Arrays.asList(sReader.getElementText().split("\\n"));
+                        return Arrays.asList(sReader.getElementText().split("\n"));
                     }
                 }
             }

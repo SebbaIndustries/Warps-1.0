@@ -7,6 +7,8 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import static com.sebbaindustries.warps.utils.gui.components.ItemNBT.getNBTTag;
+
 public final class GuiListener implements Listener {
 
     private final Plugin plugin;
@@ -70,7 +72,7 @@ public final class GuiListener implements Listener {
         if (isntGuiItem(event.getCurrentItem(), guiItem)) return;
 
         // Executes the action of the item
-        //guiItem.getAction().execute(event);
+        guiItem.getAction().execute(event);
 
     }
 
@@ -103,7 +105,7 @@ public final class GuiListener implements Listener {
         // GUI
         final BaseGui gui = (BaseGui) event.getInventory().getHolder();
 
-        /* The GUI action for closing */
+        // The GUI action for closing
         final GuiAction<InventoryCloseEvent> closeAction = gui.getCloseGuiAction();
 
         // Checks if there is or not an action set and executes it
@@ -136,12 +138,10 @@ public final class GuiListener implements Listener {
      * @param guiItem     The GUI item in the slot
      * @return Whether it is or not a GUI item
      */
-    @Deprecated
     private boolean isntGuiItem(final ItemStack currentItem, final GuiItem guiItem) {
         if (guiItem == null) return true;
         // Checks whether or not the Item is truly a GUI Item
-        //return !getNBTTag(currentItem, "mf-gui").equals(guiItem.getUuid().toString());
-        return false;
+        return !getNBTTag(currentItem, "mf-gui").equals(guiItem.getUuid().toString());
     }
 
 }

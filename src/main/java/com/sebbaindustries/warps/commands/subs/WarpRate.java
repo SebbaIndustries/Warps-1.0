@@ -3,10 +3,12 @@ package com.sebbaindustries.warps.commands.subs;
 import com.google.common.primitives.Ints;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
+import com.sebbaindustries.warps.commands.events.WarpRateEvent;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
 import com.sebbaindustries.warps.message.EMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.Warp;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +44,10 @@ public class WarpRate extends ICommand {
         }
 
         warp.setRating(player.getUniqueId(), rate);
+
+        // TODO: convert to events
+        //Bukkit.getServer().getPluginManager().callEvent(new WarpRateEvent(player, warp, rate));
+
         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.RATED_WARP)
                 , "{warp-owner}", warp.getOwner().getName()
                 , "{warp-name}", warp.getName()

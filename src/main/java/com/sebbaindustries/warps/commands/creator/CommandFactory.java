@@ -59,7 +59,7 @@ public class CommandFactory implements CommandExecutor {
     /**
      * @param sender  Player or console instance
      * @param command Command class
-     * @param label   todo open gui if label == "warps"
+     * @param label   command label
      * @param args    command arguments
      * @return True ALWAYS FUCKING true, if you change this I quit.
      * @see CommandExecutor
@@ -98,7 +98,7 @@ public class CommandFactory implements CommandExecutor {
         }
 
         // Check if usage is correct (prevents some nasty NPEs)
-        if (cmd.getMinArgs() > Arrays.copyOfRange(args, 1, args.length).length || cmd.getMaxArgs() < Arrays.copyOfRange(args, 1, args.length).length) {
+        if (cmd.getMinArgs() > Arrays.copyOfRange(args, 1, args.length).length) {
             sender.sendMessage(Color.chat("Invalid Usage! Usage /warps " + cmd.getUsage()));
             return true;
         }

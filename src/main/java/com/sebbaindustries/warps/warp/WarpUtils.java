@@ -17,14 +17,14 @@ public class WarpUtils {
     TODO: add config formatter
      */
     public static String getLocationString(final WarpLocation location) {
-        return "Location -> X: " + Math.floor(location.getX()) + ", Y: " + Math.floor(location.getY()) + ", Z: " + Math.floor(location.getZ());
+        return "X: " + Math.floor(location.getX()) + ", Y: " + Math.floor(location.getY()) + ", Z: " + Math.floor(location.getZ());
     }
 
     /*
     TODO: add config formatter
      */
     public static String getBooleanString(final boolean value) {
-        return value ? "True" : "False";
+        return value ? "&aPublic" : "&cPrivate";
     }
 
     /*
