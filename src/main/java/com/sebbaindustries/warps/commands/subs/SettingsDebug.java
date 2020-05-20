@@ -2,6 +2,7 @@ package com.sebbaindustries.warps.commands.subs;
 
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
+import com.sebbaindustries.warps.interfaces.Interface;
 import com.sebbaindustries.warps.warp.components.WarpTeleportationThread;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

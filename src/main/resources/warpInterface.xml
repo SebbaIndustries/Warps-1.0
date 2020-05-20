@@ -20,19 +20,19 @@
             </lore>
         </warps>
 
-        <button action="next-page" slot="50">
+        <button action="next-page" slot="1">
             <material>SPECTRAL_ARROW</material>
             <display>§8Next Page</display>
             <lore>$empty</lore>
         </button>
 
-        <button action="previous-page" slot="48">
+        <button action="previous-page" slot="3">
             <material>SPECTRAL_ARROW</material>
             <display>§8Next Page</display>
             <lore>$empty</lore>
         </button>
 
-        <button action="none" slot="49">
+        <button action="none" slot="4">
             <material>KNOWLEDGE_BOOK</material>
             <display>§8Some info tralala</display>
             <lore>info.</lore>

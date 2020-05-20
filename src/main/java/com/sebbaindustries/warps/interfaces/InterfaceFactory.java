@@ -110,7 +110,6 @@ public abstract class InterfaceFactory {
 
                 if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
                     if (sReader.getLocalName().equalsIgnoreCase("warps")) {
-                        if (sReader.getAttributeCount() > 0) {
                             final Material material = readMaterial(sReader);
                             final String display = readDisplay(sReader);
                             final List<String> lore = readLore(sReader);
@@ -125,7 +124,6 @@ public abstract class InterfaceFactory {
 
                             sReader.close();
                             return item;
-                        }
                     }
                 }
             }

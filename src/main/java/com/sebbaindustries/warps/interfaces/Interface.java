@@ -33,8 +33,9 @@ public class Interface extends InterfaceFactory {
             if (items.get(i) == null) items.put(i, new GuiItem(background));
         }
 
-        for (Integer slot : getButtons().keySet()) {
-            items.put(slot, getButtons().get(slot));
+        Map<Integer, GuiItem> buttons = getButtons();
+        for (Integer slot : buttons.keySet()) {
+            items.put(slot, buttons.get(slot));
         }
     }
 
@@ -55,4 +56,24 @@ public class Interface extends InterfaceFactory {
     }
 
     public Map<Integer, GuiItem> getItems() { return items; }
+
+    /*
+    public void printLog() {
+        System.out.println("PRINT LOG");
+        System.out.println("PRINT LOG");
+        System.out.println("PRINT LOG");
+        System.out.println(" ");
+        System.out.println("Gui rows: " + guiRows);
+        System.out.println("Warps " + warpsPerPage);
+        System.out.println("Display: " + display);
+        System.out.println(" ");
+        System.out.println("Warp item stack " + warpItemStack.getItemMeta().getLore());
+        System.out.println(" ");
+        for (int i = 0; i < guiRows * 9; i++) {
+            System.out.println(items.get(i).getItemStack().getType().toString());
+        }
+    }
+
+     */
+
 }
