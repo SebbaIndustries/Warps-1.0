@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -92,5 +93,18 @@ public class WarpUtils {
         }
 
         return filteredWarps;
+    }
+
+    public static String getStringLister(final List<String> values) {
+        String list = "";
+        for (int i = 0; i < values.size(); i++) {
+            if (i == values.size() - 1) {
+                list = list.concat(values.get(i));
+                continue;
+            }
+            list = list.concat(values.get(i) + ", ");
+        }
+
+        return list;
     }
 }

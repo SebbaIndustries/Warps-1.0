@@ -47,7 +47,8 @@ public class CommandFactory implements CommandExecutor {
                 new WarpTeleportation(),
                 new WarpsMenu(core),
                 new WarpRate(),
-                new WarpDescription()
+                new WarpDescription(),
+                new WarpList()
                 /*new SettingsDebug()*/
                 ).collect(Collectors.toSet());
         // Find "default" command

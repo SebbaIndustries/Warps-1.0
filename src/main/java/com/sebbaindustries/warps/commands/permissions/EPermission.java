@@ -26,7 +26,9 @@ public enum EPermission {
     TELEPORT("warps.command.teleport"),
     MENU("warps.command.menu"),
     RATE("warps.command.rate"),
-    DESCRIPTION("warps.command.rate"),
+    DESCRIPTION("warps.command.description"),
+    LIST("warps.command.list"),
+    LIST_OTHERS("warps.command.list.others"),
     ;
 
     public String permission;

@@ -184,4 +184,14 @@ SOFTWARE.
     <message id="24">
         <msg lang="EN" prefix="true">There is no warps created!</msg>
     </message>
+
+    <!-- Listed warps message -->
+    <message id="25">
+        <msg lang="EN" prefix="false">§8[§b{target-name}'s Warps§8] §f{warp-names}</msg>
+    </message>
+
+    <!-- Target has no warps message -->
+    <message id="26">
+        <msg lang="EN" prefix="true">Target does not have any warps!</msg>
+    </message>
 </messages>
