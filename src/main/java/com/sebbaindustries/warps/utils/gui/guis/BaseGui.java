@@ -134,7 +134,7 @@ public abstract class BaseGui implements InventoryHolder {
      * @return The GUI
      */
     public BaseGui setItem(final int slot, @NotNull final GuiItem guiItem) {
-        if (!isValidSlot(slot)) throw new GuiException("Invalid item slot!");
+        if (!isValidSlot(slot)) throw new GuiException("Invalid item slot! (" + slot + ")");
 
         guiItems.put(slot, guiItem);
 

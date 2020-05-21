@@ -25,7 +25,6 @@ public class Interface extends InterfaceFactory {
      */
     private int selectorRows;
     private String selectorDisplay;
-    private ItemStack selectorBackgroundItemStack;
     private Map<Integer, GuiItem> selectorItems = new HashMap<>();
 
     @Override
@@ -66,7 +65,7 @@ public class Interface extends InterfaceFactory {
         selectorRows = Integer.parseInt(getInterfaceAttributes("selector", "rows"));
         selectorDisplay = getInterfaceAttributes("selector", "display");
 
-        selectorBackgroundItemStack = getBackground();
+        ItemStack selectorBackgroundItemStack = getBackground();
 
         for (int i = 0; i < selectorRows * 9; i++) {
             if (selectorItems.get(i) == null) selectorItems.put(i, new GuiItem(selectorBackgroundItemStack.clone()));
@@ -108,10 +107,6 @@ public class Interface extends InterfaceFactory {
 
     public int getSelectorRows() {
         return selectorRows;
-    }
-
-    public ItemStack getSelectorBackgroundItemStack() {
-        return selectorBackgroundItemStack;
     }
 
     public Map<Integer, GuiItem> getSelectorItems() {
