@@ -28,10 +28,10 @@ public class Interface extends InterfaceFactory {
         items.clear();
 
         setWarpItemStack();
-        warpsPerPage = Integer.parseInt(getInterfaceAttributes("warps"));
         guiRows = Integer.parseInt(getInterfaceAttributes("rows"));
         display = getInterfaceAttributes("display");
-        warpSlots = Arrays.asList(10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34);
+        warpSlots = getWarpSlots();
+        warpsPerPage = warpSlots.size();
 
         backgroundItemStack = getBackground();
 

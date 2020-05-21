@@ -105,8 +105,8 @@ public abstract class InterfaceFactory {
         return getInterfaceAttributes("display");
     }
 
-    List<Integer> getWarpSlots() {
-        final List<Integer> slots = new ArrayList<>();
+    protected List<Integer> getWarpSlots() {
+        List<Integer> slots = new ArrayList<>();
         try {
             XMLInputFactory iFactory = XMLInputFactory.newInstance();
             XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.warpInterface));
@@ -116,8 +116,11 @@ public abstract class InterfaceFactory {
 
                 if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
                     if (sReader.getLocalName().equalsIgnoreCase("warps")) {
-                        sReader.close();
-                        Arrays.stream(getSlots(sReader.getAttributeValue(null, "slots"))).forEach(slot -> slots.add(slot));
+                        if (sReader.getAttributeCount() > 0) {
+                            Arrays.stream(getSlots(sReader.getAttributeValue(null, "slots"))).forEach(slots::add);
+                            sReader.close();
+                            return slots;
+                        }
                     }
                 }
             }

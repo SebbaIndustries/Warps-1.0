@@ -3,6 +3,7 @@ package com.sebbaindustries.warps.warp.components;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.settings.ESettings;
 import com.sebbaindustries.warps.utils.Color;
+import com.sebbaindustries.warps.warp.Warp;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -15,10 +16,25 @@ public class WarpTeleportationThread extends Thread {
 
     private final Player p;
     private int seconds;
+    Location loc;
 
-    public WarpTeleportationThread(Player p) {
+    public WarpTeleportationThread(Player p, Location loc) {
         this.p = p;
         this.seconds = Core.gCore.settings.getWarpSettings(p).getWaitTime() / 20;
+        this.loc = loc;
+    }
+
+    public WarpTeleportationThread(Player p, Warp warp) {
+        this.p = p;
+        this.seconds = Core.gCore.settings.getWarpSettings(p).getWaitTime() / 20;
+        this.loc = new Location(
+                warp.getLocation().getWorld(),
+                warp.getLocation().getX(),
+                warp.getLocation().getY(),
+                warp.getLocation().getZ(),
+                warp.getLocation().getYaw(),
+                warp.getLocation().getPitch()
+        );
     }
 
     private @NotNull String getProgressBar(int current, int max, int totalBars, String symbol,
@@ -45,9 +61,9 @@ public class WarpTeleportationThread extends Thread {
      * Thread Code
      */
     public void run() {
-
         title();
 
+        teleportPlayer(p, loc);
     }
 
     private void title() {
