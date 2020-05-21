@@ -1,10 +1,13 @@
 package com.sebbaindustries.warps.warp;
 
+import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.warp.components.WarpLocation;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class WarpUtils {
@@ -55,5 +58,39 @@ public class WarpUtils {
      */
     public static String getWorldString(final World world) {
         return StringUtils.capitalize(world.getName().toLowerCase());
+    }
+
+    public static String getSplitDescription(final String description) {
+        String[] text = description.split(" ");
+
+        if (text.length < 4) {
+            return description;
+        }
+
+        String newDescription = "";
+
+        for (int i = 0; i < text.length; i++) {
+            if (i == 5) {
+                newDescription = newDescription.concat(text[i] + "\\n ");
+                continue;
+            }
+            newDescription = newDescription.concat(text[i] + " ");
+        }
+
+        return newDescription;
+    }
+
+    public static Map<String, Warp> getFilteredWarps(final Map<String, Warp> warpMap, final String type) {
+        final Map<String, Warp> filteredWarps = new HashMap<>();
+
+        for (String name : warpMap.keySet()) {
+            final Warp warp = Core.gCore.warpStorage.getWarp(name);
+
+            if (warp.getType().toString().equalsIgnoreCase(type)) {
+                filteredWarps.put(name, warp);
+            }
+        }
+
+        return filteredWarps;
     }
 }

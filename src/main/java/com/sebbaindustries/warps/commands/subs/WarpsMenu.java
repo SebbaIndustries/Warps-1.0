@@ -3,9 +3,8 @@ package com.sebbaindustries.warps.commands.subs;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
-import com.sebbaindustries.warps.interfaces.menu.WarpMenu;
-import com.sebbaindustries.warps.message.EMessage;
-import com.sebbaindustries.warps.utils.gui.guis.PaginatedGui;
+import com.sebbaindustries.warps.interfaces.menu.SelectorMenu;
+import com.sebbaindustries.warps.utils.gui.guis.Gui;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -25,12 +24,7 @@ public class WarpsMenu extends ICommand {
 
     @Override
     public void execute(@NotNull CommandSender sender, String[] args) {
-        final PaginatedGui gui = WarpMenu.getWarpMenu(core);
-
-        if (gui == null) {
-            sender.sendMessage(Core.gCore.message.get(EMessage.NO_CREATED_WARPS));
-            return;
-        }
+        final Gui gui = SelectorMenu.getSelectorMenu(core);
 
         gui.open((Player) sender);
     }

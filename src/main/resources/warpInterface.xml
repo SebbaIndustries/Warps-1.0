@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<interface rows="5" display="§8{type} Warps (§2{warp-amount}§8)">
-    <pages>
+<interface>
+    <pages rows="5" display="§8{type} Warps (§2{warp-amount}§8)">
 
         <warps slots="10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34">
             <material>DIAMOND</material>
@@ -39,4 +39,20 @@
         <background material="GRAY_STAINED_GLASS_PANE"/>
 
     </pages>
+    <selector rows="3" display="Warp Selector Menu">
+
+        <button type="server" slot="">
+            <material>DIAMOND_BLOCK</material>
+            <display>§9Server Warps</display>
+            <lore>$empty</lore>
+        </button>
+        <button type="player" slot="">
+            <material>GOLD_BLOCK</material>
+            <display>§2Player Warps</display>
+            <lore>$empty</lore>
+        </button>
+
+        <background material="GRAY_STAINED_GLASS_PANE"/>
+
+    </selector>
 </interface>

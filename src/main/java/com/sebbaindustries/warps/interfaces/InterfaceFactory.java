@@ -18,7 +18,7 @@ public abstract class InterfaceFactory {
 
     public abstract void setWarpItemStack();
 
-    protected String getInterfaceAttributes(String attribute) {
+    String getInterfaceAttributes(String menu, String attribute) {
         try {
             XMLInputFactory iFactory = XMLInputFactory.newInstance();
             XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.warpInterface));
@@ -29,7 +29,7 @@ public abstract class InterfaceFactory {
                 //Check if its 'START_ELEMENT'
                 if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
                     //message tag - opened
-                    if (sReader.getLocalName().equalsIgnoreCase("interface")) {
+                    if (sReader.getLocalName().equalsIgnoreCase(menu)) {
                         // Read attributes within message tag
                         if (sReader.getAttributeCount() > 0) {
                             return sReader.getAttributeValue(null, attribute);
@@ -45,8 +45,50 @@ public abstract class InterfaceFactory {
         return null;
     }
 
-    protected Map<Integer, GuiItem> getButtons() {
-        Map<Integer, GuiItem> buttons = new HashMap<>();
+    Map<Integer, GuiItem> getSelectorButtons() {
+        final Map<Integer, GuiItem> buttons = new HashMap<>();
+        try {
+            XMLInputFactory iFactory = XMLInputFactory.newInstance();
+            XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.warpInterface));
+            while (sReader.hasNext()) {
+                sReader.next();
+
+                if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
+                    if (sReader.getLocalName().equalsIgnoreCase("button")) {
+                        if (sReader.getAttributeCount() > 0) {
+                            final int slot = Integer.parseInt(sReader.getAttributeValue(null, "slot"));
+                            final String type = sReader.getAttributeValue(null, "type");
+                            final Material material = readMaterial(sReader);
+                            final String display = readDisplay(sReader);
+                            final List<String> lore = readLore(sReader);
+
+                            ItemStack button = new ItemStack(material);
+                            final ItemMeta meta = button.getItemMeta();
+
+                            meta.setDisplayName(display);
+
+                            if (!lore.contains("$empty")) {
+                                meta.setLore(lore);
+                            }
+
+                            button.setItemMeta(meta);
+
+                            button = ItemNBT.setNBTTag(button, "type", type);
+                            buttons.put(slot, new GuiItem(button));
+                        }
+                    }
+                }
+            }
+            sReader.close();
+            return buttons;
+        } catch (XMLStreamException | FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    Map<Integer, GuiItem> getButtons() {
+        final Map<Integer, GuiItem> buttons = new HashMap<>();
         try {
             XMLInputFactory iFactory = XMLInputFactory.newInstance();
             XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.warpInterface));
@@ -94,18 +136,18 @@ public abstract class InterfaceFactory {
     }
 
     protected int getWarpsPerPage() {
-        return Integer.parseInt(getInterfaceAttributes("warps"));
+        return Integer.parseInt(getInterfaceAttributes("pages", "warps"));
     }
 
     protected int getMenuRows() {
-        return Integer.parseInt(getInterfaceAttributes("rows"));
+        return Integer.parseInt(getInterfaceAttributes("pages", "rows"));
     }
 
     protected String getMenuDisplay() {
-        return getInterfaceAttributes("display");
+        return getInterfaceAttributes("pages", "display");
     }
 
-    protected List<Integer> getWarpSlots() {
+    List<Integer> getWarpSlots() {
         List<Integer> slots = new ArrayList<>();
         try {
             XMLInputFactory iFactory = XMLInputFactory.newInstance();
@@ -141,20 +183,20 @@ public abstract class InterfaceFactory {
 
                 if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
                     if (sReader.getLocalName().equalsIgnoreCase("warps")) {
-                            final Material material = readMaterial(sReader);
-                            final String display = readDisplay(sReader);
-                            final List<String> lore = readLore(sReader);
+                        final Material material = readMaterial(sReader);
+                        final String display = readDisplay(sReader);
+                        final List<String> lore = readLore(sReader);
 
-                            ItemStack item = new ItemStack(material);
-                            final ItemMeta meta = item.getItemMeta();
+                        ItemStack item = new ItemStack(material);
+                        final ItemMeta meta = item.getItemMeta();
 
-                            meta.setDisplayName(display);
-                            meta.setLore(lore);
+                        meta.setDisplayName(display);
+                        meta.setLore(lore);
 
-                            item.setItemMeta(meta);
+                        item.setItemMeta(meta);
 
-                            sReader.close();
-                            return item;
+                        sReader.close();
+                        return item;
                     }
                 }
             }
@@ -165,7 +207,7 @@ public abstract class InterfaceFactory {
         return new ItemStack(Material.STONE);
     }
 
-    protected ItemStack getBackground() {
+    ItemStack getBackground() {
         try {
             XMLInputFactory iFactory = XMLInputFactory.newInstance();
             XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.warpInterface));

@@ -3,7 +3,6 @@ package com.sebbaindustries.warps.interfaces;
 import com.sebbaindustries.warps.utils.gui.guis.GuiItem;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +11,22 @@ public class Interface extends InterfaceFactory {
 
     private static Map<Integer, GuiItem> items = new HashMap<>();
 
-    private List<Integer> warpSlots;
+    /*
+    Warps Menu
+     */
     private int guiRows;
     private String display;
     private int warpsPerPage;
     private ItemStack warpItemStack;
     private ItemStack backgroundItemStack;
+
+    /*
+    Selector Menu
+     */
+    private int selectorRows;
+    private String selectorDisplay;
+    private ItemStack selectorBackgroundItemStack;
+    private Map<Integer, GuiItem> selectorItems = new HashMap<>();
 
     @Override
     public void setWarpItemStack() {
@@ -27,9 +36,13 @@ public class Interface extends InterfaceFactory {
     public void reloadInterface() {
         items.clear();
 
+        /*
+        Warps Menu
+         */
+        List<Integer> warpSlots;
         setWarpItemStack();
-        guiRows = Integer.parseInt(getInterfaceAttributes("rows"));
-        display = getInterfaceAttributes("display");
+        guiRows = Integer.parseInt(getInterfaceAttributes("pages", "rows"));
+        display = getInterfaceAttributes("pages", "display");
         warpSlots = getWarpSlots();
         warpsPerPage = warpSlots.size();
 
@@ -45,13 +58,33 @@ public class Interface extends InterfaceFactory {
         for (Integer slot : buttons.keySet()) {
             items.put(slot, buttons.get(slot));
         }
+
+        /*
+        Selector Menu
+         */
+
+        selectorRows = Integer.parseInt(getInterfaceAttributes("selector", "rows"));
+        selectorDisplay = getInterfaceAttributes("selector", "display");
+
+        selectorBackgroundItemStack = getBackground();
+
+        for (int i = 0; i < selectorRows * 9; i++) {
+            if (selectorItems.get(i) == null) selectorItems.put(i, new GuiItem(selectorBackgroundItemStack.clone()));
+        }
+
+        Map<Integer, GuiItem> selectorButtons = getSelectorButtons();
+        for (Integer slot : selectorButtons.keySet()) {
+            selectorItems.put(slot, buttons.get(slot));
+        }
     }
 
     public ItemStack getWarpItemStack() {
         return warpItemStack;
     }
 
-    public ItemStack getBackgroundItemStack() { return backgroundItemStack; }
+    public ItemStack getBackgroundItemStack() {
+        return backgroundItemStack;
+    }
 
     public String getMenuDisplay() {
         return display;
@@ -69,22 +102,20 @@ public class Interface extends InterfaceFactory {
         return items;
     }
 
+    public String getSelectorDisplay() {
+        return selectorDisplay;
+    }
 
-    public void printLog() {
-        System.out.println("PRINT LOG");
-        System.out.println("PRINT LOG");
-        System.out.println("PRINT LOG");
-        System.out.println(" ");
-        System.out.println("Gui rows: " + guiRows);
-        System.out.println("Warps " + warpsPerPage);
-        System.out.println("Display: " + display);
-        System.out.println(" ");
-        System.out.println("Warp item stack " + warpItemStack.getItemMeta().getLore());
-        System.out.println(" ");
-        for (int i = 0; i < guiRows * 9; i++) {
-            System.out.println(items.get(i).getItemStack().getType().toString());
-        }
-        System.out.println("Warp Slots: " + warpSlots);
+    public int getSelectorRows() {
+        return selectorRows;
+    }
+
+    public ItemStack getSelectorBackgroundItemStack() {
+        return selectorBackgroundItemStack;
+    }
+
+    public Map<Integer, GuiItem> getSelectorItems() {
+        return selectorItems;
     }
 
 }

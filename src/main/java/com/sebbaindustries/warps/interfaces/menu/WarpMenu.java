@@ -9,6 +9,8 @@ import com.sebbaindustries.warps.utils.gui.guis.GuiItem;
 import com.sebbaindustries.warps.utils.gui.guis.PaginatedGui;
 import com.sebbaindustries.warps.warp.Warp;
 import com.sebbaindustries.warps.warp.WarpUtils;
+import com.sebbaindustries.warps.warp.components.WarpTeleportationThread;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,11 +19,11 @@ import java.util.Map;
 
 public class WarpMenu {
 
-    public static PaginatedGui getWarpMenu(final Core core) {
+    static PaginatedGui getWarpMenu(final Core core, final String type) {
         final Interface iMenu = Core.gCore.guiInterface;
-        final Map<String, Warp> warpMap = Core.gCore.warpStorage.getWarpHashMap();
+        final Map<String, Warp> warpMap = WarpUtils.getFilteredWarps(Core.gCore.warpStorage.getWarpHashMap(), type);
         final PaginatedGui gui = new PaginatedGui(core, iMenu.getMenuRows(), iMenu.getWarpsPerPage(), Replace.replaceString(iMenu.getMenuDisplay()
-                , "{type}", "Player", "{warp-amount}", String.valueOf(Core.gCore.warpStorage.getWarpHashMap().size())));
+                , "{type}", StringUtils.capitalize(type.toLowerCase()), "{warp-amount}", String.valueOf(Core.gCore.warpStorage.getWarpHashMap().size())));
 
         if (warpMap.size() < 1) {
             return null;
@@ -45,7 +47,7 @@ public class WarpMenu {
                         , "{warp-rating}", String.valueOf(WarpUtils.getWarpAverageRating(warp))
                         , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
                         , "{warp-world}", WarpUtils.getWorldString(warp.getLocation().getWorld())
-                        , "{warp-description}", warp.getDescription()
+                        , "{warp-description}", WarpUtils.getSplitDescription(warp.getDescription())
                 ));
             }
 
@@ -56,7 +58,7 @@ public class WarpMenu {
 
                 // If the warp is public, teleport player
                 if (warp.getAccessibility()) {
-                    player.teleport(WarpUtils.convertWarpLocation(warp.getLocation()));
+                    new WarpTeleportationThread(player, WarpUtils.convertWarpLocation(warp.getLocation())).start();
                 }
             }));
         }
@@ -69,16 +71,14 @@ public class WarpMenu {
                 case "next-page":
                     if (gui.getNextPageNum() != gui.getCurrentPageNum()) {
                         gui.setItem(slot, new GuiItem(item, event -> gui.nextPage()));
-                    }
-                    else {
+                    } else {
                         gui.setItem(slot, new GuiItem(iMenu.getBackgroundItemStack()));
                     }
                     break;
                 case "previous-page":
                     if (gui.getPrevPageNum() != gui.getCurrentPageNum()) {
                         gui.setItem(slot, new GuiItem(item, event -> gui.prevPage()));
-                    }
-                    else {
+                    } else {
                         gui.setItem(slot, new GuiItem(iMenu.getBackgroundItemStack()));
                     }
                     break;
