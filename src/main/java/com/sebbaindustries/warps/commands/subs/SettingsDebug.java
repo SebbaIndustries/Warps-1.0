@@ -1,12 +1,14 @@
 package com.sebbaindustries.warps.commands.subs;
 
+import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
-import com.sebbaindustries.warps.interfaces.Interface;
-import com.sebbaindustries.warps.warp.components.WarpTeleportationThread;
+import com.sebbaindustries.warps.warp.Warp;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Iterator;
+import java.util.Map;
 
 public class SettingsDebug extends ICommand {
 
@@ -28,6 +30,6 @@ public class SettingsDebug extends ICommand {
         System.out.println(warpSettings.getPermission());
 
          */
-        new WarpTeleportationThread((Player) sender).start();
+        //new WarpTeleportationThread((Player) sender).start();
     }
 }

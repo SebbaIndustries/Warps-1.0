@@ -4,15 +4,10 @@ import com.sebbaindustries.warps.warp.Warp;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
 
 public class WarpRateEvent extends Event {
 
-    @Override
-    public @NotNull HandlerList getHandlers() {
-        return new HandlerList();
-    }
-
+    private static final HandlerList handlers = new HandlerList();
     private Player rater;
     private Warp rated;
     private int rate;
@@ -23,9 +18,24 @@ public class WarpRateEvent extends Event {
         this.rate = rate;
     }
 
-    public Player getRater() { return rater; }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-    public Warp getRated() { return rated; }
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 
-    public int getRate() { return rate; }
+    public Player getRater() {
+        return rater;
+    }
+
+    public Warp getRated() {
+        return rated;
+    }
+
+    public int getRate() {
+        return rate;
+    }
 }

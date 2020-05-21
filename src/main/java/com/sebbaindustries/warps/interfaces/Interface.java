@@ -17,6 +17,7 @@ public class Interface extends InterfaceFactory {
     private String display;
     private int warpsPerPage;
     private ItemStack warpItemStack;
+    private ItemStack backgroundItemStack;
 
     @Override
     public void setWarpItemStack() {
@@ -32,11 +33,11 @@ public class Interface extends InterfaceFactory {
         display = getInterfaceAttributes("display");
         warpSlots = Arrays.asList(10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34);
 
-        ItemStack background = getBackground();
+        backgroundItemStack = getBackground();
 
         for (int i = 0; i < guiRows * 9; i++) {
             if (!warpSlots.contains(i)) {
-                if (items.get(i) == null) items.put(i, new GuiItem(background));
+                if (items.get(i) == null) items.put(i, new GuiItem(backgroundItemStack.clone()));
             }
         }
 
@@ -49,6 +50,8 @@ public class Interface extends InterfaceFactory {
     public ItemStack getWarpItemStack() {
         return warpItemStack;
     }
+
+    public ItemStack getBackgroundItemStack() { return backgroundItemStack; }
 
     public String getMenuDisplay() {
         return display;

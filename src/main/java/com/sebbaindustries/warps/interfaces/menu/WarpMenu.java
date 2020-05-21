@@ -13,28 +13,31 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Map;
+
 public class WarpMenu {
 
     public static PaginatedGui getWarpMenu(final Core core) {
         final Interface iMenu = Core.gCore.guiInterface;
+        final Map<String, Warp> warpMap = Core.gCore.warpStorage.getWarpHashMap();
         final PaginatedGui gui = new PaginatedGui(core, iMenu.getMenuRows(), iMenu.getWarpsPerPage(), Replace.replaceString(iMenu.getMenuDisplay()
                 , "{type}", "Player", "{warp-amount}", String.valueOf(Core.gCore.warpStorage.getWarpHashMap().size())));
 
-        if (Core.gCore.warpStorage.getWarpHashMap().size() < 1) {
+        if (warpMap.size() < 1) {
             return null;
         }
 
         gui.setDefaultClickAction(e -> e.setCancelled(true));
 
-        for (String name : Core.gCore.warpStorage.getWarpHashMap().keySet()) {
+        for (String name : warpMap.keySet()) {
             final Warp warp = Core.gCore.warpStorage.getWarp(name);
-            ItemStack warpItem = iMenu.getWarpItemStack();
+            ItemStack warpItem = iMenu.getWarpItemStack().clone();
 
             final ItemMeta meta = warpItem.getItemMeta();
 
             if (meta != null) {
                 meta.setDisplayName(Replace.replaceString(meta.getDisplayName()
-                        , "{warp-name}", name));
+                        , "{warp-name}", warp.getName()));
 
                 meta.setLore(Replace.replaceList(meta.getLore()
                         , "{warp-owner}", warp.getOwner().getName()
@@ -53,28 +56,34 @@ public class WarpMenu {
 
                 // If the warp is public, teleport player
                 if (warp.getAccessibility()) {
-                    // Add teleport
+                    player.teleport(WarpUtils.convertWarpLocation(warp.getLocation()));
                 }
             }));
         }
 
         for (Integer slot : iMenu.getItems().keySet()) {
-            final GuiItem item = iMenu.getItems().get(slot);
-            final String action = ItemNBT.getNBTTag(item.getItemStack(), "action");
+            final ItemStack item = iMenu.getItems().get(slot).getItemStack().clone();
+            final String action = ItemNBT.getNBTTag(item, "action");
 
             switch (action) {
                 case "next-page":
-                    if (gui.nextPage()) {
-                        gui.setItem(slot, new GuiItem(item.getItemStack(), event -> gui.nextPage()));
-                        break;
+                    if (gui.getNextPageNum() != gui.getCurrentPageNum()) {
+                        gui.setItem(slot, new GuiItem(item, event -> gui.nextPage()));
                     }
+                    else {
+                        gui.setItem(slot, new GuiItem(iMenu.getBackgroundItemStack()));
+                    }
+                    break;
                 case "previous-page":
-                    if (gui.prevPage()) {
-                        gui.setItem(slot, new GuiItem(item.getItemStack(), event -> gui.prevPage()));
-                        break;
+                    if (gui.getPrevPageNum() != gui.getCurrentPageNum()) {
+                        gui.setItem(slot, new GuiItem(item, event -> gui.prevPage()));
                     }
+                    else {
+                        gui.setItem(slot, new GuiItem(iMenu.getBackgroundItemStack()));
+                    }
+                    break;
                 default:
-                    gui.setItem(slot, item);
+                    gui.setItem(slot, new GuiItem(item));
             }
         }
 

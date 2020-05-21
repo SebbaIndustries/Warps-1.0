@@ -39,8 +39,6 @@ public class WarpTeleportation extends ICommand {
             return;
         }
 
-        final Location loc = WarpUtils.convertWarpLocation(warp.getLocation());
-
         /*
         @placeholder {warp-owner}
          */
@@ -57,6 +55,6 @@ public class WarpTeleportation extends ICommand {
         /*
         TODO: TIMER @Nzd
         */
-        player.teleport(loc);
+        player.teleport(WarpUtils.convertWarpLocation(warp.getLocation()));
     }
 }

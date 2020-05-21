@@ -3,6 +3,8 @@ package com.sebbaindustries.warps.commands.creator;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.subs.*;
 import com.sebbaindustries.warps.utils.Color;
+import com.sebbaindustries.warps.warp.Warp;
+import com.sebbaindustries.warps.warp.WarpUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -76,9 +78,26 @@ public class CommandFactory implements CommandExecutor {
         // Check if first argument equals to any subs
         final Optional<ICommand> optionalCommand = iCommands.stream().filter(cmd -> cmd.getArgument().equalsIgnoreCase(args[0])).findAny();
 
-        // TODO remove this add check for warps here
         if (!optionalCommand.isPresent()) {
-            sender.sendMessage(Color.chat("&cUnknown Command.")); //plugin.getConfig().getString("settings.unknown-command")));
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("You cannot use this through console!");
+                return true;
+            }
+            final Warp warp = Core.gCore.warpStorage.getWarp(args[0]);
+
+            if (warp == null) {
+                sender.sendMessage("Invalid warp!");
+                return true;
+            }
+
+            if (!warp.getAccessibility()) {
+                sender.sendMessage("Private warp");
+                return true;
+            }
+
+            ((Player) sender).teleport(WarpUtils.convertWarpLocation(warp.getLocation()));
+            // teleport player to warp (add safety check)
+
             return true;
         }
 
@@ -87,13 +106,13 @@ public class CommandFactory implements CommandExecutor {
         // Check if console can execute this sub-command
         // TODO add same thing for players
         if (cmd.isPlayerOnly() && !(sender instanceof Player)) {
-            sender.sendMessage(Color.chat("&cThis command can not be executed in console!")); //plugin.getConfig().getString("settings.player-only")));
+            sender.sendMessage(Color.chat("&cThis command can not be executed in console!"));
             return true;
         }
 
         // Check if player has permission to execute this sub-command
         if (!checkPermissions(cmd, sender)) {
-            sender.sendMessage(Color.chat("&cYou do not have permission to execute this command Jimbo.")); // plugin.getConfig().getString("settings.no-permission")));
+            sender.sendMessage(Color.chat("&cYou do not have permission to execute this command Jimbo."));
             return true;
         }
 

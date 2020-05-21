@@ -4,6 +4,7 @@ import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.CommandFactory;
 import com.sebbaindustries.warps.interfaces.Interface;
 import com.sebbaindustries.warps.lang.Lang;
+import com.sebbaindustries.warps.listener.WarpRateListener;
 import com.sebbaindustries.warps.message.Message;
 import com.sebbaindustries.warps.settings.Settings;
 import com.sebbaindustries.warps.utils.FileManager;
@@ -35,6 +36,7 @@ public class GlobalCore {
         commandFactory = new CommandFactory(core);
         warpStorage = new WarpStorage();
         guiInterface = new Interface();
+        core.getServer().getPluginManager().registerEvents(new WarpRateListener(), core);
     }
 
 }
