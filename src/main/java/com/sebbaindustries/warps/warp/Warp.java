@@ -36,6 +36,8 @@ public class Warp {
     private final Map<UUID, Integer> ratings = new HashMap<>();
     private String description = "/";
 
+    private Category category = Category.UNDEFINED;
+
     /**
      * Generates random UUID, frosty said that they won't repeat, so :/
      * @return random UUID
@@ -209,11 +211,34 @@ public class Warp {
     public final void setDescription(final String description) { this.description = description; }
 
     /**
+     * Gets the warps category
+     */
+    public final Category getCategory() { return category; }
+
+    /**
+     * Sets the warps category
+     *
+     * @param category warps new category
+     */
+    public final void setCategory(final Category category) {
+        this.category = category;
+    }
+
+    /**
      * Enum containing types of the warp
      */
     public enum Type {
         SERVER,
         PLAYER,
+        ;
+    }
+
+    public enum Category {
+        SHOP,
+        PVP,
+        MINIGAME,
+        OTHER,
+        UNDEFINED,
         ;
     }
 

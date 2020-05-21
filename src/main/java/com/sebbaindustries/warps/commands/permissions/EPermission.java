@@ -29,6 +29,7 @@ public enum EPermission {
     DESCRIPTION("warps.command.description"),
     LIST("warps.command.list"),
     LIST_OTHERS("warps.command.list.others"),
+    CATEGORY("warps.command.category"),
     ;
 
     public String permission;

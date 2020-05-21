@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
 
-public class WarpMenu {
+class WarpMenu {
 
     static PaginatedGui getWarpMenu(final Core core, final String type) {
         final Interface iMenu = Core.gCore.guiInterface;
@@ -48,6 +48,7 @@ public class WarpMenu {
                         , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
                         , "{warp-world}", WarpUtils.getWorldString(warp.getLocation().getWorld())
                         , "{warp-description}", WarpUtils.getSplitDescription(warp.getDescription())
+                        , "{warp-category}", WarpUtils.getFormattedCategory(warp.getCategory())
                 ));
             }
 

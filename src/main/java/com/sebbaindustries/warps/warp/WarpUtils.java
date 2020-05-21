@@ -61,6 +61,9 @@ public class WarpUtils {
         return StringUtils.capitalize(world.getName().toLowerCase());
     }
 
+    /*
+    Returns a split description with \n (for lore purposes)
+     */
     public static String getSplitDescription(final String description) {
         String[] text = description.split(" ");
 
@@ -81,6 +84,9 @@ public class WarpUtils {
         return newDescription;
     }
 
+    /*
+    Returns a certain type of warp map (ie. SERVER/PLAYER)
+     */
     public static Map<String, Warp> getFilteredWarps(final Map<String, Warp> warpMap, final String type) {
         final Map<String, Warp> filteredWarps = new HashMap<>();
 
@@ -95,6 +101,9 @@ public class WarpUtils {
         return filteredWarps;
     }
 
+    /*
+    Returns a string separated with ,
+     */
     public static String getStringLister(final List<String> values) {
         String list = "";
         for (int i = 0; i < values.size(); i++) {
@@ -106,5 +115,24 @@ public class WarpUtils {
         }
 
         return list;
+    }
+
+    /*
+    Returns a category string
+    TODO: Add config option to customize each one
+     */
+    public static String getFormattedCategory(final Warp.Category category) {
+        switch (category) {
+            case PVP:
+                return "PvP";
+            case SHOP:
+                return "Trgovina";
+            case MINIGAME:
+                return "Miniigre";
+            case OTHER:
+                return "Ostalo";
+            default:
+                return "Nedoloceno";
+        }
     }
 }

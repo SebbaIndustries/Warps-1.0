@@ -194,4 +194,9 @@ SOFTWARE.
     <message id="26">
         <msg lang="EN" prefix="true">Target does not have any warps!</msg>
     </message>
+
+    <!-- Set warps category -->
+    <message id="27">
+        <msg lang="EN" prefix="true">Set {warp-name} Warp's category to {warp-category}</msg>
+    </message>
 </messages>
