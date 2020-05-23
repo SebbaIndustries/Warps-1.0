@@ -6,6 +6,8 @@ import com.sebbaindustries.warps.utils.gui.guis.GuiItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -17,6 +19,100 @@ import java.util.*;
 public abstract class InterfaceFactory {
 
     public abstract void setWarpItemStack();
+
+    /**
+     * READ before use!
+     * getSingleXMLEntry("slots", "interface", "pages", "warps");
+     * 10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34
+     *
+     * getSingleXMLEntry(null, "interface", "pages", "warps", "material");
+     * DIAMOND
+     * @param attribute
+     * @param path
+     * @return
+     */
+    private String getSingleXMLEntry(@Nullable String attribute, @NotNull String... path) {
+        int position = 0;
+        int finalStop = path.clone().length - 1;
+        try {
+            XMLInputFactory iFactory = XMLInputFactory.newInstance();
+            XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.warpInterface));
+            while (sReader.hasNext()) {
+                //Move to next event
+                sReader.next();
+
+                //Check if its 'START_ELEMENT'
+                if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
+
+                    if (sReader.getLocalName().equalsIgnoreCase(path[position])) {
+                        if (finalStop == position) {
+                            if (attribute == null) {
+                                return sReader.getElementText();
+                            }
+                            return sReader.getAttributeValue(null, attribute);
+                        }
+                        position++;
+                    }
+                }
+            }
+            sReader.close();
+        } catch (XMLStreamException | FileNotFoundException e) {
+            e.printStackTrace();
+            return "$ERROR_STACK";
+        }
+        return "$ERROR_NOT_FOUND";
+    }
+
+    /**
+     * READ before use!
+     * getMultipleXMLEntry("action", "interface", "button");
+     * [next-page, previous-page, none]
+     *
+     * getMultipleXMLEntry(null, "interface", "pages", "button", "material");
+     * [SPECTRAL_ARROW, SPECTRAL_ARROW, KNOWLEDGE_BOOK]
+     * @param attribute
+     * @param path
+     * @return
+     */
+    protected List<String> getMultipleXMLEntry(@Nullable String attribute, @NotNull String... path) {
+        int position = 0;
+        int finalStop = path.clone().length - 1;
+        String limiter = path.clone()[finalStop-1];
+        List<String> entries = new ArrayList<>();
+        try {
+            XMLInputFactory iFactory = XMLInputFactory.newInstance();
+            XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.warpInterface));
+            while (sReader.hasNext()) {
+                //Move to next event
+                sReader.next();
+
+                if (sReader.getEventType() == XMLStreamReader.END_ELEMENT) {
+                    if (sReader.getLocalName().equalsIgnoreCase(limiter)) return entries;
+                }
+                //Check if its 'START_ELEMENT'
+                if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
+
+                    if (sReader.getLocalName().equalsIgnoreCase(path[position])) {
+                        if (finalStop == position) {
+                            if (attribute == null) {
+                                entries.add(sReader.getElementText());
+                            } else {
+                                entries.add(sReader.getAttributeValue(null, attribute));
+                            }
+                            position = finalStop;
+                            continue;
+                        }
+                        position++;
+                    }
+                }
+            }
+            sReader.close();
+            return entries;
+        } catch (XMLStreamException | FileNotFoundException e) {
+            e.printStackTrace();
+            return Collections.singletonList("$ERROR_STACK");
+        }
+    }
 
     String getInterfaceAttributes(String menu, String attribute) {
         try {

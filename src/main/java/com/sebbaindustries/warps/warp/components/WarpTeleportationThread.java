@@ -4,6 +4,8 @@ import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.settings.ESettings;
 import com.sebbaindustries.warps.utils.Color;
 import com.sebbaindustries.warps.warp.Warp;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -15,8 +17,8 @@ import java.text.DecimalFormat;
 public class WarpTeleportationThread extends Thread {
 
     private final Player p;
-    private int seconds;
     Location loc;
+    private int seconds;
 
     public WarpTeleportationThread(Player p, Location loc) {
         this.p = p;
@@ -61,7 +63,24 @@ public class WarpTeleportationThread extends Thread {
      * Thread Code
      */
     public void run() {
-        title();
+        switch (Core.gCore.settings.get(ESettings.TELEPORT_METHOD).toLowerCase()) {
+            case "title":
+                title();
+                break;
+            case "actionbar":
+                actionbar();
+                break;
+            case "chat":
+                chat();
+                break;
+            default:
+                int waitTime = seconds * 1000;
+                try {
+                    Thread.sleep(waitTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+        }
 
         teleportPlayer(p, loc);
     }
@@ -127,6 +146,47 @@ public class WarpTeleportationThread extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void actionbar() {
+        try {
+            String text = Core.gCore.settings.get(ESettings.ACTIONBAR_TEXT);
+            if (Core.gCore.settings.getBool(ESettings.USE_PROGRESS_BAR)) {
+                String colorComplete = Color.chat(Core.gCore.settings.get(ESettings.PROGRESS_BAR_COMPLETED_COLOR));
+                String colorNotComplete = Color.chat(Core.gCore.settings.get(ESettings.PROGRESS_BAR_UNCOMPLETED_COLOR));
+                String symbol = Color.chat(Core.gCore.settings.get(ESettings.PROGRESS_BAR_SYMBOL));
+                int length = Core.gCore.settings.getInt(ESettings.PROGRESS_BAR_LENGTH);
+                seconds = seconds * 10;
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                        text.replace("${time}", getProgressBar(0, seconds, length, symbol, colorComplete, colorNotComplete))));
+                Thread.sleep(100);
+                for (int i = 1; i <= seconds; i++) {
+                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                            text.replace("${time}", getProgressBar(i, seconds, length, symbol, colorComplete, colorNotComplete))));
+                    Thread.sleep(100);
+                }
+            } else {
+                double sec = seconds;
+                seconds = seconds * 10;
+                DecimalFormat df = new DecimalFormat("####0.0");
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                        text.replace("${time}", String.valueOf(df.format(sec)))));
+                Thread.sleep(100);
+                for (int i = 1; i <= sec; i++) {
+                    sec -= 0.1;
+                    if (sec <= 0.0) sec = 0.0;
+                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                            text.replace("${time}", String.valueOf(df.format(sec)))));
+                    Thread.sleep(100);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void chat() {
+
     }
 
     private void teleportPlayer(final @NotNull Player p, final @NotNull Location loc) {
