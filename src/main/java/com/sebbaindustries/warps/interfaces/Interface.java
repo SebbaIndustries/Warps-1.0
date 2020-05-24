@@ -67,13 +67,13 @@ public class Interface extends InterfaceFactory {
 
         ItemStack selectorBackgroundItemStack = getBackground();
 
-        for (int i = 0; i < selectorRows * 9; i++) {
-            if (selectorItems.get(i) == null) selectorItems.put(i, new GuiItem(selectorBackgroundItemStack.clone()));
-        }
-
         Map<Integer, GuiItem> selectorButtons = getSelectorButtons();
         for (Integer slot : selectorButtons.keySet()) {
-            selectorItems.put(slot, buttons.get(slot));
+            selectorItems.put(slot, selectorButtons.get(slot));
+        }
+
+        for (int i = 0; i < selectorRows * 9; i++) {
+            if (selectorItems.get(i) == null) selectorItems.put(i, new GuiItem(selectorBackgroundItemStack.clone()));
         }
     }
 

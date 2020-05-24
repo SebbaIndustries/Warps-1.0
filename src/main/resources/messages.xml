@@ -199,4 +199,9 @@ SOFTWARE.
     <message id="27">
         <msg lang="EN" prefix="true">Set {warp-name} Warp's category to {warp-category}</msg>
     </message>
+
+    <!-- No entered category warps -->
+    <message id="28">
+        <msg lang="EN" prefix="true">There is no {warp-category} Warps!</msg>
+    </message>
 </messages>

@@ -3,6 +3,7 @@ package com.sebbaindustries.warps.interfaces;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.utils.gui.components.ItemNBT;
 import com.sebbaindustries.warps.utils.gui.guis.GuiItem;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -24,14 +25,15 @@ public abstract class InterfaceFactory {
      * READ before use!
      * getSingleXMLEntry("slots", "interface", "pages", "warps");
      * 10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34
-     *
+     * <p>
      * getSingleXMLEntry(null, "interface", "pages", "warps", "material");
      * DIAMOND
+     *
      * @param attribute
      * @param path
      * @return
      */
-    private String getSingleXMLEntry(@Nullable String attribute, @NotNull String... path) {
+    String getSingleXMLEntry(@Nullable String attribute, @NotNull String... path) {
         int position = 0;
         int finalStop = path.clone().length - 1;
         try {
@@ -67,17 +69,18 @@ public abstract class InterfaceFactory {
      * READ before use!
      * getMultipleXMLEntry("action", "interface", "button");
      * [next-page, previous-page, none]
-     *
+     * <p>
      * getMultipleXMLEntry(null, "interface", "pages", "button", "material");
      * [SPECTRAL_ARROW, SPECTRAL_ARROW, KNOWLEDGE_BOOK]
+     *
      * @param attribute
      * @param path
      * @return
      */
-    protected List<String> getMultipleXMLEntry(@Nullable String attribute, @NotNull String... path) {
+    private List<String> getMultipleXMLEntry(@Nullable String attribute, @NotNull String... path) {
         int position = 0;
         int finalStop = path.clone().length - 1;
-        String limiter = path.clone()[finalStop-1];
+        String limiter = path.clone()[finalStop - 1];
         List<String> entries = new ArrayList<>();
         try {
             XMLInputFactory iFactory = XMLInputFactory.newInstance();
@@ -142,45 +145,31 @@ public abstract class InterfaceFactory {
     }
 
     Map<Integer, GuiItem> getSelectorButtons() {
-        final Map<Integer, GuiItem> buttons = new HashMap<>();
-        try {
-            XMLInputFactory iFactory = XMLInputFactory.newInstance();
-            XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.warpInterface));
-            while (sReader.hasNext()) {
-                sReader.next();
+        final Map<Integer, GuiItem> items = new HashMap<>();
+        final List<String> materials = getMultipleXMLEntry(null, "interface", "selector", "button", "material");
+        final List<String> slots = getMultipleXMLEntry("slot", "interface", "selector", "button");
+        final List<String> types = getMultipleXMLEntry("type", "interface", "selector", "button");
+        final List<String> displays = getMultipleXMLEntry(null, "interface", "selector", "button", "display");
+        final List<String> lores = getMultipleXMLEntry(null, "interface", "selector", "button", "lore");
 
-                if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
-                    if (sReader.getLocalName().equalsIgnoreCase("button")) {
-                        if (sReader.getAttributeCount() > 0) {
-                            final int slot = Integer.parseInt(sReader.getAttributeValue(null, "slot"));
-                            final String type = sReader.getAttributeValue(null, "type");
-                            final Material material = readMaterial(sReader);
-                            final String display = readDisplay(sReader);
-                            final List<String> lore = readLore(sReader);
+        for (int i = 0; i < materials.size(); i++) {
+            final Material material = Material.matchMaterial(materials.get(i));
+            Validate.notNull(material);
 
-                            ItemStack button = new ItemStack(material);
-                            final ItemMeta meta = button.getItemMeta();
+            ItemStack item = new ItemStack(material);
+            final ItemMeta meta = item.getItemMeta();
 
-                            meta.setDisplayName(display);
+            meta.setDisplayName(displays.get(i));
+            meta.setLore(Arrays.asList(lores.get(i).split("\n")));
 
-                            if (!lore.contains("$empty")) {
-                                meta.setLore(lore);
-                            }
+            item.setItemMeta(meta);
 
-                            button.setItemMeta(meta);
+            item = ItemNBT.setNBTTag(item, "type", types.get(i));
 
-                            button = ItemNBT.setNBTTag(button, "type", type);
-                            buttons.put(slot, new GuiItem(button));
-                        }
-                    }
-                }
-            }
-            sReader.close();
-            return buttons;
-        } catch (XMLStreamException | FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
+            items.put(Integer.parseInt(slots.get(i)), new GuiItem(item));
         }
+
+        return items;
     }
 
     Map<Integer, GuiItem> getButtons() {

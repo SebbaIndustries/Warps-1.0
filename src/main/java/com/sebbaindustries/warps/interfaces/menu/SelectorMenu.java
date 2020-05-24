@@ -16,6 +16,8 @@ public class SelectorMenu {
         final Interface iMenu = Core.gCore.guiInterface;
         final Gui gui = new Gui(core, iMenu.getSelectorRows(), iMenu.getSelectorDisplay());
 
+        gui.setDefaultClickAction(e -> e.setCancelled(true));
+
         for (Integer slot : iMenu.getSelectorItems().keySet()) {
             final ItemStack item = iMenu.getSelectorItems().get(slot).getItemStack().clone();
             final String type = ItemNBT.getNBTTag(item, "type");

@@ -64,6 +64,11 @@ public class WarpCategory extends ICommand {
             }
         });
 
+        if (categoryWarps.isEmpty()) {
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.NO_CATEGORY_WARPS), "{warp-category}", WarpUtils.getFormattedCategory(category)));
+            return;
+        }
+
         // Add category menu
         player.sendMessage(WarpUtils.getStringLister(categoryWarps));
     }
