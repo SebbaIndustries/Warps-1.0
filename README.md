@@ -9,6 +9,7 @@ Java Docs: <a href="https://github.com/SebbaIndustries/JavaDocs">github.com/Sebb
 Developers: `SebbaIndustries`, `Frcsty` <br>
 Build: <br>
 ![Java CI with Maven](https://github.com/SebbaIndustries/Warps/workflows/Java%20CI%20with%20Maven/badge.svg)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 
 ## Licence
 <b>MIT License</b><br>
