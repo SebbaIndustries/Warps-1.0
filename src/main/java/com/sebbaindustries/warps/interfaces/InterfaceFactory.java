@@ -80,7 +80,7 @@ public abstract class InterfaceFactory {
     private List<String> getMultipleXMLEntry(@Nullable String attribute, @NotNull String... path) {
         int position = 0;
         int finalStop = path.clone().length - 1;
-        String limiter = path.clone()[finalStop - 1];
+        String limiter = path.clone()[finalStop - 2];
         List<String> entries = new ArrayList<>();
         try {
             XMLInputFactory iFactory = XMLInputFactory.newInstance();
@@ -89,9 +89,6 @@ public abstract class InterfaceFactory {
                 //Move to next event
                 sReader.next();
 
-                if (sReader.getEventType() == XMLStreamReader.END_ELEMENT) {
-                    if (sReader.getLocalName().equalsIgnoreCase(limiter)) return entries;
-                }
                 //Check if its 'START_ELEMENT'
                 if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
 
@@ -107,6 +104,9 @@ public abstract class InterfaceFactory {
                         }
                         position++;
                     }
+                }
+                if (sReader.getEventType() == XMLStreamReader.END_ELEMENT) {
+                    if (sReader.getLocalName().equalsIgnoreCase(limiter)) return entries;
                 }
             }
             sReader.close();
@@ -145,12 +145,12 @@ public abstract class InterfaceFactory {
     }
 
     Map<Integer, GuiItem> getSelectorButtons() {
-        final Map<Integer, GuiItem> items = new HashMap<>();
-        final List<String> materials = getMultipleXMLEntry(null, "interface", "selector", "button", "material");
-        final List<String> slots = getMultipleXMLEntry("slot", "interface", "selector", "button");
-        final List<String> types = getMultipleXMLEntry("type", "interface", "selector", "button");
-        final List<String> displays = getMultipleXMLEntry(null, "interface", "selector", "button", "display");
-        final List<String> lores = getMultipleXMLEntry(null, "interface", "selector", "button", "lore");
+        Map<Integer, GuiItem> items = new HashMap<>();
+        List<String> materials = getMultipleXMLEntry(null, "interface", "selector", "button", "material");
+        List<String> slots = getMultipleXMLEntry("slot", "interface", "selector", "button");
+        List<String> types = getMultipleXMLEntry("type", "interface", "selector", "button");
+        List<String> displays = getMultipleXMLEntry(null, "interface", "selector", "button", "display");
+        List<String> lores = getMultipleXMLEntry(null, "interface", "selector", "button", "lore");
 
         for (int i = 0; i < materials.size(); i++) {
             final Material material = Material.matchMaterial(materials.get(i));

@@ -81,8 +81,8 @@ public class Warp {
      * @param yaw Yaw coordinate
      * @param pitch Pitch coordinate
      */
-    public Warp(final @NotNull Type type, final @NotNull Player owner, final String name
-                , final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
+    public Warp(final @NotNull Type type, final @NotNull Player owner, final String name,
+                final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
         this.ID = generateID();
 
         this.type = type;
