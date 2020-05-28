@@ -9,6 +9,7 @@ import com.sebbaindustries.warps.utils.gui.guis.GuiItem;
 import com.sebbaindustries.warps.utils.gui.guis.PaginatedGui;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class SelectorMenu {
 
@@ -34,8 +35,14 @@ public class SelectorMenu {
                             player.sendMessage(Core.gCore.message.get(EMessage.NO_CREATED_WARPS));
                             return;
                         }
+                        player.closeInventory();
 
-                        menu.open(player);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                menu.open(player);
+                            }
+                        }.runTaskLater(core, 5);
                     }));
                     break;
                 default:

@@ -41,7 +41,7 @@
     </pages>
     <selector rows="3" display="Warp Selector Menu">
 
-        <button type="server" slot="13">
+        <button type="server" slot="11">
             <material>DIAMOND_BLOCK</material>
             <display>§9Server Warps</display>
             <lore>$empty</lore>

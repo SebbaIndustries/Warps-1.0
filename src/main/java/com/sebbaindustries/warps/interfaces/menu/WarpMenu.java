@@ -23,7 +23,7 @@ class WarpMenu {
         final Interface iMenu = Core.gCore.guiInterface;
         final Map<String, Warp> warpMap = WarpUtils.getFilteredWarps(Core.gCore.warpStorage.getWarpHashMap(), type);
         final PaginatedGui gui = new PaginatedGui(core, iMenu.getMenuRows(), iMenu.getWarpsPerPage(), Replace.replaceString(iMenu.getMenuDisplay()
-                , "{type}", StringUtils.capitalize(type.toLowerCase()), "{warp-amount}", String.valueOf(Core.gCore.warpStorage.getWarpHashMap().size())));
+                , "{type}", StringUtils.capitalize(type.toLowerCase()), "{warp-amount}", String.valueOf(warpMap.size())));
 
         if (warpMap.size() < 1) {
             return null;
@@ -66,6 +66,7 @@ class WarpMenu {
 
         for (Integer slot : iMenu.getItems().keySet()) {
             final ItemStack item = iMenu.getItems().get(slot).getItemStack().clone();
+            System.out.println("Slot: " + slot + ", Item: " + item.getType());
             final String action = ItemNBT.getNBTTag(item, "action");
 
             switch (action) {
