@@ -102,6 +102,23 @@ public class WarpUtils {
     }
 
     /*
+    Returns a map of specified category warps
+     */
+    public static Map<String, Warp> getCategoryFilteredWarps(final Map<String, Warp> warpMap, final Warp.Category category) {
+        final Map<String, Warp> categoryFilteredWarps = new HashMap<>();
+
+        for (String name : warpMap.keySet()) {
+            final Warp warp = Core.gCore.warpStorage.getWarp(name);
+
+            if (warp.getCategory() == category) {
+                categoryFilteredWarps.put(name, warp);
+            }
+        }
+
+        return categoryFilteredWarps;
+    }
+
+    /*
     Returns a string separated with ,
      */
     public static String getStringLister(final List<String> values) {

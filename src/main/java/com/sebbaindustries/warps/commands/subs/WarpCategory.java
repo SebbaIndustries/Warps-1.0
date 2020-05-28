@@ -3,24 +3,26 @@ package com.sebbaindustries.warps.commands.subs;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
+import com.sebbaindustries.warps.interfaces.menu.CategoryMenu;
 import com.sebbaindustries.warps.message.EMessage;
 import com.sebbaindustries.warps.utils.Replace;
+import com.sebbaindustries.warps.utils.gui.guis.PaginatedGui;
 import com.sebbaindustries.warps.warp.Warp;
 import com.sebbaindustries.warps.warp.WarpUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 public class WarpCategory extends ICommand {
 
-    public WarpCategory() {
+    private final Core core;
+
+    public WarpCategory(final Core core) {
         super("category", "category [category/set] (warp) <category>", 0);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.CATEGORY);
         setPlayerOnly();
+
+        this.core = core;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class WarpCategory extends ICommand {
         final String argument = args.length >= 1 ? args[0].toLowerCase() : null;
 
         if (argument == null) {
-            // Invalid input
+            player.sendMessage(Core.gCore.message.get(EMessage.INVALID_CATEGORY));
             return;
         }
 
@@ -54,22 +56,14 @@ public class WarpCategory extends ICommand {
             return;
         }
 
-        final Warp.Category category = args.length == 2 ? Warp.Category.valueOf(args[1].toUpperCase()) : Warp.Category.UNDEFINED;
-        final List<String> categoryWarps = new ArrayList<>();
-        final Map<String, Warp> warpMap = Core.gCore.warpStorage.getWarpHashMap();
+        final Warp.Category category = args.length == 1 ? Warp.Category.valueOf(args[0].toUpperCase()) : Warp.Category.UNDEFINED;
+        final PaginatedGui categoryMenu = CategoryMenu.getCategoryWarpMenu(core, category);
 
-        warpMap.forEach((name, warp) -> {
-            if (warp.getCategory().equals(category)) {
-                categoryWarps.add(name);
-            }
-        });
-
-        if (categoryWarps.isEmpty()) {
-            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.NO_CATEGORY_WARPS), "{warp-category}", WarpUtils.getFormattedCategory(category)));
+        if (categoryMenu == null) {
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.NO_CATEGORY_WARPS), "{warp-category}", argument));
             return;
         }
 
-        // Add category menu
-        player.sendMessage(WarpUtils.getStringLister(categoryWarps));
+        categoryMenu.open(player);
     }
 }

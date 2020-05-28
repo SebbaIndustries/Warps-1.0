@@ -204,4 +204,9 @@ SOFTWARE.
     <message id="28">
         <msg lang="EN" prefix="true">There is no {warp-category} Warps!</msg>
     </message>
+
+    <!-- Invalid entered category -->
+    <message id="29">
+        <msg lang="EN" prefix="true">Invalid category selected!</msg>
+    </message>
 </messages>

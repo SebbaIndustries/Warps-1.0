@@ -36,6 +36,7 @@ public enum EMessage {
     TARGET_IS_WITHOUT_WARPS(26),
     SET_WARP_CATEGORY(27),
     NO_CATEGORY_WARPS(28),
+    INVALID_CATEGORY(29),
     ;
 
     public Integer ID;
