@@ -17,7 +17,7 @@ public class Message extends MessageFactory {
     /**
      * Gets specified message from the hashmap, returns error if message does not exist <br>
      * @see EMessage
-     * @param eMessage Enum for messages
+     * @param eMessage EnumCheck for messages
      * @return Translated message
      */
     @Override

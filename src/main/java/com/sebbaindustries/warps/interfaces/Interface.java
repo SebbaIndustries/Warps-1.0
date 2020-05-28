@@ -53,7 +53,7 @@ public class Interface extends InterfaceFactory {
             }
         }
 
-        Map<Integer, GuiItem> buttons = getButtons();
+        Map<Integer, GuiItem> buttons = getButtons("pages");
         for (Integer slot : buttons.keySet()) {
             items.put(slot, buttons.get(slot));
         }
@@ -67,7 +67,7 @@ public class Interface extends InterfaceFactory {
 
         ItemStack selectorBackgroundItemStack = getBackground();
 
-        Map<Integer, GuiItem> selectorButtons = getSelectorButtons();
+        Map<Integer, GuiItem> selectorButtons = getButtons("selector");
         for (Integer slot : selectorButtons.keySet()) {
             selectorItems.put(slot, selectorButtons.get(slot));
         }

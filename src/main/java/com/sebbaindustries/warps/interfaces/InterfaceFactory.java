@@ -29,9 +29,9 @@ public abstract class InterfaceFactory {
      * getSingleXMLEntry(null, "interface", "pages", "warps", "material");
      * DIAMOND
      *
-     * @param attribute
-     * @param path
-     * @return
+     * @param attribute given attribute
+     * @param path given paths
+     * @return returns a string of retrieved value
      */
     String getSingleXMLEntry(@Nullable String attribute, @NotNull String... path) {
         int position = 0;
@@ -73,9 +73,9 @@ public abstract class InterfaceFactory {
      * getMultipleXMLEntry(null, "interface", "pages", "button", "material");
      * [SPECTRAL_ARROW, SPECTRAL_ARROW, KNOWLEDGE_BOOK]
      *
-     * @param attribute
-     * @param path
-     * @return
+     * @param attribute given attribute
+     * @param path given paths
+     * @return returns a list of retrieved values
      */
     private List<String> getMultipleXMLEntry(@Nullable String attribute, @NotNull String... path) {
         int position = 0;
@@ -144,13 +144,13 @@ public abstract class InterfaceFactory {
         return null;
     }
 
-    Map<Integer, GuiItem> getSelectorButtons() {
+    Map<Integer, GuiItem> getButtons(final String sub) {
         Map<Integer, GuiItem> items = new HashMap<>();
-        List<String> materials = getMultipleXMLEntry(null, "interface", "selector", "button", "material");
-        List<String> slots = getMultipleXMLEntry("slot", "interface", "selector", "button");
-        List<String> types = getMultipleXMLEntry("type", "interface", "selector", "button");
-        List<String> displays = getMultipleXMLEntry(null, "interface", "selector", "button", "display");
-        List<String> lores = getMultipleXMLEntry(null, "interface", "selector", "button", "lore");
+        List<String> materials = getMultipleXMLEntry(null, "interface", sub, "button", "material");
+        List<String> slots = getMultipleXMLEntry("slot", "interface", sub, "button");
+        List<String> types = getMultipleXMLEntry("type", "interface", sub, "button");
+        List<String> displays = getMultipleXMLEntry(null, "interface", sub, "button", "display");
+        List<String> lores = getMultipleXMLEntry(null, "interface", sub, "button", "lore");
 
         for (int i = 0; i < materials.size(); i++) {
             final Material material = Material.matchMaterial(materials.get(i));
@@ -159,8 +159,12 @@ public abstract class InterfaceFactory {
             ItemStack item = new ItemStack(material);
             final ItemMeta meta = item.getItemMeta();
 
-            meta.setDisplayName(displays.get(i));
-            meta.setLore(Arrays.asList(lores.get(i).split("\n")));
+            if (!displays.get(i).contains("$empty")) {
+                meta.setDisplayName(displays.get(i));
+            }
+            if (!lores.get(i).contains("$empty")) {
+                meta.setLore(Arrays.asList(lores.get(i).split("\n")));
+            }
 
             item.setItemMeta(meta);
 
@@ -170,54 +174,6 @@ public abstract class InterfaceFactory {
         }
 
         return items;
-    }
-
-    Map<Integer, GuiItem> getButtons() {
-        final Map<Integer, GuiItem> buttons = new HashMap<>();
-        try {
-            XMLInputFactory iFactory = XMLInputFactory.newInstance();
-            XMLStreamReader sReader = iFactory.createXMLStreamReader(new FileReader(Core.gCore.fileManager.warpInterface));
-            while (sReader.hasNext()) {
-                //Move to next event
-                sReader.next();
-
-                //Check if its 'START_ELEMENT'
-                if (sReader.getEventType() == XMLStreamReader.START_ELEMENT) {
-                    //message tag - opened
-                    if (sReader.getLocalName().equalsIgnoreCase("button")) {
-                        // Read attributes within message tag
-                        if (sReader.getAttributeCount() > 0) {
-                            final int slot = Integer.parseInt(sReader.getAttributeValue(null, "slot"));
-                            final String action = sReader.getAttributeValue(null, "action");
-                            final Material material = readMaterial(sReader);
-                            final String display = readDisplay(sReader);
-                            final List<String> lore = readLore(sReader);
-
-                            ItemStack button = new ItemStack(material);
-                            final ItemMeta meta = button.getItemMeta();
-
-                            meta.setDisplayName(display);
-
-                            if (!lore.contains("$empty")) {
-                                meta.setLore(lore);
-                            }
-
-                            button.setItemMeta(meta);
-
-                            button = ItemNBT.setNBTTag(button, "action", action);
-
-                            buttons.put(slot, new GuiItem(button));
-                        }
-                    }
-                }
-            }
-            sReader.close();
-            // Tag or attribute not found
-            return buttons;
-        } catch (XMLStreamException | FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     protected int getWarpsPerPage() {

@@ -66,7 +66,6 @@ class WarpMenu {
 
         for (Integer slot : iMenu.getItems().keySet()) {
             final ItemStack item = iMenu.getItems().get(slot).getItemStack().clone();
-            System.out.println("Slot: " + slot + ", Item: " + item.getType());
             final String action = ItemNBT.getNBTTag(item, "action");
 
             switch (action) {

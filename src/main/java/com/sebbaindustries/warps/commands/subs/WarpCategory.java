@@ -5,6 +5,7 @@ import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
 import com.sebbaindustries.warps.interfaces.menu.CategoryMenu;
 import com.sebbaindustries.warps.message.EMessage;
+import com.sebbaindustries.warps.utils.EnumCheck;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.utils.gui.guis.PaginatedGui;
 import com.sebbaindustries.warps.warp.Warp;
@@ -56,7 +57,12 @@ public class WarpCategory extends ICommand {
             return;
         }
 
-        final Warp.Category category = args.length == 1 ? Warp.Category.valueOf(args[0].toUpperCase()) : Warp.Category.UNDEFINED;
+        if (!EnumCheck.isValid(Warp.Category.class, args[0].toUpperCase())) {
+            player.sendMessage(Core.gCore.message.get(EMessage.INVALID_CATEGORY));
+            return;
+        }
+
+        final Warp.Category category = Warp.Category.valueOf(args[0].toUpperCase());
         final PaginatedGui categoryMenu = CategoryMenu.getCategoryWarpMenu(core, category);
 
         if (categoryMenu == null) {

@@ -14,7 +14,7 @@ import java.util.UUID;
  * <b>Warp data type, containing all information about warp</b><br>
  * ID of the warp - ID<br>
  * Name of the warp - name<br>
- * Type of the warp - Enum Type<br>
+ * Type of the warp - EnumCheck Type<br>
  * Location of the warp - WarpLocation Class<br>
  * Owner of the warp - owner<br>
  * Warp accessibility - accessibility<br>
@@ -225,7 +225,7 @@ public class Warp {
     }
 
     /**
-     * Enum containing types of the warp
+     * EnumCheck containing types of the warp
      */
     public enum Type {
         SERVER,
