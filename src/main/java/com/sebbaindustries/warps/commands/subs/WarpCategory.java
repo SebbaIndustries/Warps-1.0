@@ -53,6 +53,7 @@ public class WarpCategory extends ICommand {
             }
 
             warp.setCategory(category);
+            Core.gCore.warpStorage.addWarp(warp);
             player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SET_WARP_CATEGORY), "{warp-category}", WarpUtils.getFormattedCategory(category), "{warp-name}", name));
             return;
         }

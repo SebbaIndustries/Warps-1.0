@@ -15,12 +15,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
+import java.util.SortedMap;
 
 public class CategoryMenu {
 
     public static PaginatedGui getCategoryWarpMenu(final Core core, final Warp.Category category) {
         final Interface iMenu = Core.gCore.guiInterface;
-        final Map<String, Warp> warpMap = WarpUtils.getCategoryFilteredWarps(Core.gCore.warpStorage.getWarpHashMap(), category);
+        final SortedMap<String, Warp> warpMap = WarpUtils.getCategoryFilteredWarps(Core.gCore.warpStorage.getWarpHashMap(), category);
         final PaginatedGui gui = new PaginatedGui(core, iMenu.getMenuRows(), iMenu.getWarpsPerPage(), Replace.replaceString(iMenu.getMenuDisplay()
                 , "{type}", WarpUtils.getFormattedCategory(category), "{warp-amount}", String.valueOf(warpMap.size())));
 

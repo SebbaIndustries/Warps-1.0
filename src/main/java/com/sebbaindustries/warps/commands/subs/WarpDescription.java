@@ -61,6 +61,6 @@ public class WarpDescription extends ICommand {
             default:
                 player.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
         }
-
+        Core.gCore.warpStorage.addWarp(warp);
     }
 }

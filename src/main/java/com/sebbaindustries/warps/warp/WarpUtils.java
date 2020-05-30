@@ -6,10 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class WarpUtils {
 
@@ -87,8 +84,8 @@ public class WarpUtils {
     /*
     Returns a certain type of warp map (ie. SERVER/PLAYER)
      */
-    public static Map<String, Warp> getFilteredWarps(final Map<String, Warp> warpMap, final String type) {
-        final Map<String, Warp> filteredWarps = new HashMap<>();
+    public static SortedMap<String, Warp> getFilteredWarps(final Map<String, Warp> warpMap, final String type) {
+        final SortedMap<String, Warp> filteredWarps = new TreeMap<>();
 
         for (String name : warpMap.keySet()) {
             final Warp warp = Core.gCore.warpStorage.getWarp(name);
@@ -104,8 +101,8 @@ public class WarpUtils {
     /*
     Returns a map of specified category warps
      */
-    public static Map<String, Warp> getCategoryFilteredWarps(final Map<String, Warp> warpMap, final Warp.Category category) {
-        final Map<String, Warp> categoryFilteredWarps = new HashMap<>();
+    public static SortedMap<String, Warp> getCategoryFilteredWarps(final Map<String, Warp> warpMap, final Warp.Category category) {
+        final SortedMap<String, Warp> categoryFilteredWarps = new TreeMap<>();
 
         for (String name : warpMap.keySet()) {
             final Warp warp = Core.gCore.warpStorage.getWarp(name);

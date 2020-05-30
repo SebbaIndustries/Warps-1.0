@@ -18,6 +18,7 @@ public class WarpRateListener implements Listener {
         final int rate = event.getRate();
 
         rated.setRating(rater.getUniqueId(), rate);
+        Core.gCore.warpStorage.addWarp(rated);
         rater.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.RATED_WARP)
                 , "{warp-owner}", rated.getOwner()
                 , "{warp-name}", rated.getName()

@@ -15,13 +15,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Map;
+import java.util.SortedMap;
 
 class WarpMenu {
 
     static PaginatedGui getWarpMenu(final Core core, final String type) {
         final Interface iMenu = Core.gCore.guiInterface;
-        final Map<String, Warp> warpMap = WarpUtils.getFilteredWarps(Core.gCore.warpStorage.getWarpHashMap(), type);
+        final SortedMap<String, Warp> warpMap = WarpUtils.getFilteredWarps(Core.gCore.warpStorage.getWarpHashMap(), type);
         final PaginatedGui gui = new PaginatedGui(core, iMenu.getMenuRows(), iMenu.getWarpsPerPage(), Replace.replaceString(iMenu.getMenuDisplay()
                 , "{type}", StringUtils.capitalize(type.toLowerCase()), "{warp-amount}", String.valueOf(warpMap.size())));
 

@@ -155,6 +155,6 @@ public class WarpChange extends ICommand {
                  */
                 break;
         }
-
+        Core.gCore.warpStorage.addWarp(warp);
     }
 }
