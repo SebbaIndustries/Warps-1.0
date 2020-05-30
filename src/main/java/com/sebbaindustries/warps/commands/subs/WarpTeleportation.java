@@ -34,8 +34,8 @@ public class WarpTeleportation extends ICommand {
             return;
         }
 
-        if (!warp.getAccessibility() && !warp.getOwner().equals(player)) {
-            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.PRIVATE_WARP), "{warp-owner}", warp.getOwner().getName()));
+        if (!warp.getAccessibility() && !warp.getOwner().equalsIgnoreCase(player.getName())) {
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.PRIVATE_WARP), "{warp-owner}", warp.getOwner()));
             return;
         }
 
@@ -44,7 +44,7 @@ public class WarpTeleportation extends ICommand {
          */
         if (!SafetyCheck.isLocationSafe(warp.getLocation())) {
             player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.UNSAFE_TELEPORT_LOCATION)
-                    , "{warp-owner}", warp.getOwner().getName()));
+                    , "{warp-owner}", warp.getOwner()));
             return;
         }
 

@@ -13,6 +13,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.concurrent.CompletableFuture;
+
 public class WarpCreate extends ICommand {
 
     public WarpCreate() {
@@ -61,6 +65,7 @@ public class WarpCreate extends ICommand {
          @placeholder world = {warp-environment}
           */
         if (Core.gCore.warpStorage.addWarp(warp)) {
+            CompletableFuture.runAsync(() -> writeWarpToDB(warp));
             player.sendMessage(Replace.replaceString(
                     Core.gCore.message.get(EMessage.SUCCESSFULLY_CREATED_WARP)
                     , "{warp-name}", warp.getName()
@@ -84,6 +89,35 @@ public class WarpCreate extends ICommand {
      */
     private String getReason() {
         return "warp already exists!";
+    }
+
+    private void writeWarpToDB(Warp warp) {
+        Connection con = Core.gCore.connection.getConn();
+        try {
+            con.prepareStatement(
+                    "INSERT INTO warps (id, owner, name) VALUES (" + warp.getID() + ", '" + warp.getOwner() + "', '" + warp.getName() + "');"
+            ).executeUpdate();
+
+            con.prepareStatement(
+                    "INSERT INTO warp_info (ID, type, category, description, access) VALUES " +
+                            "(" + warp.getID() + ", " + warp.getType().id + ", " + warp.getCategory().id + ", " +
+                            "'" + warp.getDescription() + "', " + warp.getAccessibility() + ");"
+            ).executeUpdate();
+
+            con.prepareStatement(
+                    "INSERT INTO warp_locations (ID, world, x, y, z, pitch, yaw) VALUES " +
+                            "(" + warp.getID() + ", '" + warp.getLocation().getWorld().getName() + "', " +
+                            "" + warp.getLocation().getX() + ", " +
+                            "" + warp.getLocation().getY() + ", " +
+                            "" + warp.getLocation().getX() + ", " +
+                            "" + warp.getLocation().getPitch() + ", " +
+                            "" + warp.getLocation().getYaw() + ");"
+            ).executeUpdate();
+
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

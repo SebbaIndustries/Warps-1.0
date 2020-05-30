@@ -1,6 +1,10 @@
 package com.sebbaindustries.warps;
 
+import com.sebbaindustries.warps.database.Connection;
 import com.sebbaindustries.warps.global.GlobalCore;
+import com.sebbaindustries.warps.utils.DBSetup;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -65,5 +69,6 @@ public final class Core extends JavaPlugin {
         gCore.settings.reloadSettings();
         gCore.message.reloadMessages();
         gCore.guiInterface.reloadInterface();
+        DBSetup.start();
     }
 }

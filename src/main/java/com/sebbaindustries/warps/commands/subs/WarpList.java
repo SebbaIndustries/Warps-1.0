@@ -43,7 +43,7 @@ public class WarpList extends ICommand {
         }
 
         warpMap.forEach((name, warp) -> {
-            if (warp.getOwner().equals(target)) {
+            if (warp.getOwner().equalsIgnoreCase(target.getName())) {
                 warpOwnerList.add(name);
             }
         });

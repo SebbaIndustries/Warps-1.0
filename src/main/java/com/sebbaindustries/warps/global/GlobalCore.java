@@ -2,6 +2,7 @@ package com.sebbaindustries.warps.global;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.CommandFactory;
+import com.sebbaindustries.warps.database.Connection;
 import com.sebbaindustries.warps.interfaces.Interface;
 import com.sebbaindustries.warps.lang.Lang;
 import com.sebbaindustries.warps.listener.WarpRateListener;
@@ -25,6 +26,7 @@ public class GlobalCore {
     public final WarpStorage warpStorage;
     public final Message message;
     public final Interface guiInterface;
+    public final Connection connection;
 
     public GlobalCore(Core core) {
         // fileManager needs to be initialized first
@@ -36,6 +38,7 @@ public class GlobalCore {
         commandFactory = new CommandFactory(core);
         warpStorage = new WarpStorage();
         guiInterface = new Interface();
+        connection = new Connection();
         core.getServer().getPluginManager().registerEvents(new WarpRateListener(), core);
     }
 

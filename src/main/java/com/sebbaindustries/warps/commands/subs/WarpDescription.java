@@ -32,7 +32,7 @@ public class WarpDescription extends ICommand {
             return;
         }
 
-        if (!warp.getOwner().equals(player)) {
+        if (!warp.getOwner().equalsIgnoreCase(player.getName())) {
             player.sendMessage(Core.gCore.message.get(EMessage.NOT_WARP_OWNER));
             return;
         }

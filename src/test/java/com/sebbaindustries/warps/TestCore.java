@@ -1,5 +1,7 @@
 package com.sebbaindustries.warps;
 
+import java.util.logging.Logger;
+
 /**
  * <b>MIT License</b><br>
  * <br>
@@ -27,4 +29,5 @@ package com.sebbaindustries.warps;
  * @version <b>1.0</b>
  */
 public class TestCore {
+
 }

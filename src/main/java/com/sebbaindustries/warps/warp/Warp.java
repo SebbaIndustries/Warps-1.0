@@ -1,5 +1,6 @@
 package com.sebbaindustries.warps.warp;
 
+import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.warp.components.WarpLocation;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -25,26 +26,18 @@ import java.util.UUID;
  */
 public class Warp {
 
-    private final UUID ID;
+    private final int ID;
     private String name;
     private Type type;
     private boolean accessibility = true;
 
-    private Player owner;
+    private String owner;
 
     private WarpLocation warpLocation;
     private final Map<UUID, Integer> ratings = new HashMap<>();
-    private String description = "/";
+    private String description = "N/A";
 
     private Category category = Category.UNDEFINED;
-
-    /**
-     * Generates random UUID, frosty said that they won't repeat, so :/
-     * @return random UUID
-     */
-    private UUID generateID() {
-        return UUID.randomUUID();
-    }
 
     /**
      * Warp constructor, for creating warp with direct location from the player.
@@ -53,10 +46,10 @@ public class Warp {
      * @param name Name of the warp, if name is null warp gets owners name
      */
     public Warp(final @NotNull Type type, final @NotNull Player owner, final String name) {
-        this.ID = generateID();
+        this.ID = Core.gCore.warpStorage.genNextID();
 
         this.type = type;
-        this.owner = owner;
+        this.owner = owner.getName();
 
         Location loc = owner.getLocation();
         warpLocation = new WarpLocation(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
@@ -81,9 +74,9 @@ public class Warp {
      * @param yaw Yaw coordinate
      * @param pitch Pitch coordinate
      */
-    public Warp(final @NotNull Type type, final @NotNull Player owner, final String name,
+    public Warp(final @NotNull Type type, final @NotNull String owner, final String name,
                 final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
-        this.ID = generateID();
+        this.ID = Core.gCore.warpStorage.genNextID();
 
         this.type = type;
         this.owner = owner;
@@ -92,7 +85,36 @@ public class Warp {
 
         // check for name
         if (name == null) {
-            this.name = owner.getName();
+            this.name = owner;
+            return;
+        }
+        this.name = name;
+    }
+
+    /**
+     * Warp constructor, for creating warp with custom parameters with sql queries
+     * @param type Type of warp
+     * @param owner Owner of the warp
+     * @param name Name of the warp
+     * @param world warps world
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @param z Z coordinate
+     * @param yaw Yaw coordinate
+     * @param pitch Pitch coordinate
+     */
+    public Warp(final int ID, final @NotNull Type type, final @NotNull String owner, final String name,
+                final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
+        this.ID = ID;
+
+        this.type = type;
+        this.owner = owner;
+
+        warpLocation = new WarpLocation(world, x, y, z, yaw, pitch);
+
+        // check for name
+        if (name == null) {
+            this.name = owner;
             return;
         }
         this.name = name;
@@ -114,10 +136,10 @@ public class Warp {
     }
 
     /**
-     * @return UUID of warp
+     * @return ID of warp
      */
-    public final String getID() {
-        return ID.toString();
+    public final int getID() {
+        return ID;
     }
 
     /**
@@ -154,7 +176,7 @@ public class Warp {
     /**
      * @return Owner of the warp
      */
-    public final Player getOwner() {
+    public final String getOwner() {
         return owner;
     }
 
@@ -163,6 +185,14 @@ public class Warp {
      * @param owner Player instance
      */
     public final void setOwner(final @NotNull Player owner) {
+        this.owner = owner.getName();
+    }
+
+    /**
+     * Changes owner of the warp
+     * @param owner Owner name
+     */
+    public final void setOwner(final @NotNull String owner) {
         this.owner = owner;
     }
 
@@ -228,18 +258,30 @@ public class Warp {
      * EnumCheck containing types of the warp
      */
     public enum Type {
-        SERVER,
-        PLAYER,
+        SERVER(0),
+        PLAYER(1),
         ;
+
+        public int id;
+
+        Type(int id) {
+            this.id = id;
+        }
     }
 
     public enum Category {
-        SHOP,
-        PVP,
-        MINIGAME,
-        OTHER,
-        UNDEFINED,
+        SHOP(0),
+        PVP(1),
+        MINIGAME(2),
+        OTHER(3),
+        UNDEFINED(4),
         ;
+
+        public int id;
+
+        Category(int id) {
+            this.id = id;
+        }
     }
 
 }

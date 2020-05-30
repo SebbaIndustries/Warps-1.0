@@ -32,7 +32,7 @@ public class WarpRate extends ICommand {
             return;
         }
 
-        if (!warp.getOwner().equals(player)) {
+        if (!warp.getOwner().equalsIgnoreCase(player.getName())) {
             player.sendMessage(Core.gCore.message.get(EMessage.CANT_RATE_OWN_WARP));
             return;
         }

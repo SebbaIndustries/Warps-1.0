@@ -42,7 +42,7 @@ class WarpMenu {
                         , "{warp-name}", warp.getName()));
 
                 meta.setLore(Replace.replaceList(meta.getLore()
-                        , "{warp-owner}", warp.getOwner().getName()
+                        , "{warp-owner}", warp.getOwner()
                         , "{warp-status}", Color.chat(WarpUtils.getBooleanString(warp.getAccessibility()))
                         , "{warp-rating}", String.valueOf(WarpUtils.getWarpAverageRating(warp))
                         , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())

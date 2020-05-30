@@ -33,14 +33,14 @@ public class WarpDelete extends ICommand {
             return;
         }
 
-        if (!warp.getOwner().equals(player)) {
+        if (!warp.getOwner().equalsIgnoreCase(player.getName())) {
             /*
             @placeholder warpName = {warp-name}
             @placeholder warpOwner = {warp-owner}
              */
             player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.NOT_WARP_OWNER)
                     , "{warp-name}", name
-                    , "{warp-owner}", warp.getOwner().getName()));
+                    , "{warp-owner}", warp.getOwner()));
             return;
         }
 

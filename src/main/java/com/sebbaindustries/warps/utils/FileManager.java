@@ -21,11 +21,24 @@ public class FileManager {
 
     public FileManager(final @NotNull Core core) {
         this.core = core;
+        generateHikariProps();
         generateREADME();
         generateMessages();
         generateSettings();
         generateConfiguration();
         generateWarpInterface();
+    }
+
+    /*
+    hikari.properties File
+     */
+
+    public final void generateHikariProps() {
+        File README = new File(core.getDataFolder(), "hikari.properties");
+
+        if (!README.exists()) {
+            core.saveResource("hikari.properties", false);
+        }
     }
 
     /*

@@ -7,6 +7,10 @@ import java.util.Map;
 
 public class Replace {
 
+    public static String removeLastChar(String str) {
+        return str.substring(0, str.length() - 1);
+    }
+
     public static List<String> replaceList(final List<String> input, String... values) {
         if (values == null) {
             return input;

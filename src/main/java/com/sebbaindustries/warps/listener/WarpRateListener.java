@@ -19,7 +19,7 @@ public class WarpRateListener implements Listener {
 
         rated.setRating(rater.getUniqueId(), rate);
         rater.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.RATED_WARP)
-                , "{warp-owner}", rated.getOwner().getName()
+                , "{warp-owner}", rated.getOwner()
                 , "{warp-name}", rated.getName()
                 , "{rating}", String.valueOf(rate)));
     }

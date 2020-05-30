@@ -6,6 +6,12 @@ import java.util.Map;
 public class WarpStorage {
 
     private Map<String, Warp> warpHashMap = new HashMap<>();
+    public int nextID = 0;
+
+    public int genNextID() {
+        nextID++;
+        return nextID;
+    }
 
     public boolean addWarp(Warp warp) {
         if (getWarp(warp.getName()) != null) return false;

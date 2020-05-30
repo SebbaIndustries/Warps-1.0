@@ -40,7 +40,7 @@ public class WarpChange extends ICommand {
             return;
         }
 
-        if (!warp.getOwner().equals(player)) {
+        if (!warp.getOwner().equalsIgnoreCase(player.getName())) {
             player.sendMessage(Core.gCore.message.get(EMessage.NOT_WARP_OWNER));
             return;
         }
@@ -87,35 +87,35 @@ public class WarpChange extends ICommand {
                 WarpLocation warpLocation;
                 switch (parameter) {
                     case "x":
-                        subParameter = args.length == 4 ? Double.valueOf(args[3]) : warp.getLocation().getX();
+                        subParameter = args.length == 4 ? Double.parseDouble(args[3]) : warp.getLocation().getX();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), subParameter, warp.getLocation().getY(), warp.getLocation().getZ(), warp.getLocation().getYaw(), warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
                         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
                     case "y":
-                        subParameter = args.length == 4 ? Double.valueOf(args[3]) : warp.getLocation().getY();
+                        subParameter = args.length == 4 ? Double.parseDouble(args[3]) : warp.getLocation().getY();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), subParameter, warp.getLocation().getZ(), warp.getLocation().getYaw(), warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
                         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
                     case "z":
-                        subParameter = args.length == 4 ? Double.valueOf(args[3]) : warp.getLocation().getZ();
+                        subParameter = args.length == 4 ? Double.parseDouble(args[3]) : warp.getLocation().getZ();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), warp.getLocation().getY(), subParameter, warp.getLocation().getYaw(), warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
                         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
                     case "yaw":
-                        subParameter = args.length == 4 ? Double.valueOf(args[3]) : warp.getLocation().getYaw();
+                        subParameter = args.length == 4 ? Double.parseDouble(args[3]) : warp.getLocation().getYaw();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), warp.getLocation().getY(), warp.getLocation().getZ(), (float) subParameter, warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
                         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
                     case "pitch":
-                        subParameter = args.length == 4 ? Double.valueOf(args[3]) : warp.getLocation().getPitch();
+                        subParameter = args.length == 4 ? Double.parseDouble(args[3]) : warp.getLocation().getPitch();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), warp.getLocation().getY(), warp.getLocation().getZ(), warp.getLocation().getYaw(), (float) subParameter);
                         warp.setLocation(warpLocation);
                         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
