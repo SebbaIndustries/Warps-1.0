@@ -1,15 +1,15 @@
 package com.sebbaindustries.warps.commands.creator;
 
 import com.sebbaindustries.warps.Core;
+import com.sebbaindustries.warps.commands.creator.completion.TabCompletion;
 import com.sebbaindustries.warps.commands.subs.*;
 import com.sebbaindustries.warps.utils.Color;
 import com.sebbaindustries.warps.warp.Warp;
 import com.sebbaindustries.warps.warp.WarpUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,7 +39,9 @@ public class CommandFactory implements CommandExecutor {
      */
     public CommandFactory(final @NotNull Core core) {
         // Register commands
-        Objects.requireNonNull(core.getCommand("warp")).setExecutor(this);
+        final PluginCommand warpCommand = Objects.requireNonNull(core.getCommand("warp"));
+        warpCommand.setTabCompleter(new TabCompletion());
+        warpCommand.setExecutor(this);
 
         // Register sub-commands
         iCommands = Stream.of(
@@ -53,7 +55,7 @@ public class CommandFactory implements CommandExecutor {
                 new WarpList(),
                 new WarpCategory(core)
                 /*new SettingsDebug()*/
-                ).collect(Collectors.toSet());
+        ).collect(Collectors.toSet());
         // Find "default" command
         defaultICommand = iCommands.stream().filter(ICommand::isDef).findAny().orElseThrow(NoDefaultCommandException::new);
         // Check if every command has at least 1 permission attached to them

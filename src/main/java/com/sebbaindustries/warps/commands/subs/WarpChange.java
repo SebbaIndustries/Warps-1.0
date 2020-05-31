@@ -47,7 +47,7 @@ public class WarpChange extends ICommand {
 
         switch (argument) {
             case "status":
-                final boolean status = args.length == 3 ? Boolean.getBoolean(args[2].toLowerCase()) : !warp.getAccessibility();
+                final boolean status = args.length == 3 ? WarpUtils.getBooleanValue(args[2].toLowerCase()) : !warp.getAccessibility();
                 /*
                 @param boolean public/private
                 @desc Toggles the warps status to public/private

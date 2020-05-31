@@ -5,6 +5,7 @@ import com.sebbaindustries.warps.warp.components.WarpLocation;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -23,9 +24,17 @@ public class WarpUtils {
 
     /*
     TODO: add config formatter
+    Returns a String value based on the input (true/false)
      */
     public static String getBooleanString(final boolean value) {
-        return value ? "&aPublic" : "&cPrivate";
+        return value ? "public" : "private";
+    }
+
+    /*
+    Returns a boolean value based on the input (private/public)
+     */
+    public static boolean getBooleanValue(final String value) {
+        return value.equalsIgnoreCase("public");
     }
 
     /*
@@ -145,8 +154,62 @@ public class WarpUtils {
                 return "Miniigre";
             case OTHER:
                 return "Ostalo";
+            case REALESTATE:
+                return "Nepremicnina";
             default:
                 return "Nedoloceno";
         }
+    }
+
+    /*
+    Returns a list of non-formatted categories
+     */
+    public static List<String> getCategories() {
+        final List<String> categories = new ArrayList<>();
+        final Warp.Category[] values = Warp.Category.values();
+
+        for (Warp.Category category : values) {
+            categories.add(category.name());
+        }
+
+        return categories;
+    }
+
+    /*
+    Returns a list of publicly available warps
+     */
+    public static List<String> getPublicWarps() {
+        final List<String> warps = new ArrayList<>();
+        final Map<String, Warp> warpMap = Core.gCore.warpStorage.getWarpHashMap();
+
+        for (String warp : warpMap.keySet()) {
+            if (warpMap.get(warp).getAccessibility()) warps.add(warp);
+        }
+        return warps;
+    }
+
+    /*
+    Returns a list of warp owners
+     */
+    public static List<String> getWarpOwners() {
+        final List<String> owners = new ArrayList<>();
+        final Map<String, Warp> warpMap = Core.gCore.warpStorage.getWarpHashMap();
+
+        warpMap.forEach((key, value) -> owners.add(warpMap.get(key).getOwner()));
+        return owners;
+    }
+
+    /*
+    Returns a list of specified players warps
+     */
+    public static List<String> getPlayersWarps(final Player player) {
+        final List<String> warps = new ArrayList<>();
+        final Map<String, Warp> warpMap = Core.gCore.warpStorage.getWarpHashMap();
+
+        warpMap.forEach((key, value) -> {
+            if (warpMap.get(key).getOwner().equalsIgnoreCase(player.getName())) warps.add(key);
+        });
+
+        return warps;
     }
 }

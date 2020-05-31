@@ -274,7 +274,8 @@ public class Warp {
         PVP(1),
         MINIGAME(2),
         OTHER(3),
-        UNDEFINED(4),
+        REALESTATE(4),
+        UNDEFINED(5),
         ;
 
         public int id;
