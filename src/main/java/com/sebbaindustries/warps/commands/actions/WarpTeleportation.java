@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.commands.subs;
+package com.sebbaindustries.warps.commands.actions;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
@@ -7,7 +7,6 @@ import com.sebbaindustries.warps.message.EMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.*;
 import com.sebbaindustries.warps.warp.components.SafetyCheck;
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class WarpTeleportation extends ICommand {
 
     public WarpTeleportation() {
-        super("teleport", "teleport [warp]", 1);
+        super("warp", "teleport [warp]", 1);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.TELEPORT);
         setPlayerOnly();
     }

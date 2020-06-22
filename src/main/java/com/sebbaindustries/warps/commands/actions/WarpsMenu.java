@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.commands.subs;
+package com.sebbaindustries.warps.commands.actions;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;

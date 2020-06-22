@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.commands.subs;
+package com.sebbaindustries.warps.commands.actions;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
@@ -53,6 +53,7 @@ public class WarpCategory extends ICommand {
             }
 
             warp.setCategory(category);
+            Core.gCore.warpStorage.updateWarp(warp);
             player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SET_WARP_CATEGORY), "{warp-category}", WarpUtils.getFormattedCategory(category), "{warp-name}", name));
             return;
         }

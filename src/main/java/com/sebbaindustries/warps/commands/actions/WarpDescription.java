@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.commands.subs;
+package com.sebbaindustries.warps.commands.actions;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
@@ -47,6 +47,7 @@ public class WarpDescription extends ICommand {
         switch (argument) {
             case "set":
                 warp.setDescription(description);
+                Core.gCore.warpStorage.updateWarp(warp);
                 player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_SET_DESCRIPTION)
                         , "{warp-description}", description, "{warp-name}", name));
                 break;
@@ -55,6 +56,7 @@ public class WarpDescription extends ICommand {
                 TODO: add option for this
                  */
                 warp.setDescription("/");
+                Core.gCore.warpStorage.updateWarp(warp);
                 player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_REMOVED_DESCRIPTION)
                         , "{warp-name}", name));
                 break;

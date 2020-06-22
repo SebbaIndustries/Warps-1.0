@@ -5,7 +5,7 @@ package com.sebbaindustries.warps.commands.creator;
  * @author sebbaindustries
  * @version 1.0
  */
-public final class NoPermissionSetCommandException extends RuntimeException {
+public class NoPermissionSetCommandException extends RuntimeException {
 
     /**
      * Exception constructor, returns with message that show up in the console

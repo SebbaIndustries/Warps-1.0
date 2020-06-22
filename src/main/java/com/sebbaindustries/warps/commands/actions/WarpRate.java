@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.commands.subs;
+package com.sebbaindustries.warps.commands.actions;
 
 import com.google.common.primitives.Ints;
 import com.sebbaindustries.warps.Core;

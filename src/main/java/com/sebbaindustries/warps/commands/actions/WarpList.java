@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.commands.subs;
+package com.sebbaindustries.warps.commands.actions;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class WarpList extends ICommand {
 
     public WarpList() {
-        super("list", "list [owner]", 0);
+        super("listwarps", "list [owner]", 0);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.LIST);
         setPlayerOnly();
     }

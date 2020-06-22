@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.commands.subs;
+package com.sebbaindustries.warps.commands.actions;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
@@ -55,6 +55,7 @@ public class WarpChange extends ICommand {
                 @placeholder {warp-status}
                  */
                 warp.setAccessibility(status);
+                Core.gCore.warpStorage.updateWarp(warp);
                 player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.CHANGED_WARP_STATUS)
                         ,"{warp-name}", warp.getName()
                         ,"{warp-status}", WarpUtils.getBooleanString(warp.getAccessibility())));
@@ -77,9 +78,10 @@ public class WarpChange extends ICommand {
                     /*
                     @placeholder {warp-location}
                      */
+                    warp.setLocation(warpLocation);
+                    Core.gCore.warpStorage.updateWarp(warp);
                     player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                             , "{warp-location}", WarpUtils.getLocationString(warpLocation)));
-                    warp.setLocation(warpLocation);
                     return;
                 }
 
@@ -90,6 +92,7 @@ public class WarpChange extends ICommand {
                         subParameter = args.length == 4 ? Double.parseDouble(args[3]) : warp.getLocation().getX();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), subParameter, warp.getLocation().getY(), warp.getLocation().getZ(), warp.getLocation().getYaw(), warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
+                        Core.gCore.warpStorage.updateWarp(warp);
                         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
@@ -97,6 +100,7 @@ public class WarpChange extends ICommand {
                         subParameter = args.length == 4 ? Double.parseDouble(args[3]) : warp.getLocation().getY();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), subParameter, warp.getLocation().getZ(), warp.getLocation().getYaw(), warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
+                        Core.gCore.warpStorage.updateWarp(warp);
                         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
@@ -104,6 +108,7 @@ public class WarpChange extends ICommand {
                         subParameter = args.length == 4 ? Double.parseDouble(args[3]) : warp.getLocation().getZ();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), warp.getLocation().getY(), subParameter, warp.getLocation().getYaw(), warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
+                        Core.gCore.warpStorage.updateWarp(warp);
                         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
@@ -111,6 +116,7 @@ public class WarpChange extends ICommand {
                         subParameter = args.length == 4 ? Double.parseDouble(args[3]) : warp.getLocation().getYaw();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), warp.getLocation().getY(), warp.getLocation().getZ(), (float) subParameter, warp.getLocation().getPitch());
                         warp.setLocation(warpLocation);
+                        Core.gCore.warpStorage.updateWarp(warp);
                         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
@@ -118,6 +124,7 @@ public class WarpChange extends ICommand {
                         subParameter = args.length == 4 ? Double.parseDouble(args[3]) : warp.getLocation().getPitch();
                         warpLocation = new WarpLocation(warp.getLocation().getWorld(), warp.getLocation().getX(), warp.getLocation().getY(), warp.getLocation().getZ(), warp.getLocation().getYaw(), (float) subParameter);
                         warp.setLocation(warpLocation);
+                        Core.gCore.warpStorage.updateWarp(warp);
                         player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                                 ,"{warp-location}", WarpUtils.getLocationString(warpLocation)));
                         break;
@@ -143,6 +150,7 @@ public class WarpChange extends ICommand {
                 }
 
                 warp.setOwner(target);
+                Core.gCore.warpStorage.updateWarp(warp);
                 /*
                 @placeholder {warp-previous-owner}
                 @placeholder {warp-new-owner}

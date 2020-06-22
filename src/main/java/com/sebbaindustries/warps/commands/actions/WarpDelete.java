@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.commands.subs;
+package com.sebbaindustries.warps.commands.actions;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class WarpDelete extends ICommand {
 
     public WarpDelete() {
-        super("delete", "delete [warp]", 1);
+        super("delwarp", "delete [warp]", 1);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.DELETE);
         setPlayerOnly();
     }
