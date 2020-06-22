@@ -1,4 +1,4 @@
-package com.sebbaindustries.warps.commands.subs;
+package com.sebbaindustries.warps.commands.actions;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
@@ -14,7 +14,7 @@ public class WarpsMenu extends ICommand {
     private final Core core;
 
     public WarpsMenu(final Core core) {
-        super("menu", "menu", 0);
+        super("warps", "menu", 0);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.MENU);
         setPlayerOnly();
         setDef();

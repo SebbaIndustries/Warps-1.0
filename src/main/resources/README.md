@@ -7,7 +7,7 @@ Website: <a href="www.sebbaindustries.com">SebbaIndustries.com</a><br>
 Source code: <a href="https://github.com/SebbaIndustries/Warps">github.com/SebbaIndustries/Warps</a><br>
 Java Docs: <a href="https://github.com/SebbaIndustries/JavaDocs">github.com/SebbaIndustries/JavaDocs</a><br>
 Developers: `SebbaIndustries`, `Frcsty` <br>
-Build: <br>
+
 ![Java CI with Maven](https://github.com/SebbaIndustries/Warps/workflows/Java%20CI%20with%20Maven/badge.svg)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 
@@ -36,3 +36,24 @@ SOFTWARE. <br>
 <br>
 
 ## Commands and permissions
+<b>Flags:</b><br>
+`-a` : Flag for admin commands, create, modify, delete warps for other players<br>
+Permission: `warps.command.{command_name}.admin` <br>
+Use: `/delwarp -a warpName`
+<br>
+<br>
+`-o` : Flag for creating/modifying official/server warps<br>
+Permission: `warps.command.{command_name}.official` <br>
+Use `/setwarp -o warpName` <br><br>
+
+|Command|Permission|Flags|Description|
+|-------|----------|-----|-----------|
+|/warps|warps.command.warps|`N/A`|Opens warps GUI|
+|/warp {warp}|warps.command.warp|`N/A`|Teleports to selected warp|
+|/delwarp {warp}|warps.command.delwarp|`-o` `-a`|Deletes warp|
+|/setwarp {warp}|warps.command.setwarp|`-o` `-a`|Creates warp|
+|/movewarp {warp}|warps.command.movewarp|`-o` `-a`|Moves warp|
+|/modifywarp {warp} description {new warp description}|warps.command.modifywarp.description|`-o` `-a`|Modify description  of the warp|
+|/modifywarp {warp} category {category}|warps.command.modifywarp.category|`-o` `-a`|Modify category of the warp|
+|/ratewarp {warp} {rating}|warps.command.ratewarp|`N/A`|Rates warp|
+|/listwarps {player}|warps.command.listwarps|`-a`|Lists all warps|

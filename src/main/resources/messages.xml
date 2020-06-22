@@ -190,6 +190,13 @@ SOFTWARE.
         <msg lang="EN" prefix="false">§8[§b{target-name}'s Warps§8] §f{warp-names}</msg>
     </message>
 
+    <!-- All listed warps message -->
+    <message id="30">
+        <msg lang="EN" prefix="false">§bOfficial Warps§8: §e{official-warp-names}
+
+§bPlayer Warps§8: §f{player-warp-names}</msg>
+    </message>
+
     <!-- Target has no warps message -->
     <message id="26">
         <msg lang="EN" prefix="true">Target does not have any warps!</msg>

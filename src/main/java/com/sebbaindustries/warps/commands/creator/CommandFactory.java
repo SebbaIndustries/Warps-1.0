@@ -1,19 +1,17 @@
 package com.sebbaindustries.warps.commands.creator;
 
 import com.sebbaindustries.warps.Core;
-import com.sebbaindustries.warps.commands.creator.completion.TabCompletion;
-import com.sebbaindustries.warps.commands.subs.*;
+import com.sebbaindustries.warps.commands.actions.*;
 import com.sebbaindustries.warps.utils.Color;
 import com.sebbaindustries.warps.warp.Warp;
 import com.sebbaindustries.warps.warp.WarpUtils;
+import com.sebbaindustries.warps.warp.components.SafetyCheck;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -39,22 +37,25 @@ public class CommandFactory implements CommandExecutor {
      */
     public CommandFactory(final @NotNull Core core) {
         // Register commands
-        final PluginCommand warpCommand = Objects.requireNonNull(core.getCommand("warp"));
-        warpCommand.setTabCompleter(new TabCompletion());
-        warpCommand.setExecutor(this);
+        Objects.requireNonNull(core.getCommand("warp")).setExecutor(this);
+        Objects.requireNonNull(core.getCommand("warps")).setExecutor(this);
+        Objects.requireNonNull(core.getCommand("setwarp")).setExecutor(this);
+        Objects.requireNonNull(core.getCommand("delwarp")).setExecutor(this);
+        Objects.requireNonNull(core.getCommand("movewarp")).setExecutor(this);
+        Objects.requireNonNull(core.getCommand("modifywarp")).setExecutor(this);
+        Objects.requireNonNull(core.getCommand("ratewarp")).setExecutor(this);
+        Objects.requireNonNull(core.getCommand("listwarps")).setExecutor(this);
 
         // Register sub-commands
         iCommands = Stream.of(
-                new WarpCreate(),
-                new WarpChange(),
-                new WarpDelete(),
+                new SetWarp(),
+                new RateWarp(),
+                new MoveWarp(),
+                new ModifyWarp(),
+                new ListWarps(),
+                new DelWarp(),
                 new WarpTeleportation(),
-                new WarpsMenu(core),
-                new WarpRate(),
-                new WarpDescription(),
-                new WarpList(),
-                new WarpCategory(core)
-                /*new SettingsDebug()*/
+                new WarpsMenu(core)
         ).collect(Collectors.toSet());
         // Find "default" command
         defaultICommand = iCommands.stream().filter(ICommand::isDef).findAny().orElseThrow(NoDefaultCommandException::new);
@@ -74,17 +75,22 @@ public class CommandFactory implements CommandExecutor {
      */
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command command, final @NotNull String label, final @NotNull String[] args) {
+        // Check if first argument equals to any subs
+        final Optional<ICommand> baseCommand = iCommands.stream().filter(cmd -> cmd.getArgument().equalsIgnoreCase(command.getName())).findAny();
 
-        // Check length if there is no arguments execute base command,
-        if (args.length == 0) {
-            defaultICommand.execute(sender, args);
+        if (!baseCommand.isPresent()) {
+            sender.sendMessage("Invalid command!");
             return true;
         }
 
-        // Check if first argument equals to any subs
-        final Optional<ICommand> optionalCommand = iCommands.stream().filter(cmd -> cmd.getArgument().equalsIgnoreCase(args[0])).findAny();
+        final ICommand cmd = baseCommand.get();
 
-        if (!optionalCommand.isPresent()) {
+        if (cmd.isDef()) {
+            cmd.execute(sender, args);
+            return true;
+        }
+
+        if (cmd.getArgument().equalsIgnoreCase("warp")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("You cannot use this through console!");
                 return true;
@@ -101,13 +107,15 @@ public class CommandFactory implements CommandExecutor {
                 return true;
             }
 
+            if (!SafetyCheck.isLocationSafe(warp.getLocation())) {
+                sender.sendMessage("Invalid warp location!");
+                return true;
+            }
             ((Player) sender).teleport(WarpUtils.convertWarpLocation(warp.getLocation()));
             // teleport player to warp (add safety check)
 
             return true;
         }
-
-        final ICommand cmd = optionalCommand.get();
 
         // Check if console can execute this sub-command
         // TODO add same thing for players
@@ -123,13 +131,13 @@ public class CommandFactory implements CommandExecutor {
         }
 
         // Check if usage is correct (prevents some nasty NPEs)
-        if (cmd.getMinArgs() > Arrays.copyOfRange(args, 1, args.length).length) {
-            sender.sendMessage(Color.chat("Invalid Usage! Usage /warps " + cmd.getUsage()));
+        if (cmd.getMinArgs() > args.length) {
+            sender.sendMessage(Color.chat("Invalid Usage! Usage " + cmd.getUsage()));
             return true;
         }
 
-        // Finally execute this sub-command
-        cmd.execute(sender, Arrays.copyOfRange(args, 1, args.length));
+        // Finally execute this command
+        cmd.execute(sender, args);
         return true;
 
     }

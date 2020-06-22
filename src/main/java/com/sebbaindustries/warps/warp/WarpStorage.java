@@ -25,6 +25,10 @@ public class WarpStorage {
         return true;
     }
 
+    public void updateWarp(Warp warp) {
+        warpHashMap.put(warp.getName(), warp);
+    }
+
     public Warp getWarp(String warpName) {
         return warpHashMap.getOrDefault(warpName, null);
     }

@@ -128,6 +128,10 @@ public class WarpUtils {
     Returns a string separated with ,
      */
     public static String getStringLister(final List<String> values) {
+        if (values.isEmpty()) {
+            return "/";
+        }
+
         String list = "";
         for (int i = 0; i < values.size(); i++) {
             if (i == values.size() - 1) {

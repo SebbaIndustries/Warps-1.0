@@ -24,5 +24,7 @@
 # you can create custom lang attribute if needed
 # Currently available: EN - English, SI - Slovenian
 language: EN
-console:
-  debug: false
+# Debug, logs every action into the console, and saves it to .xml file
+debug:
+  enable: true
+  save-to-file: true

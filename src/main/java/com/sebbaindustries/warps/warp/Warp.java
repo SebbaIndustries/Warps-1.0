@@ -21,29 +21,29 @@ import java.util.UUID;
  * Warp accessibility - accessibility<br>
  * Warp ratings - ratings<br>
  * <br>
+ *
  * @author sebbaindustries
  * @version 1.1
  */
 public class Warp {
 
     private final int ID;
+    private final Map<UUID, Integer> ratings = new HashMap<>();
     private String name;
     private Type type;
     private boolean accessibility = true;
-
     private String owner;
-
     private WarpLocation warpLocation;
-    private final Map<UUID, Integer> ratings = new HashMap<>();
     private String description = "N/A";
 
     private Category category = Category.UNDEFINED;
 
     /**
      * Warp constructor, for creating warp with direct location from the player.
-     * @param type Type of warp
+     *
+     * @param type  Type of warp
      * @param owner Owner of the warp and location
-     * @param name Name of the warp, if name is null warp gets owners name
+     * @param name  Name of the warp, if name is null warp gets owners name
      */
     public Warp(final @NotNull Type type, final @NotNull Player owner, final String name) {
         this.ID = Core.gCore.warpStorage.genNextID();
@@ -64,14 +64,15 @@ public class Warp {
 
     /**
      * Warp constructor, for creating warp with custom parameters
-     * @param type Type of warp
+     *
+     * @param type  Type of warp
      * @param owner Owner of the warp
-     * @param name Name of the warp
+     * @param name  Name of the warp
      * @param world warps world
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
-     * @param yaw Yaw coordinate
+     * @param x     X coordinate
+     * @param y     Y coordinate
+     * @param z     Z coordinate
+     * @param yaw   Yaw coordinate
      * @param pitch Pitch coordinate
      */
     public Warp(final @NotNull Type type, final @NotNull String owner, final String name,
@@ -93,14 +94,15 @@ public class Warp {
 
     /**
      * Warp constructor, for creating warp with custom parameters with sql queries
-     * @param type Type of warp
+     *
+     * @param type  Type of warp
      * @param owner Owner of the warp
-     * @param name Name of the warp
+     * @param name  Name of the warp
      * @param world warps world
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
-     * @param yaw Yaw coordinate
+     * @param x     X coordinate
+     * @param y     Y coordinate
+     * @param z     Z coordinate
+     * @param yaw   Yaw coordinate
      * @param pitch Pitch coordinate
      */
     public Warp(final int ID, final @NotNull Type type, final @NotNull String owner, final String name,
@@ -129,6 +131,7 @@ public class Warp {
 
     /**
      * Changes name of the warp
+     *
      * @param name Name of the warp
      */
     public final void setName(final @NotNull String name) {
@@ -151,6 +154,7 @@ public class Warp {
 
     /**
      * Changes warp type
+     *
      * @param type Type of the warp
      */
     public final void setType(final @NotNull Type type) {
@@ -167,6 +171,7 @@ public class Warp {
     /**
      * Changes warp accessibility
      * Defaults to true!
+     *
      * @param accessibility public/private
      */
     public final void setAccessibility(final @NotNull Boolean accessibility) {
@@ -182,6 +187,7 @@ public class Warp {
 
     /**
      * Changes owner of the warp
+     *
      * @param owner Player instance
      */
     public final void setOwner(final @NotNull Player owner) {
@@ -190,6 +196,7 @@ public class Warp {
 
     /**
      * Changes owner of the warp
+     *
      * @param owner Owner name
      */
     public final void setOwner(final @NotNull String owner) {
@@ -197,8 +204,8 @@ public class Warp {
     }
 
     /**
-     * @see WarpLocation
      * @return Location of the warp
+     * @see WarpLocation
      */
     public final WarpLocation getLocation() {
         return warpLocation;
@@ -206,6 +213,7 @@ public class Warp {
 
     /**
      * Updates warp location, overrides old values
+     *
      * @param warpLocation New warp location
      */
     public final void setLocation(WarpLocation warpLocation) {
@@ -214,8 +222,9 @@ public class Warp {
 
     /**
      * Adds a rating to the warp (resets old users rating)
+     *
      * @param rater rater's uuid
-     * @param rate int (1-10)
+     * @param rate  int (1-10)
      */
     public final void setRating(final UUID rater, final int rate) {
         this.ratings.put(rater, rate);
@@ -231,19 +240,25 @@ public class Warp {
     /**
      * Gets the warps description
      */
-    public final String getDescription() { return description; }
+    public final String getDescription() {
+        return description;
+    }
 
     /**
      * Sets the warps description
      *
      * @param description warps new description
      */
-    public final void setDescription(final String description) { this.description = description; }
+    public final void setDescription(final String description) {
+        this.description = description;
+    }
 
     /**
      * Gets the warps category
      */
-    public final Category getCategory() { return category; }
+    public final Category getCategory() {
+        return category;
+    }
 
     /**
      * Sets the warps category

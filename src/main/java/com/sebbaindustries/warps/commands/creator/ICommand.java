@@ -18,7 +18,7 @@ public abstract class ICommand {
 
     private final String argument;
     private final String usage;
-    private Integer minArgs = 0;
+    private Integer minArgs;
     private Integer maxArgs;
     private boolean def = false;
     private boolean playerOnly = false;
@@ -91,7 +91,6 @@ public abstract class ICommand {
 
     /**
      * Changes if command is default or not
-     * @param def true/false
      */
     public void setDef() {
         this.def = true;
@@ -99,7 +98,6 @@ public abstract class ICommand {
 
     /**
      * Changes whether or not the command contains %s placeholders
-     * @param placeholders true/false
      */
     public void setPlaceholders() { this.placeholders = true; }
 

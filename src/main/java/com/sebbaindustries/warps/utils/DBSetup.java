@@ -9,8 +9,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Database setup script, creates all tables and pulls any existing data from them
+ * @author sebbaindustries
+ * @version 1.0
+ */
 public class DBSetup {
 
+    /**
+     * Async data fetch
+     * TODO add lock on the plugin, while async going on
+     */
     public static void start() {
         CompletableFuture.runAsync(() -> {
             createTables();
@@ -18,6 +27,9 @@ public class DBSetup {
         });
     }
 
+    /**
+     * Create tables if the don't exist
+     */
     private static void createTables() {
         Connection con = Core.gCore.connection.getConn();
         try {
@@ -127,6 +139,9 @@ public class DBSetup {
 
     }
 
+    /**
+     * pulls data from database and loads them into hashmap
+     */
     private static void loadWarps() {
         Connection con = Core.gCore.connection.getConn();
         try {
@@ -167,6 +182,11 @@ public class DBSetup {
         }
     }
 
+    /**
+     * Identifies type of the warp
+     * @param i id of the warp
+     * @return Enum of warp type
+     */
     private static Warp.Type machType(int i) {
         for (Warp.Type type : Warp.Type.values()) {
             if (type.id == i) return type;
@@ -174,6 +194,11 @@ public class DBSetup {
         return Warp.Type.PLAYER;
     }
 
+    /**
+     * Identifies type of the warp category
+     * @param i id of the category
+     * @return Enum of warp category
+     */
     private static Warp.Category machCategory(int i) {
         for (Warp.Category category : Warp.Category.values()) {
             if (category.id == i) return category;
