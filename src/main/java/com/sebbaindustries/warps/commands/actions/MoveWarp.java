@@ -62,24 +62,7 @@ public class MoveWarp extends ICommand {
             return;
         }
 
-        final String type = args.length >= 3 ? args[2] : null;
-        if (type == null) {
-            p.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
-            return;
-        }
-
-        final Location location = p.getLocation();
-        WarpLocation warpLocation;
-        if (type.equalsIgnoreCase("location")) {
-            warpLocation = new WarpLocation(p.getWorld(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-        } else {
-            warpLocation = new WarpLocation(p.getWorld(), Ints.tryParse(args[2]), Ints.tryParse(args[3]), Ints.tryParse(args[4]), location.getYaw(), location.getPitch());
-        }
-
-        warp.setLocation(warpLocation);
-        Core.gCore.warpStorage.updateWarp(warp);
-        p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
-                , "{warp-location}", WarpUtils.getLocationString(warpLocation)));
+        performWarpMove(args, p, warp);
     }
 
     private void movePlayerBypassWarp(@NotNull final Player p, final String[] args) {
@@ -94,6 +77,10 @@ public class MoveWarp extends ICommand {
             return;
         }
 
+        performWarpMove(args, p, warp);
+    }
+
+    private void performWarpMove(final String[] args, final Player p, final Warp warp) {
         final String type = args.length >= 3 ? args[2] : null;
         if (type == null) {
             p.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
@@ -108,6 +95,10 @@ public class MoveWarp extends ICommand {
             warpLocation = new WarpLocation(p.getWorld(), Ints.tryParse(args[2]), Ints.tryParse(args[3]), Ints.tryParse(args[4]), location.getYaw(), location.getPitch());
         }
 
+        setWarpLocation(warp, warpLocation, p);
+    }
+
+    private void setWarpLocation(final Warp warp, final WarpLocation warpLocation, final Player p) {
         warp.setLocation(warpLocation);
         Core.gCore.warpStorage.updateWarp(warp);
         p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
@@ -136,9 +127,6 @@ public class MoveWarp extends ICommand {
             return;
         }
 
-        warp.setLocation(warpLocation);
-        Core.gCore.warpStorage.updateWarp(warp);
-        p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
-                , "{warp-location}", WarpUtils.getLocationString(warpLocation)));
+        setWarpLocation(warp, warpLocation, p);
     }
 }

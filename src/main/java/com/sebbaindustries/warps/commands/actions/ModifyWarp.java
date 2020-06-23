@@ -39,14 +39,19 @@ public class ModifyWarp extends ICommand {
         modifyPlayerWarp(player, args);
     }
 
+    private boolean performWarpCheck(final Warp warp, final Player player) {
+        if (warp == null) {
+            player.sendMessage(Core.gCore.message.get(EMessage.INVALID_WARP));
+            return true;
+        }
+        return false;
+    }
+
     private void modifyPlayerWarp(@NotNull final Player p, final String[] args) {
         final String name = args.length >= 1 ? args[0] : p.getName();
         final Warp warp = Core.gCore.warpStorage.getWarp(name);
 
-        if (warp == null) {
-            p.sendMessage(Core.gCore.message.get(EMessage.INVALID_WARP));
-            return;
-        }
+        if (performWarpCheck(warp, p)) return;
 
         if (!warp.getOwner().equalsIgnoreCase(p.getName())) {
             p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.NOT_WARP_OWNER)
@@ -54,6 +59,10 @@ public class ModifyWarp extends ICommand {
             return;
         }
 
+        performWarpActions(args, p, warp);
+    }
+
+    private void performWarpActions(final String[] args, final Player p, final Warp warp) {
         final String type = args.length >= 2 ? args[1] : "status";
         switch (type) {
             case "description":
@@ -66,13 +75,7 @@ public class ModifyWarp extends ICommand {
 
                 warp.setDescription(description);
                 Core.gCore.warpStorage.updateWarp(warp);
-                if (description.length() == 0) {
-                    p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_REMOVED_DESCRIPTION)
-                            , "{warp-name}", name));
-                } else {
-                    p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_SET_DESCRIPTION)
-                            , "{warp-description}", description, "{warp-name}", name));
-                }
+                performDescriptionCheck(description, p, warp);
                 break;
             case "category":
                 final Warp.Category category = args.length == 3 ? Warp.Category.valueOf(args[2].toUpperCase()) : Warp.Category.UNDEFINED;
@@ -80,7 +83,7 @@ public class ModifyWarp extends ICommand {
                 warp.setCategory(category);
                 Core.gCore.warpStorage.updateWarp(warp);
                 p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SET_WARP_CATEGORY)
-                        , "{warp-category}", WarpUtils.getFormattedCategory(category), "{warp-name}", name));
+                        , "{warp-category}", WarpUtils.getFormattedCategory(category), "{warp-name}", warp.getName()));
                 break;
             case "status":
                 final boolean status = args.length == 3 ? WarpUtils.getBooleanValue(args[2].toLowerCase()) : !warp.getAccessibility();
@@ -126,74 +129,9 @@ public class ModifyWarp extends ICommand {
             return;
         }
 
-        if (warp == null) {
-            p.sendMessage(Core.gCore.message.get(EMessage.INVALID_WARP));
-            return;
-        }
+        if (performWarpCheck(warp, p)) return;
 
-        final String type = args.length >= 2 ? args[1] : "status";
-        switch (type) {
-            case "description":
-                final String description = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-
-                if (Arrays.copyOfRange(args, 2, args.length).length > Core.gCore.settings.getWarpSettings(p).getMaxDescLength()) {
-                    p.sendMessage(Core.gCore.message.get(EMessage.TOO_LONG_WARP_DESCRIPTION));
-                    return;
-                }
-
-                warp.setDescription(description);
-                Core.gCore.warpStorage.updateWarp(warp);
-                if (description.length() == 0) {
-                    p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_REMOVED_DESCRIPTION)
-                            , "{warp-name}", name));
-                } else {
-                    p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_SET_DESCRIPTION)
-                            , "{warp-description}", description, "{warp-name}", name));
-                }
-                break;
-            case "category":
-                final Warp.Category category = args.length == 3 ? Warp.Category.valueOf(args[2].toUpperCase()) : Warp.Category.UNDEFINED;
-
-                warp.setCategory(category);
-                Core.gCore.warpStorage.updateWarp(warp);
-                p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SET_WARP_CATEGORY)
-                        , "{warp-category}", WarpUtils.getFormattedCategory(category), "{warp-name}", name));
-                break;
-            case "status":
-                final boolean status = args.length == 3 ? WarpUtils.getBooleanValue(args[2].toLowerCase()) : !warp.getAccessibility();
-
-                warp.setAccessibility(status);
-                Core.gCore.warpStorage.updateWarp(warp);
-                p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.CHANGED_WARP_STATUS)
-                        , "{warp-name}", warp.getName()
-                        , "{warp-status}", WarpUtils.getBooleanString(warp.getAccessibility())));
-                break;
-            case "owner":
-                final String targetName = args.length == 3 ? args[2] : null;
-
-                if (targetName == null) {
-                    p.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
-                    return;
-                }
-                final Player target = Bukkit.getPlayerExact(targetName);
-
-                if (target == null) {
-                    p.sendMessage(Core.gCore.message.get(EMessage.INVALID_PLAYER));
-                    return;
-                }
-
-                if (target.equals(p)) {
-                    p.sendMessage(Core.gCore.message.get(EMessage.NEW_OWNER_CANNOT_BE_OLD_OWNER));
-                    return;
-                }
-
-                warp.setOwner(target);
-                Core.gCore.warpStorage.updateWarp(warp);
-                p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_WARP_OWNER)
-                        , "{warp-previous-owner}", p.getName()
-                        , "{warp-new-owner}", target.getName()));
-                break;
-        }
+        performWarpActions(args, p, warp);
     }
 
     private void modifyOfficialWarp(@NotNull final Player p, final String[] args) {
@@ -217,16 +155,9 @@ public class ModifyWarp extends ICommand {
                     p.sendMessage(Core.gCore.message.get(EMessage.TOO_LONG_WARP_DESCRIPTION));
                     return;
                 }
-
                 warp.setDescription(description);
                 Core.gCore.warpStorage.updateWarp(warp);
-                if (description.length() == 0) {
-                    p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_REMOVED_DESCRIPTION)
-                            , "{warp-name}", name));
-                } else {
-                    p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_SET_DESCRIPTION)
-                            , "{warp-description}", description, "{warp-name}", name));
-                }
+                performDescriptionCheck(description, p, warp);
                 break;
             case "category":
                 final Warp.Category category = args.length == 4 ? Warp.Category.valueOf(args[3].toUpperCase()) : Warp.Category.UNDEFINED;
@@ -236,6 +167,16 @@ public class ModifyWarp extends ICommand {
                 p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SET_WARP_CATEGORY)
                         , "{warp-category}", WarpUtils.getFormattedCategory(category), "{warp-name}", name));
                 break;
+        }
+    }
+
+    private void performDescriptionCheck(final String description, final Player player, final Warp warp) {
+        if (description.length() == 0) {
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_REMOVED_DESCRIPTION)
+                    , "{warp-name}", warp.getName()));
+        } else {
+            player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_SET_DESCRIPTION)
+                    , "{warp-description}", description, "{warp-name}", warp.getName()));
         }
     }
 }
