@@ -101,7 +101,7 @@ SOFTWARE.
     </safety-check>
 
     <!--
-    Teleport confirm wait time, after this timer expires teleport is thrown out of a que
+    Teleport confirm wait time, after this timer expires teleport is thrown out of a queue
     -->
     <teleport confirm-availability-time="500"/>
 
@@ -112,8 +112,8 @@ SOFTWARE.
     completed color:
     -->
     <teleport-display
-            method="title"
-            use-progress-bar="true"
+            method="actionbar"
+            use-progress-bar="false"
             completed-color="§3"
             uncompleted-color="§f"
             progress-bar-symbol="|"
@@ -125,7 +125,7 @@ SOFTWARE.
     -->
     <teleport-method>
         <title
-                top="${time}"
+                top="§7§oTeleporting.."
                 sub="${time}"
                 teleported-top="Teleported to ${warp}"
                 teleported-sub="${warp.description}"

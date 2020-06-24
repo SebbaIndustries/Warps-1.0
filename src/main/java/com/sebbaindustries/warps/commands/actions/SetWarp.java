@@ -24,7 +24,7 @@ public class SetWarp extends ICommand {
      */
     public SetWarp() {
         super("setwarp", "usage", 0);
-        permissions().add(EPermission.ROOT, EPermission.COMMANDS);
+        permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.CREATE);
         setPlayerOnly();
     }
 

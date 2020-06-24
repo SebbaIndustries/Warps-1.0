@@ -22,7 +22,7 @@ public class MoveWarp extends ICommand {
      */
     public MoveWarp() {
         super("movewarp", "usage", 1);
-        permissions().add(EPermission.ROOT, EPermission.COMMANDS);
+        permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.MOVE);
         setPlayerOnly();
     }
 

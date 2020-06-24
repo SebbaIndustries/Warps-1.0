@@ -18,7 +18,7 @@ public class ModifyWarp extends ICommand {
 
     public ModifyWarp() {
         super("modifywarp", "usage", 1);
-        permissions().add(EPermission.ROOT, EPermission.COMMANDS);
+        permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.MODIFY);
         setPlayerOnly();
     }
 
@@ -119,6 +119,8 @@ public class ModifyWarp extends ICommand {
                         , "{warp-previous-owner}", p.getName()
                         , "{warp-new-owner}", target.getName()));
                 break;
+            default:
+                p.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
         }
     }
 
@@ -167,6 +169,8 @@ public class ModifyWarp extends ICommand {
                 p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SET_WARP_CATEGORY)
                         , "{warp-category}", WarpUtils.getFormattedCategory(category), "{warp-name}", name));
                 break;
+            default:
+                p.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
         }
     }
 

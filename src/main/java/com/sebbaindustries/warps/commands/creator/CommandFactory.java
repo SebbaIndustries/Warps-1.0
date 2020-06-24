@@ -2,6 +2,7 @@ package com.sebbaindustries.warps.commands.creator;
 
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.actions.*;
+import com.sebbaindustries.warps.commands.creator.completion.*;
 import com.sebbaindustries.warps.utils.Color;
 import com.sebbaindustries.warps.warp.Warp;
 import com.sebbaindustries.warps.warp.WarpUtils;
@@ -9,6 +10,7 @@ import com.sebbaindustries.warps.warp.components.SafetyCheck;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,13 +23,12 @@ import java.util.stream.Stream;
 /**
  * <b>This class contains command handling and executing to it's sub-classes</b><br>
  *
- * @author sebbaindustries
+ * @author Sebba, Frcsty
  * @version 1.0
  */
 public class CommandFactory implements CommandExecutor {
 
     private final Set<ICommand> iCommands;
-    private final ICommand defaultICommand;
 
     /**
      * Main constructor, registers commands and it's sub classes <br>
@@ -37,14 +38,42 @@ public class CommandFactory implements CommandExecutor {
      */
     public CommandFactory(final @NotNull Core core) {
         // Register commands
-        Objects.requireNonNull(core.getCommand("warp")).setExecutor(this);
         Objects.requireNonNull(core.getCommand("warps")).setExecutor(this);
-        Objects.requireNonNull(core.getCommand("setwarp")).setExecutor(this);
-        Objects.requireNonNull(core.getCommand("delwarp")).setExecutor(this);
-        Objects.requireNonNull(core.getCommand("movewarp")).setExecutor(this);
-        Objects.requireNonNull(core.getCommand("modifywarp")).setExecutor(this);
-        Objects.requireNonNull(core.getCommand("ratewarp")).setExecutor(this);
-        Objects.requireNonNull(core.getCommand("listwarps")).setExecutor(this);
+
+        final PluginCommand warp = core.getCommand("warp");
+
+        Objects.requireNonNull(warp).setExecutor(this);
+        Objects.requireNonNull(warp).setTabCompleter(new WarpCompletion());
+
+        final PluginCommand set = core.getCommand("setwarp");
+
+        Objects.requireNonNull(set).setExecutor(this);
+        Objects.requireNonNull(set).setTabCompleter(new SetCompletion());
+
+        final PluginCommand delete = core.getCommand("delwarp");
+
+        Objects.requireNonNull(delete).setExecutor(this);
+        Objects.requireNonNull(delete).setTabCompleter(new DeleteCompletion());
+
+        final PluginCommand move = core.getCommand("movewarp");
+
+        Objects.requireNonNull(move).setExecutor(this);
+        Objects.requireNonNull(move).setTabCompleter(new MoveCompletion());
+
+        final PluginCommand modify = core.getCommand("modifywarp");
+
+        Objects.requireNonNull(modify).setExecutor(this);
+        Objects.requireNonNull(modify).setTabCompleter(new ModifyCompletion());
+
+        final PluginCommand rate = core.getCommand("ratewarp");
+
+        Objects.requireNonNull(rate).setExecutor(this);
+        Objects.requireNonNull(rate).setTabCompleter(new RateCompletion());
+
+        final PluginCommand list = core.getCommand("listwarps");
+
+        Objects.requireNonNull(list).setExecutor(this);
+        Objects.requireNonNull(list).setTabCompleter(new ListCompletion());
 
         // Register sub-commands
         iCommands = Stream.of(
@@ -57,8 +86,6 @@ public class CommandFactory implements CommandExecutor {
                 new WarpTeleportation(),
                 new WarpsMenu(core)
         ).collect(Collectors.toSet());
-        // Find "default" command
-        defaultICommand = iCommands.stream().filter(ICommand::isDef).findAny().orElseThrow(NoDefaultCommandException::new);
         // Check if every command has at least 1 permission attached to them
         iCommands.forEach(iCommand -> {
             if (iCommand.permissions().getPermissions().isEmpty()) throw new NoPermissionSetCommandException();

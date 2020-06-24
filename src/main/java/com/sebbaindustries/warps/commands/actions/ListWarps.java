@@ -20,7 +20,7 @@ public class ListWarps extends ICommand {
 
     public ListWarps() {
         super("listwarps", "usage", 0);
-        permissions().add(EPermission.ROOT, EPermission.COMMANDS);
+        permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.LIST);
     }
 
     @Override

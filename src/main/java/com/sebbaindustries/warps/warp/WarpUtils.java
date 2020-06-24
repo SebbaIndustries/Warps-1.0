@@ -193,6 +193,17 @@ public class WarpUtils {
     }
 
     /*
+    Returns a list of all warps
+     */
+    public static List<String> getAllWarps() {
+        final List<String> warps = new ArrayList<>();
+        final Map<String, Warp> warpMap = Core.gCore.warpStorage.getWarpHashMap();
+
+        warpMap.forEach((name, warp) -> warps.add(name));
+        return warps;
+    }
+
+    /*
     Returns a list of warp owners
      */
     public static List<String> getWarpOwners() {

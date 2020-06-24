@@ -19,7 +19,7 @@ public class RateWarp extends ICommand {
      */
     public RateWarp() {
         super("ratewarp", "usage", 2);
-        permissions().add(EPermission.ROOT, EPermission.COMMANDS);
+        permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.RATE);
         setPlayerOnly();
     }
 

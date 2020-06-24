@@ -26,7 +26,7 @@ public enum EPermission {
     TELEPORT("warps.command.teleport"),
     MENU("warps.command.menu"),
     RATE("warps.command.rate"),
-    DESCRIPTION("warps.command.description"),
+    MODIFY("warps.command.modify"),
     LIST("warps.command.list"),
     LIST_OTHERS("warps.command.list.others"),
     CATEGORY("warps.command.category"),
