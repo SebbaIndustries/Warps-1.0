@@ -21,10 +21,24 @@ public class FileManager {
 
     public FileManager(final @NotNull Core core) {
         this.core = core;
+        generateHikariProps();
         generateREADME();
         generateMessages();
         generateSettings();
         generateConfiguration();
+        generateWarpInterface();
+    }
+
+    /*
+    hikari.properties File
+     */
+
+    public final void generateHikariProps() {
+        File README = new File(core.getDataFolder(), "hikari.properties");
+
+        if (!README.exists()) {
+            core.saveResource("hikari.properties", false);
+        }
     }
 
     /*
@@ -75,6 +89,24 @@ public class FileManager {
         }
         if (!settings.exists()) {
             core.saveResource("settings.xml", false);
+        }
+    }
+
+    /*
+    warpInterface.xml
+     */
+
+    public File warpInterface;
+
+    /**
+     * Generates warpInterface.xml File
+     */
+    public final void generateWarpInterface() {
+        if (warpInterface == null) {
+            warpInterface = new File(core.getDataFolder(), "warpInterface.xml");
+        }
+        if (!warpInterface.exists()) {
+            core.saveResource("warpInterface.xml", false);
         }
     }
 

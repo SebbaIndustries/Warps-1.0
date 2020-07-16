@@ -5,7 +5,7 @@ package com.sebbaindustries.warps.message;
  * @author sebbaindustries
  * @version 1.0
  */
-public enum IMessage {
+public enum EMessage {
 
     NO_PERMISSION(0),
     FAILED_WARP_CREATION(1),
@@ -28,11 +28,21 @@ public enum IMessage {
     PRIVATE_WARP_RATING(18),
     RATED_WARP(19),
     CANT_RATE_OWN_WARP(20),
+    TOO_LONG_WARP_DESCRIPTION(21),
+    SUCCESSFULLY_SET_DESCRIPTION(22),
+    SUCCESSFULLY_REMOVED_DESCRIPTION(23),
+    NO_CREATED_WARPS(24),
+    LISTED_WARPS(25),
+    ALL_LISTED_WARPS(30),
+    TARGET_IS_WITHOUT_WARPS(26),
+    SET_WARP_CATEGORY(27),
+    NO_CATEGORY_WARPS(28),
+    INVALID_CATEGORY(29),
     ;
 
     public Integer ID;
 
-    IMessage(Integer ID) {
+    EMessage(Integer ID) {
         this.ID = ID;
     }
 }

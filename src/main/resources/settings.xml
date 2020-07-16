@@ -23,6 +23,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <settings>
+    <!--
+    Warp settings, unlimited groups, based on permissions
+    <warp-settings
+            permission="permission"
+            maxwarps="Integer"
+            Environment.NORMAL="true/false"
+            Environment.NETHER="true/false"
+            Environment.THE_END="true/false"
+            teleport-wait-time="Integer(20=1second)"
+            max-description-length="Integer, 1=1 UTF character"
+    />
+    Make sure that everything is in double quotes (""), so plugin can parse values correctly
+    -->
     <warp-settings
             permission="warp.rank.default"
             maxwarps="1"
@@ -30,6 +43,7 @@ SOFTWARE.
             Environment.NETHER="false"
             Environment.THE_END="false"
             teleport-wait-time="60"
+            max-description-length="50"
     />
     <warp-settings
             permission="warp.rank.iron"
@@ -38,6 +52,7 @@ SOFTWARE.
             Environment.NETHER="false"
             Environment.THE_END="false"
             teleport-wait-time="60"
+            max-description-length="50"
     />
     <warp-settings
             permission="warp.rank.gold"
@@ -46,6 +61,7 @@ SOFTWARE.
             Environment.NETHER="true"
             Environment.THE_END="false"
             teleport-wait-time="60"
+            max-description-length="50"
     />
     <warp-settings
             permission="warp.rank.diamond"
@@ -54,6 +70,7 @@ SOFTWARE.
             Environment.NETHER="true"
             Environment.THE_END="false"
             teleport-wait-time="60"
+            max-description-length="50"
     />
     <warp-settings
             permission="warp.rank.emerald"
@@ -62,41 +79,68 @@ SOFTWARE.
             Environment.NETHER="true"
             Environment.THE_END="true"
             teleport-wait-time="60"
+            max-description-length="50"
     />
 
+    <!--
+    Blacklisted names for warps, plugin won't allow warps to be created with this names, unless player/console has
+    permission to bypass this check. Bypass perm: TODO add bypass perm here
+    -->
     <blacklisted-warp-names>fuck me I hate this shit please kill me</blacklisted-warp-names>
+
+    <!--
+    Safety check:
+      - Blacklisted items: checks block that player is standing on
+      - Ring check: checks radius  around the player for blacklisted blocks. (1 = 3x3 check, 2 = 5x5 check)
+      There is no max value for ring check, but it's not recommended to set a value that is higher than 5.
+      Recommended and default: 1
+    -->
     <safety-check>
         <blacklisted-items allow-in-air-warps="false">PRESSURE_PLATE TRAPDOOR LAVA</blacklisted-items>
         <ring-check radius="1">LAVA WATER CACTUS</ring-check>
     </safety-check>
 
-    <teleport
-            confirm-availability-time="500"
-    />
+    <!--
+    Teleport confirm wait time, after this timer expires teleport is thrown out of a queue
+    -->
+    <teleport confirm-availability-time="500"/>
 
+    <!--
+    Teleport countdown, this contains all settings that can be changed
+    method: Title/actionbar/chat/none (recommended and default: title)
+    use-progress-bar: true/false (default: true)
+    completed color:
+    -->
     <teleport-display
-            method="title"
-            use-progress-bar="true"
+            method="actionbar"
+            use-progress-bar="false"
             completed-color="§3"
             uncompleted-color="§f"
             progress-bar-symbol="|"
             progress-bar-length="42"
     />
+
+    <!--
+    Teleport methods (title/actionbar/chat) configuration
+    -->
     <teleport-method>
         <title
-                top="${time}"
+                top="§7§oTeleporting.."
                 sub="${time}"
+                teleported-top="Teleported to ${warp}"
+                teleported-sub="${warp.description}"
                 fadein="10"
                 fadeout="10"
         />
 
         <actionbar
                 text="Teleporting in %time%"
+                teleported="Teleported to ${warp}, ${warp.description}"
         />
 
         <chat
                 text="Teleporting in %time% seconds"
-                text-send-frequency="20"
+                teleported="Teleported to ${warp}, ${warp.description}"
         />
     </teleport-method>
 

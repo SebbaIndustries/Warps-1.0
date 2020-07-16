@@ -164,4 +164,56 @@ SOFTWARE.
     <message id="20">
         <msg lang="EN" prefix="true">You can't rate your own warp..</msg>
     </message>
+
+    <!-- Too long warp description -->
+    <message id="21">
+        <msg lang="EN" prefix="true">Inputted description is too long.</msg>
+    </message>
+
+    <!-- Successfully set warps description -->
+    <message id="22">
+        <msg lang="EN" prefix="true">Successfully set warps description to: {warp-description}</msg>
+    </message>
+
+    <!-- Removed warps description -->
+    <message id="23">
+        <msg lang="EN" prefix="true">Successfully removed {warp-name} Warp's description!</msg>
+    </message>
+
+    <!-- No warps message -->
+    <message id="24">
+        <msg lang="EN" prefix="true">There is no warps created!</msg>
+    </message>
+
+    <!-- Listed warps message -->
+    <message id="25">
+        <msg lang="EN" prefix="false">§8[§b{target-name}'s Warps§8] §f{warp-names}</msg>
+    </message>
+
+    <!-- All listed warps message -->
+    <message id="30">
+        <msg lang="EN" prefix="false">§bOfficial Warps§8: §e{official-warp-names}
+
+§bPlayer Warps§8: §f{player-warp-names}</msg>
+    </message>
+
+    <!-- Target has no warps message -->
+    <message id="26">
+        <msg lang="EN" prefix="true">Target does not have any warps!</msg>
+    </message>
+
+    <!-- Set warps category -->
+    <message id="27">
+        <msg lang="EN" prefix="true">Set {warp-name} Warp's category to {warp-category}</msg>
+    </message>
+
+    <!-- No entered category warps -->
+    <message id="28">
+        <msg lang="EN" prefix="true">There is no {warp-category} Warps!</msg>
+    </message>
+
+    <!-- Invalid entered category -->
+    <message id="29">
+        <msg lang="EN" prefix="true">Invalid category selected!</msg>
+    </message>
 </messages>

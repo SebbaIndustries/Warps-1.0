@@ -1,5 +1,7 @@
 package com.sebbaindustries.warps.warp;
 
+import com.sebbaindustries.warps.Core;
+import com.sebbaindustries.warps.warp.components.WarpLocation;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -13,46 +15,41 @@ import java.util.UUID;
  * <b>Warp data type, containing all information about warp</b><br>
  * ID of the warp - ID<br>
  * Name of the warp - name<br>
- * Type of the warp - Enum Type<br>
+ * Type of the warp - EnumCheck Type<br>
  * Location of the warp - WarpLocation Class<br>
  * Owner of the warp - owner<br>
  * Warp accessibility - accessibility<br>
  * Warp ratings - ratings<br>
  * <br>
+ *
  * @author sebbaindustries
  * @version 1.1
  */
 public class Warp {
 
-    private final UUID ID;
+    private final int ID;
+    private final Map<UUID, Integer> ratings = new HashMap<>();
     private String name;
     private Type type;
     private boolean accessibility = true;
-
-    private Player owner;
-
+    private String owner;
     private WarpLocation warpLocation;
-    private final Map<UUID, Integer> ratings = new HashMap<>();
+    private String description = "N/A";
 
-    /**
-     * Generates random UUID, frosty said that they won't repeat, so :/
-     * @return random UUID
-     */
-    private UUID generateID() {
-        return UUID.randomUUID();
-    }
+    private Category category = Category.UNDEFINED;
 
     /**
      * Warp constructor, for creating warp with direct location from the player.
-     * @param type Type of warp
+     *
+     * @param type  Type of warp
      * @param owner Owner of the warp and location
-     * @param name Name of the warp, if name is null warp gets owners name
+     * @param name  Name of the warp, if name is null warp gets owners name
      */
     public Warp(final @NotNull Type type, final @NotNull Player owner, final String name) {
-        this.ID = generateID();
+        this.ID = Core.gCore.warpStorage.genNextID();
 
         this.type = type;
-        this.owner = owner;
+        this.owner = owner.getName();
 
         Location loc = owner.getLocation();
         warpLocation = new WarpLocation(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
@@ -67,19 +64,20 @@ public class Warp {
 
     /**
      * Warp constructor, for creating warp with custom parameters
-     * @param type Type of warp
+     *
+     * @param type  Type of warp
      * @param owner Owner of the warp
-     * @param name Name of the warp
+     * @param name  Name of the warp
      * @param world warps world
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
-     * @param yaw Yaw coordinate
+     * @param x     X coordinate
+     * @param y     Y coordinate
+     * @param z     Z coordinate
+     * @param yaw   Yaw coordinate
      * @param pitch Pitch coordinate
      */
-    public Warp(final @NotNull Type type, final @NotNull Player owner, final String name
-                , final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
-        this.ID = generateID();
+    public Warp(final @NotNull Type type, final @NotNull String owner, final String name,
+                final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
+        this.ID = Core.gCore.warpStorage.genNextID();
 
         this.type = type;
         this.owner = owner;
@@ -88,7 +86,37 @@ public class Warp {
 
         // check for name
         if (name == null) {
-            this.name = owner.getName();
+            this.name = owner;
+            return;
+        }
+        this.name = name;
+    }
+
+    /**
+     * Warp constructor, for creating warp with custom parameters with sql queries
+     *
+     * @param type  Type of warp
+     * @param owner Owner of the warp
+     * @param name  Name of the warp
+     * @param world warps world
+     * @param x     X coordinate
+     * @param y     Y coordinate
+     * @param z     Z coordinate
+     * @param yaw   Yaw coordinate
+     * @param pitch Pitch coordinate
+     */
+    public Warp(final int ID, final @NotNull Type type, final @NotNull String owner, final String name,
+                final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
+        this.ID = ID;
+
+        this.type = type;
+        this.owner = owner;
+
+        warpLocation = new WarpLocation(world, x, y, z, yaw, pitch);
+
+        // check for name
+        if (name == null) {
+            this.name = owner;
             return;
         }
         this.name = name;
@@ -103,6 +131,7 @@ public class Warp {
 
     /**
      * Changes name of the warp
+     *
      * @param name Name of the warp
      */
     public final void setName(final @NotNull String name) {
@@ -110,10 +139,10 @@ public class Warp {
     }
 
     /**
-     * @return UUID of warp
+     * @return ID of warp
      */
-    public final String getID() {
-        return ID.toString();
+    public final int getID() {
+        return ID;
     }
 
     /**
@@ -125,6 +154,7 @@ public class Warp {
 
     /**
      * Changes warp type
+     *
      * @param type Type of the warp
      */
     public final void setType(final @NotNull Type type) {
@@ -141,6 +171,7 @@ public class Warp {
     /**
      * Changes warp accessibility
      * Defaults to true!
+     *
      * @param accessibility public/private
      */
     public final void setAccessibility(final @NotNull Boolean accessibility) {
@@ -150,21 +181,31 @@ public class Warp {
     /**
      * @return Owner of the warp
      */
-    public final Player getOwner() {
+    public final String getOwner() {
         return owner;
     }
 
     /**
      * Changes owner of the warp
+     *
      * @param owner Player instance
      */
     public final void setOwner(final @NotNull Player owner) {
+        this.owner = owner.getName();
+    }
+
+    /**
+     * Changes owner of the warp
+     *
+     * @param owner Owner name
+     */
+    public final void setOwner(final @NotNull String owner) {
         this.owner = owner;
     }
 
     /**
-     * @see WarpLocation
      * @return Location of the warp
+     * @see WarpLocation
      */
     public final WarpLocation getLocation() {
         return warpLocation;
@@ -172,6 +213,7 @@ public class Warp {
 
     /**
      * Updates warp location, overrides old values
+     *
      * @param warpLocation New warp location
      */
     public final void setLocation(WarpLocation warpLocation) {
@@ -180,8 +222,9 @@ public class Warp {
 
     /**
      * Adds a rating to the warp (resets old users rating)
+     *
      * @param rater rater's uuid
-     * @param rate int (1-10)
+     * @param rate  int (1-10)
      */
     public final void setRating(final UUID rater, final int rate) {
         this.ratings.put(rater, rate);
@@ -190,17 +233,71 @@ public class Warp {
     /**
      * Gets the warps ratings
      */
-    public Map<UUID, Integer> getRatings() {
+    public final Map<UUID, Integer> getRatings() {
         return ratings;
     }
 
     /**
-     * Enum containing types of the warp
+     * Gets the warps description
+     */
+    public final String getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets the warps description
+     *
+     * @param description warps new description
+     */
+    public final void setDescription(final String description) {
+        this.description = description;
+    }
+
+    /**
+     * Gets the warps category
+     */
+    public final Category getCategory() {
+        return category;
+    }
+
+    /**
+     * Sets the warps category
+     *
+     * @param category warps new category
+     */
+    public final void setCategory(final Category category) {
+        this.category = category;
+    }
+
+    /**
+     * EnumCheck containing types of the warp
      */
     public enum Type {
-        SERVER,
-        PLAYER,
+        SERVER(0),
+        PLAYER(1),
         ;
+
+        public int id;
+
+        Type(int id) {
+            this.id = id;
+        }
+    }
+
+    public enum Category {
+        SHOP(0),
+        PVP(1),
+        MINIGAME(2),
+        OTHER(3),
+        REALESTATE(4),
+        UNDEFINED(5),
+        ;
+
+        public int id;
+
+        Category(int id) {
+            this.id = id;
+        }
     }
 
 }

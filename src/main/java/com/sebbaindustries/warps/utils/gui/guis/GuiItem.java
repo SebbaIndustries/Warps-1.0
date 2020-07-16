@@ -12,12 +12,13 @@ import static com.sebbaindustries.warps.utils.gui.components.ItemNBT.setNBTTag;
 
 public final class GuiItem {
 
-    // Random UUID to identify the idem when clicking
-    private final UUID uuid = UUID.randomUUID();
     // Action to do when clicking on the item
     private GuiAction<InventoryClickEvent> action;
+
     // The ItemStack of the GuiItem
     private ItemStack itemStack;
+    // Random UUID to identify the idem when clicking
+    private final UUID uuid = UUID.randomUUID();
 
     /**
      * Main constructor of the GuiItem
@@ -46,15 +47,6 @@ public final class GuiItem {
     }
 
     /**
-     * Gets the GuiItem's ItemStack
-     *
-     * @return The ItemStack
-     */
-    public ItemStack getItemStack() {
-        return itemStack;
-    }
-
-    /**
      * Replaces the ItemStack of the GUI Item
      *
      * @param itemStack The new ItemStack
@@ -62,6 +54,24 @@ public final class GuiItem {
     public void setItemStack(@NotNull final ItemStack itemStack) {
         Validate.notNull(itemStack, "The itemstack for the GUI Item cannot be null!");
         this.itemStack = setNBTTag(itemStack, "mf-gui", uuid.toString());
+    }
+
+    /**
+     * Replaces the action of the current GUI Item
+     *
+     * @param action The new action to set
+     */
+    public void setAction(final GuiAction<InventoryClickEvent> action) {
+        this.action = action;
+    }
+
+    /**
+     * Gets the GuiItem's ItemStack
+     *
+     * @return The ItemStack
+     */
+    public ItemStack getItemStack() {
+        return itemStack;
     }
 
     /**
@@ -76,15 +86,6 @@ public final class GuiItem {
      */
     GuiAction<InventoryClickEvent> getAction() {
         return action;
-    }
-
-    /**
-     * Replaces the action of the current GUI Item
-     *
-     * @param action The new action to set
-     */
-    public void setAction(final GuiAction<InventoryClickEvent> action) {
-        this.action = action;
     }
 
 }

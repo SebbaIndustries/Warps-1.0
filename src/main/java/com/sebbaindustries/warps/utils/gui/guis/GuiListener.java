@@ -105,7 +105,7 @@ public final class GuiListener implements Listener {
         // GUI
         final BaseGui gui = (BaseGui) event.getInventory().getHolder();
 
-        /* The GUI action for closing */
+        // The GUI action for closing
         final GuiAction<InventoryCloseEvent> closeAction = gui.getCloseGuiAction();
 
         // Checks if there is or not an action set and executes it

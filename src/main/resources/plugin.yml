@@ -24,7 +24,7 @@ name: 'Warps'
 version: ${project.version}
 main: com.sebbaindustries.warps.Core
 prefix: 'Warps'
-load: STARTUP
+load: POSTWORLD
 api-version: '1.15'
 authors: ["SebbaIndustries", "Frcsty"]
 description: ${project.description}
@@ -32,6 +32,17 @@ description: ${project.description}
 commands:
   warp:
     permission: warps.command.warp
-    aliases:
-      - warps
-    description: "https://cdn.discordapp.com/attachments/695431668944732270/710494721033633822/5af.png"
+  warps:
+    permission: warps.command.warps
+  setwarp:
+    permission: warps.command.setwarp
+  delwarp:
+    permission: warps.command.delwarp
+  movewarp:
+    permission: warps.command.movewarp
+  modifywarp:
+    permission: warps.command.modifywarp
+  ratewarp:
+    permission: warps.command.ratewarp
+  listwarps:
+    permission: warps.command.listwarps

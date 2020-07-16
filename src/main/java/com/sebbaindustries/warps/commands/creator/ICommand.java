@@ -1,6 +1,6 @@
 package com.sebbaindustries.warps.commands.creator;
 
-import com.sebbaindustries.warps.commands.permissions.IPermission;
+import com.sebbaindustries.warps.commands.permissions.EPermission;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +18,7 @@ public abstract class ICommand {
 
     private final String argument;
     private final String usage;
-    private Integer minArgs = 0;
+    private Integer minArgs;
     private Integer maxArgs;
     private boolean def = false;
     private boolean playerOnly = false;
@@ -91,7 +91,6 @@ public abstract class ICommand {
 
     /**
      * Changes if command is default or not
-     * @param def true/false
      */
     public void setDef() {
         this.def = true;
@@ -99,7 +98,6 @@ public abstract class ICommand {
 
     /**
      * Changes whether or not the command contains %s placeholders
-     * @param placeholders true/false
      */
     public void setPlaceholders() { this.placeholders = true; }
 
@@ -136,21 +134,21 @@ public abstract class ICommand {
      */
     protected static class Permissions {
 
-        private List<IPermission> permissions = new ArrayList<>();
+        private List<EPermission> permissions = new ArrayList<>();
 
         /**
          * @return List of all permission command has
          */
-        public List<IPermission> getPermissions() {
+        public List<EPermission> getPermissions() {
             return permissions;
         }
 
         /**
          * Adds permission to the list <br>
-         * @see IPermission
-         * @param permissions IPermission enums
+         * @see EPermission
+         * @param permissions EPermission enums
          */
-        public void add(IPermission... permissions) {
+        public void add(EPermission... permissions) {
             this.permissions.addAll(Arrays.asList(permissions));
         }
     }

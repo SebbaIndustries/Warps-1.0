@@ -17,7 +17,7 @@ import java.io.FileReader;
  */
 public abstract class MessageFactory {
 
-    public abstract String get(IMessage iMessage);
+    public abstract String get(EMessage eMessage);
     public abstract String getPrefix();
     public abstract void reloadMessages();
 

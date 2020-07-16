@@ -16,13 +16,13 @@ public class Message extends MessageFactory {
 
     /**
      * Gets specified message from the hashmap, returns error if message does not exist <br>
-     * @see IMessage
-     * @param iMessage Enum for messages
+     * @see EMessage
+     * @param eMessage EnumCheck for messages
      * @return Translated message
      */
     @Override
-    public final String get(final @NotNull IMessage iMessage) {
-        return messages.get(iMessage.ID);
+    public final String get(final @NotNull EMessage eMessage) {
+        return messages.get(eMessage.ID);
     }
 
     /**
@@ -40,8 +40,8 @@ public class Message extends MessageFactory {
     public void reloadMessages() {
         prefix = getMessagePrefix();
         messages.clear();
-        for (final IMessage iMessage : IMessage.values()) {
-            messages.put(iMessage.ID, getMessage(iMessage.ID));
+        for (final EMessage eMessage : EMessage.values()) {
+            messages.put(eMessage.ID, getMessage(eMessage.ID));
         }
     }
 }

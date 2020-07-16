@@ -1,15 +1,19 @@
 package com.sebbaindustries.warps.commands.creator;
 
 import com.sebbaindustries.warps.Core;
-import com.sebbaindustries.warps.commands.subs.*;
+import com.sebbaindustries.warps.commands.actions.*;
+import com.sebbaindustries.warps.commands.creator.completion.*;
 import com.sebbaindustries.warps.utils.Color;
+import com.sebbaindustries.warps.warp.Warp;
+import com.sebbaindustries.warps.warp.WarpUtils;
+import com.sebbaindustries.warps.warp.components.SafetyCheck;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -19,13 +23,12 @@ import java.util.stream.Stream;
 /**
  * <b>This class contains command handling and executing to it's sub-classes</b><br>
  *
- * @author sebbaindustries
+ * @author Sebba, Frcsty
  * @version 1.0
  */
 public class CommandFactory implements CommandExecutor {
 
     private final Set<ICommand> iCommands;
-    private final ICommand defaultICommand;
 
     /**
      * Main constructor, registers commands and it's sub classes <br>
@@ -35,20 +38,54 @@ public class CommandFactory implements CommandExecutor {
      */
     public CommandFactory(final @NotNull Core core) {
         // Register commands
-        Objects.requireNonNull(core.getCommand("warp")).setExecutor(this);
+        Objects.requireNonNull(core.getCommand("warps")).setExecutor(this);
+
+        final PluginCommand warp = core.getCommand("warp");
+
+        Objects.requireNonNull(warp).setExecutor(this);
+        Objects.requireNonNull(warp).setTabCompleter(new WarpCompletion());
+
+        final PluginCommand set = core.getCommand("setwarp");
+
+        Objects.requireNonNull(set).setExecutor(this);
+        Objects.requireNonNull(set).setTabCompleter(new SetCompletion());
+
+        final PluginCommand delete = core.getCommand("delwarp");
+
+        Objects.requireNonNull(delete).setExecutor(this);
+        Objects.requireNonNull(delete).setTabCompleter(new DeleteCompletion());
+
+        final PluginCommand move = core.getCommand("movewarp");
+
+        Objects.requireNonNull(move).setExecutor(this);
+        Objects.requireNonNull(move).setTabCompleter(new MoveCompletion());
+
+        final PluginCommand modify = core.getCommand("modifywarp");
+
+        Objects.requireNonNull(modify).setExecutor(this);
+        Objects.requireNonNull(modify).setTabCompleter(new ModifyCompletion());
+
+        final PluginCommand rate = core.getCommand("ratewarp");
+
+        Objects.requireNonNull(rate).setExecutor(this);
+        Objects.requireNonNull(rate).setTabCompleter(new RateCompletion());
+
+        final PluginCommand list = core.getCommand("listwarps");
+
+        Objects.requireNonNull(list).setExecutor(this);
+        Objects.requireNonNull(list).setTabCompleter(new ListCompletion());
 
         // Register sub-commands
         iCommands = Stream.of(
-                new WarpCreate(),
-                new WarpChange(),
-                new WarpDelete(),
+                new SetWarp(),
+                new RateWarp(),
+                new MoveWarp(),
+                new ModifyWarp(),
+                new ListWarps(),
+                new DelWarp(),
                 new WarpTeleportation(),
-                new WarpsMenu(),
-                new WarpRate(),
-                new SettingsDebug()
-                ).collect(Collectors.toSet());
-        // Find "default" command
-        defaultICommand = iCommands.stream().filter(ICommand::isDef).findAny().orElseThrow(NoDefaultCommandException::new);
+                new WarpsMenu(core)
+        ).collect(Collectors.toSet());
         // Check if every command has at least 1 permission attached to them
         iCommands.forEach(iCommand -> {
             if (iCommand.permissions().getPermissions().isEmpty()) throw new NoPermissionSetCommandException();
@@ -58,52 +95,76 @@ public class CommandFactory implements CommandExecutor {
     /**
      * @param sender  Player or console instance
      * @param command Command class
-     * @param label   todo open gui if label == "warps"
+     * @param label   command label
      * @param args    command arguments
      * @return True ALWAYS FUCKING true, if you change this I quit.
      * @see CommandExecutor
      */
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command command, final @NotNull String label, final @NotNull String[] args) {
-
-        // Check length if there is no arguments execute base command,
-        if (args.length == 0) {
-            defaultICommand.execute(sender, args);
-            return true;
-        }
-
         // Check if first argument equals to any subs
-        final Optional<ICommand> optionalCommand = iCommands.stream().filter(cmd -> cmd.getArgument().equalsIgnoreCase(args[0])).findAny();
+        final Optional<ICommand> baseCommand = iCommands.stream().filter(cmd -> cmd.getArgument().equalsIgnoreCase(command.getName())).findAny();
 
-        // TODO remove this add check for warps here
-        if (!optionalCommand.isPresent()) {
-            sender.sendMessage(Color.chat("&cUnknown Command.")); //plugin.getConfig().getString("settings.unknown-command")));
+        if (!baseCommand.isPresent()) {
+            sender.sendMessage("Invalid command!");
             return true;
         }
 
-        final ICommand cmd = optionalCommand.get();
+        final ICommand cmd = baseCommand.get();
+
+        if (cmd.isDef()) {
+            cmd.execute(sender, args);
+            return true;
+        }
+
+        if (cmd.getArgument().equalsIgnoreCase("warp")) {
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("You cannot use this through console!");
+                return true;
+            }
+            final Warp warp = Core.gCore.warpStorage.getWarp(args[0]);
+
+            if (warp == null) {
+                sender.sendMessage("Invalid warp!");
+                return true;
+            }
+
+            if (!warp.getAccessibility()) {
+                sender.sendMessage("Private warp");
+                return true;
+            }
+
+            if (!SafetyCheck.isLocationSafe(warp.getLocation())) {
+                sender.sendMessage("Invalid warp location!");
+                return true;
+            }
+            ((Player) sender).teleport(WarpUtils.convertWarpLocation(warp.getLocation()));
+            // teleport player to warp (add safety check)
+
+            return true;
+        }
 
         // Check if console can execute this sub-command
         // TODO add same thing for players
         if (cmd.isPlayerOnly() && !(sender instanceof Player)) {
-            sender.sendMessage(Color.chat("&cThis command can not be executed in console!")); //plugin.getConfig().getString("settings.player-only")));
+            sender.sendMessage(Color.chat("&cThis command can not be executed in console!"));
             return true;
         }
 
         // Check if player has permission to execute this sub-command
         if (!checkPermissions(cmd, sender)) {
-            sender.sendMessage(Color.chat("&cYou do not have permission to execute this command Jimbo.")); // plugin.getConfig().getString("settings.no-permission")));
+            sender.sendMessage(Color.chat("&cYou do not have permission to execute this command Jimbo."));
             return true;
         }
 
         // Check if usage is correct (prevents some nasty NPEs)
-        if (cmd.getMinArgs() > Arrays.copyOfRange(args, 1, args.length).length || cmd.getMaxArgs() < Arrays.copyOfRange(args, 1, args.length).length) {
-            sender.sendMessage(Color.chat("Invalid Usage! Usage /warps " + cmd.getUsage()));
+        if (cmd.getMinArgs() > args.length) {
+            sender.sendMessage(Color.chat("Invalid Usage! Usage " + cmd.getUsage()));
             return true;
         }
 
-        // Finally execute this sub-command
-        cmd.execute(sender, Arrays.copyOfRange(args, 1, args.length));
+        // Finally execute this command
+        cmd.execute(sender, args);
         return true;
 
     }

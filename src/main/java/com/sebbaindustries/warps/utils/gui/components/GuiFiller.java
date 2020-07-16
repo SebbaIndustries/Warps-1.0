@@ -151,8 +151,7 @@ public final class GuiFiller {
      * @param guiItems GuiItem
      */
     public void fill(@NotNull final List<GuiItem> guiItems) {
-        if (gui instanceof PaginatedGui)
-            throw new GuiException("Full filling a GUI is not supported in a Paginated GUI!");
+        if (gui instanceof PaginatedGui) throw new GuiException("Full filling a GUI is not supported in a Paginated GUI!");
 
         final int rows = gui.getRows();
         final List<GuiItem> items = repeatList(guiItems, rows * 9);
