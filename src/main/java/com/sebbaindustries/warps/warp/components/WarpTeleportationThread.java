@@ -70,9 +70,6 @@ public class WarpTeleportationThread extends Thread {
             case "actionbar":
                 actionbar();
                 break;
-            case "chat":
-                chat();
-                break;
             default:
                 int waitTime = seconds * 1000;
                 try {

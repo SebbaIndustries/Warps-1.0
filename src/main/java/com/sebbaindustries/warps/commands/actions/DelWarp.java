@@ -3,6 +3,7 @@ package com.sebbaindustries.warps.commands.actions;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
+import com.sebbaindustries.warps.database.DBWarpUtils;
 import com.sebbaindustries.warps.message.EMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.Warp;
@@ -11,13 +12,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.CompletableFuture;
+
 public class DelWarp extends ICommand {
 
     /**
      * Constructor that creates ICommand instance with all necessary arguments
      */
     public DelWarp() {
-        super("delwarp", "usage", 0);
+        super("delwarp", "/delwarp <warp>", 0);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.DELETE);
     }
 
@@ -57,6 +60,7 @@ public class DelWarp extends ICommand {
         }
 
         if (Core.gCore.warpStorage.deleteWarp(name)) {
+            delWarp(warp);
             p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_REMOVED_WARP)
                     , "{warp-name}", name
                     , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
@@ -84,6 +88,7 @@ public class DelWarp extends ICommand {
         }
 
         if (Core.gCore.warpStorage.deleteWarp(name)) {
+            delWarp(warp);
             p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_REMOVED_WARP)
                     , "{warp-name}", name
                     , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
@@ -108,6 +113,7 @@ public class DelWarp extends ICommand {
         }
 
         if (Core.gCore.warpStorage.deleteWarp(name)) {
+            delWarp(warp);
             p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_REMOVED_WARP)
                     , "{warp-name}", name
                     , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
@@ -116,5 +122,15 @@ public class DelWarp extends ICommand {
         }
 
         p.sendMessage(Core.gCore.message.get(EMessage.FAILED_TO_REMOVE_WARP));
+    }
+
+    private void delWarp(Warp warp) {
+        CompletableFuture.supplyAsync(() -> {
+            DBWarpUtils.deleteWarp(warp);
+            return null;
+        }).exceptionally(e -> {
+            e.printStackTrace();
+            return null;
+        });
     }
 }

@@ -33,6 +33,7 @@ SOFTWARE.
             Environment.THE_END="true/false"
             teleport-wait-time="Integer(20=1second)"
             max-description-length="Integer, 1=1 UTF character"
+            name-first-warp-after-player="true/false"
     />
     Make sure that everything is in double quotes (""), so plugin can parse values correctly
     -->
@@ -44,6 +45,7 @@ SOFTWARE.
             Environment.THE_END="false"
             teleport-wait-time="60"
             max-description-length="50"
+            name-first-warp-after-player="true"
     />
     <warp-settings
             permission="warp.rank.iron"
@@ -53,6 +55,7 @@ SOFTWARE.
             Environment.THE_END="false"
             teleport-wait-time="60"
             max-description-length="50"
+            name-first-warp-after-player="true"
     />
     <warp-settings
             permission="warp.rank.gold"
@@ -62,6 +65,7 @@ SOFTWARE.
             Environment.THE_END="false"
             teleport-wait-time="60"
             max-description-length="50"
+            name-first-warp-after-player="true"
     />
     <warp-settings
             permission="warp.rank.diamond"
@@ -71,6 +75,7 @@ SOFTWARE.
             Environment.THE_END="false"
             teleport-wait-time="60"
             max-description-length="50"
+            name-first-warp-after-player="true"
     />
     <warp-settings
             permission="warp.rank.emerald"
@@ -80,6 +85,7 @@ SOFTWARE.
             Environment.THE_END="true"
             teleport-wait-time="60"
             max-description-length="50"
+            name-first-warp-after-player="true"
     />
 
     <!--
@@ -87,6 +93,22 @@ SOFTWARE.
     permission to bypass this check. Bypass perm: TODO add bypass perm here
     -->
     <blacklisted-warp-names>fuck me I hate this shit please kill me</blacklisted-warp-names>
+
+    <!--
+    Settings for logging warp visits, length determines how many days plugin saves, 0 is counted as day so if length
+    is for example 6 plugin will log 7 days (0, 1, 2, 3, 4, 5, 6) == 7days, data older than set length is deleted.
+
+    Display:
+      - "sum" : visits are summed up from logged days
+      - "avg" : average number visits per day
+
+    c
+    -->
+    <warp-visits
+            length="6"
+            display="sum"
+            counted-visits-per-day="3"
+    />
 
     <!--
     Safety check:
@@ -107,12 +129,12 @@ SOFTWARE.
 
     <!--
     Teleport countdown, this contains all settings that can be changed
-    method: Title/actionbar/chat/none (recommended and default: title)
+    method: Title OR actionbar (recommended and default: title)
     use-progress-bar: true/false (default: true)
     completed color:
     -->
     <teleport-display
-            method="actionbar"
+            method="title"
             use-progress-bar="false"
             completed-color="§3"
             uncompleted-color="§f"
@@ -121,26 +143,21 @@ SOFTWARE.
     />
 
     <!--
-    Teleport methods (title/actionbar/chat) configuration
+    Teleport methods (title/actionbar) configuration
     -->
     <teleport-method>
         <title
                 top="§7§oTeleporting.."
                 sub="${time}"
-                teleported-top="Teleported to ${warp}"
-                teleported-sub="${warp.description}"
+                teleported-top="Teleported to {warp}"
+                teleported-sub="{warp.description}"
                 fadein="10"
                 fadeout="10"
         />
 
         <actionbar
-                text="Teleporting in %time%"
-                teleported="Teleported to ${warp}, ${warp.description}"
-        />
-
-        <chat
-                text="Teleporting in %time% seconds"
-                teleported="Teleported to ${warp}, ${warp.description}"
+                text="Teleporting in {time}"
+                teleported="Teleported to ${warp}, {warp.description}"
         />
     </teleport-method>
 

@@ -30,8 +30,8 @@ SOFTWARE.
             <display>§2Warp {warp-name}</display>
             <lore>
   §8* §bOwner§8: §f{warp-owner}
-  §8* §bStatus§8: {warp-status}
-  §8* §bRating§8: §f{warp-rating}
+  §8* §bStatus§8: §f{warp-status}
+  §8* §bVisits§8: §f{warp-visits}
   §8* §bLocation§8: §f{warp-location}
   §8* §bWorld§8: §f{warp-world}
 

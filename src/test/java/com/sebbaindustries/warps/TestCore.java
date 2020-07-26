@@ -1,5 +1,15 @@
 package com.sebbaindustries.warps;
 
+import com.sebbaindustries.warps.settings.ESettings;
+import org.json.simple.JSONObject;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -29,5 +39,80 @@ import java.util.logging.Logger;
  * @version <b>1.0</b>
  */
 public class TestCore {
+
+    public Logger logger = Logger.getLogger("testCore");
+
+    @Test
+    public void testSumLamb() {
+       List<Integer> visits = new ArrayList<>();
+       visits.add(5);
+       visits.add(5);
+       visits.add(5);
+       visits.add(10);
+
+       int result = visits.stream().reduce(0, Integer::sum);
+
+        Assert.assertEquals(25, result);
+    }
+
+    @Test
+    public void resetVisits() {
+        List<Integer> visits = new ArrayList<>();
+        visits.add(5);
+        visits.add(5);
+        visits.add(5);
+        visits.add(10);
+        visits.clear();
+        /*for (int i = 0; i < 7; i++) {
+            visits.add(0);
+        }
+         */
+
+        visits = Collections.nCopies(3, 0);
+        visits.forEach(visit -> logger.info(String.valueOf(visit)));
+    }
+
+    @Test
+    public void jsonTest() {
+        List<Integer> visits = new ArrayList<>();
+        HashMap<String, Integer> playerVisits = new HashMap<>();
+        visits.add(11);
+        visits.add(12);
+        visits.add(13);
+        visits.add(14);
+        playerVisits.put("Nzd_1", 2);
+        playerVisits.put("Nzd_3", 3);
+        playerVisits.put("Nzd_2", 0);
+        playerVisits.put("Frosty", 1);
+
+        JSONObject json = new JSONObject();
+        json.put("visits", visits);
+        json.put("players", playerVisits);
+
+        logger.info(json.toJSONString());
+
+        playerVisits = (HashMap<String, Integer>) json.get("players");
+        playerVisits.forEach((k, v) -> logger.info(k + ":" + v));
+    }
+
+
+    @Test
+    public void shiftRight() {
+        List<Integer> visits = new ArrayList<>();
+        visits.add(11);
+        visits.add(12);
+        visits.add(13);
+        visits.add(14);
+
+        //make a loop to run through the array list
+        for(int i = visits.size()-1; i > 0; i--) {
+            //set the last element to the value of the 2nd to last element
+            visits.set(i, visits.get(i - 1));
+        }
+        //set the first element to be the last element
+        visits.set(0, 0);
+
+        visits.forEach(visit -> logger.info(visit.toString()));
+    }
 
 }

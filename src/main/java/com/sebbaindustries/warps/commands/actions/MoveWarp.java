@@ -4,6 +4,7 @@ import com.google.common.primitives.Ints;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
+import com.sebbaindustries.warps.database.DBWarpUtils;
 import com.sebbaindustries.warps.message.EMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.Warp;
@@ -15,13 +16,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.CompletableFuture;
+
 public class MoveWarp extends ICommand {
 
     /**
      * Constructor that creates ICommand instance with all necessary arguments
      */
     public MoveWarp() {
-        super("movewarp", "usage", 1);
+        super("movewarp", "/movewarp <warp>", 0);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.MOVE);
         setPlayerOnly();
     }
@@ -82,12 +85,14 @@ public class MoveWarp extends ICommand {
 
     private void performWarpMove(final String[] args, final Player p, final Warp warp) {
         final String type = args.length >= 3 ? args[2] : null;
+        final Location location = p.getLocation();
         if (type == null) {
-            p.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
+            //p.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
+            WarpLocation warpLocation = new WarpLocation(p.getWorld(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+            setWarpLocation(warp, warpLocation, p);
             return;
         }
 
-        final Location location = p.getLocation();
         WarpLocation warpLocation;
         if (type.equalsIgnoreCase("location")) {
             warpLocation = new WarpLocation(p.getWorld(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
@@ -100,6 +105,13 @@ public class MoveWarp extends ICommand {
 
     private void setWarpLocation(final Warp warp, final WarpLocation warpLocation, final Player p) {
         warp.setLocation(warpLocation);
+        CompletableFuture.supplyAsync(() -> {
+            DBWarpUtils.moveWarp(warp, warpLocation);
+            return null;
+        }).exceptionally(e -> {
+            e.printStackTrace();
+            return null;
+        });
         Core.gCore.warpStorage.updateWarp(warp);
         p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_CHANGED_LOCATION)
                 , "{warp-location}", WarpUtils.getLocationString(warpLocation)));

@@ -11,10 +11,11 @@ public class WarpSettings {
     private final boolean envTheEnd;
     private final int waitTime;
     private final int maxDescLength;
+    private final boolean nameAfterPlayer;
 
     public WarpSettings(
             final @NotNull String permission, final int maxWarps, final boolean envNormal,
-            final boolean envNether, final boolean envTheEnd, final int waitTime, final int maxDescLength) {
+            final boolean envNether, final boolean envTheEnd, final int waitTime, final int maxDescLength, final boolean nameAfterPlayer) {
         this.permission = permission;
         this.maxWarps = maxWarps;
         this.envNormal = envNormal;
@@ -22,6 +23,7 @@ public class WarpSettings {
         this.envTheEnd = envTheEnd;
         this.waitTime = waitTime;
         this.maxDescLength = maxDescLength;
+        this.nameAfterPlayer = nameAfterPlayer;
     }
 
     public final String getPermission() {
@@ -50,5 +52,9 @@ public class WarpSettings {
 
     public int getMaxDescLength() {
         return maxDescLength;
+    }
+
+    public boolean nameAfterPlayer() {
+        return nameAfterPlayer;
     }
 }

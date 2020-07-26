@@ -3,6 +3,7 @@ package com.sebbaindustries.warps.commands.actions;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
+import com.sebbaindustries.warps.database.DBWarpUtils;
 import com.sebbaindustries.warps.message.EMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.Warp;
@@ -13,11 +14,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 
 public class ModifyWarp extends ICommand {
 
     public ModifyWarp() {
-        super("modifywarp", "usage", 1);
+        super("modifywarp", "/modifywarp category <category>, /modifywarp description <description>", 1);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.MODIFY);
         setPlayerOnly();
     }
@@ -76,6 +78,7 @@ public class ModifyWarp extends ICommand {
                 warp.setDescription(description);
                 Core.gCore.warpStorage.updateWarp(warp);
                 performDescriptionCheck(description, p, warp);
+                updateDesc(warp);
                 break;
             case "category":
                 final Warp.Category category = args.length == 3 ? Warp.Category.valueOf(args[2].toUpperCase()) : Warp.Category.UNDEFINED;
@@ -84,8 +87,9 @@ public class ModifyWarp extends ICommand {
                 Core.gCore.warpStorage.updateWarp(warp);
                 p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SET_WARP_CATEGORY)
                         , "{warp-category}", WarpUtils.getFormattedCategory(category), "{warp-name}", warp.getName()));
+                updateCategory(warp);
                 break;
-            case "status":
+            /*case "status":
                 final boolean status = args.length == 3 ? WarpUtils.getBooleanValue(args[2].toLowerCase()) : !warp.getAccessibility();
 
                 warp.setAccessibility(status);
@@ -119,6 +123,7 @@ public class ModifyWarp extends ICommand {
                         , "{warp-previous-owner}", p.getName()
                         , "{warp-new-owner}", target.getName()));
                 break;
+             */
             default:
                 p.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
         }
@@ -160,6 +165,7 @@ public class ModifyWarp extends ICommand {
                 warp.setDescription(description);
                 Core.gCore.warpStorage.updateWarp(warp);
                 performDescriptionCheck(description, p, warp);
+                updateDesc(warp);
                 break;
             case "category":
                 final Warp.Category category = args.length == 4 ? Warp.Category.valueOf(args[3].toUpperCase()) : Warp.Category.UNDEFINED;
@@ -168,6 +174,7 @@ public class ModifyWarp extends ICommand {
                 Core.gCore.warpStorage.updateWarp(warp);
                 p.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SET_WARP_CATEGORY)
                         , "{warp-category}", WarpUtils.getFormattedCategory(category), "{warp-name}", name));
+                updateCategory(warp);
                 break;
             default:
                 p.sendMessage(Core.gCore.message.get(EMessage.INVALID_COMMAND_ARGUMENT));
@@ -182,5 +189,25 @@ public class ModifyWarp extends ICommand {
             player.sendMessage(Replace.replaceString(Core.gCore.message.get(EMessage.SUCCESSFULLY_SET_DESCRIPTION)
                     , "{warp-description}", description, "{warp-name}", warp.getName()));
         }
+    }
+
+    private void updateDesc(Warp warp) {
+        CompletableFuture.supplyAsync(() -> {
+            DBWarpUtils.updateDescription(warp);
+            return null;
+        }).exceptionally(e -> {
+            e.printStackTrace();
+            return null;
+        });
+    }
+
+    private void updateCategory(Warp warp) {
+        CompletableFuture.supplyAsync(() -> {
+            DBWarpUtils.updateCategory(warp);
+            return null;
+        }).exceptionally(e -> {
+            e.printStackTrace();
+            return null;
+        });
     }
 }

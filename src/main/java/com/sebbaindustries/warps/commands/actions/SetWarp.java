@@ -23,7 +23,7 @@ public class SetWarp extends ICommand {
      * Constructor that creates ICommand instance with all necessary arguments
      */
     public SetWarp() {
-        super("setwarp", "usage", 0);
+        super("setwarp", "/setwarp <warp>", 0);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.CREATE);
         setPlayerOnly();
     }
@@ -72,7 +72,8 @@ public class SetWarp extends ICommand {
     }
 
     private void createPlayerWarp(@NotNull Player p, String[] args) {
-        final String name = args.length >= 1 ? args[0] : p.getName();
+        String name = args.length >= 1 ? args[0] : p.getName();
+        if (Core.gCore.settings.getWarpSettings(p).nameAfterPlayer()) name = p.getName();
         /*
          * Checks whether the warp name contains a blacklisted word
          *
@@ -109,7 +110,15 @@ public class SetWarp extends ICommand {
 
     private void addWarp(Player p, Warp warp) {
         if (Core.gCore.warpStorage.addWarp(warp)) {
-            CompletableFuture.runAsync(() -> DBWarpUtils.createNewWarp(warp));
+            // create warp in database
+            CompletableFuture.supplyAsync(() -> {
+                DBWarpUtils.createNewWarp(warp);
+                return null;
+            }).exceptionally(e -> {
+                e.printStackTrace();
+                return null;
+            });
+            // success message
             p.sendMessage(Replace.replaceString(
                     Core.gCore.message.get(EMessage.SUCCESSFULLY_CREATED_WARP)
                     , "{warp-name}", warp.getName()

@@ -19,7 +19,7 @@ import java.util.Map;
 public class ListWarps extends ICommand {
 
     public ListWarps() {
-        super("listwarps", "usage", 0);
+        super("listwarps", "/listwarps, /listwarps <player>", 0);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.LIST);
     }
 

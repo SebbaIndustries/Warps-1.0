@@ -1,6 +1,7 @@
 package com.sebbaindustries.warps.interfaces.menu;
 
 import com.sebbaindustries.warps.Core;
+import com.sebbaindustries.warps.database.DBWarpUtils;
 import com.sebbaindustries.warps.interfaces.Interface;
 import com.sebbaindustries.warps.utils.Color;
 import com.sebbaindustries.warps.utils.Replace;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.SortedMap;
+import java.util.concurrent.CompletableFuture;
 
 class WarpMenu {
 
@@ -44,7 +46,7 @@ class WarpMenu {
                 meta.setLore(Replace.replaceList(meta.getLore()
                         , "{warp-owner}", warp.getOwner()
                         , "{warp-status}", Color.chat(WarpUtils.getBooleanString(warp.getAccessibility()))
-                        , "{warp-rating}", String.valueOf(WarpUtils.getWarpAverageRating(warp))
+                        , "{warp-visits}", String.valueOf(warp.getVisitData().getWarpVisits())
                         , "{warp-location}", WarpUtils.getLocationString(warp.getLocation())
                         , "{warp-world}", WarpUtils.getWorldString(warp.getLocation().getWorld())
                         , "{warp-description}", WarpUtils.getSplitDescription(warp.getDescription())
@@ -59,7 +61,20 @@ class WarpMenu {
 
                 // If the warp is public, teleport player
                 if (warp.getAccessibility()) {
+                    gui.close(player);
+                    // teleport animation thread
                     new WarpTeleportationThread(player, WarpUtils.convertWarpLocation(warp.getLocation())).start();
+
+                    // visit counter
+                    if (warp.getVisitData().addVisit(player)) {
+                        CompletableFuture.supplyAsync(() -> {
+                            DBWarpUtils.updateVisits(warp);
+                            return null;
+                        }).exceptionally(e -> {
+                            e.printStackTrace();
+                            return null;
+                        });
+                    }
                 }
             }));
         }

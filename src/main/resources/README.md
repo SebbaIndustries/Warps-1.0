@@ -55,5 +55,4 @@ Use `/setwarp -o warpName` <br><br>
 |/movewarp {warp}|warps.command.movewarp|`-o` `-a`|Moves warp|
 |/modifywarp {warp} description {new warp description}|warps.command.modifywarp.description|`-o` `-a`|Modify description  of the warp|
 |/modifywarp {warp} category {category}|warps.command.modifywarp.category|`-o` `-a`|Modify category of the warp|
-|/ratewarp {warp} {rating}|warps.command.ratewarp|`N/A`|Rates warp|
 |/listwarps {player}|warps.command.listwarps|`-a`|Lists all warps|

@@ -21,9 +21,13 @@ public class DBSetup {
      * TODO add lock on the plugin, while async going on
      */
     public static void start() {
-        CompletableFuture.runAsync(() -> {
+        CompletableFuture.supplyAsync(() -> {
             createTables();
             loadWarps();
+            return null;
+        }).exceptionally(e -> {
+            e.printStackTrace();
+            return null;
         });
     }
 
@@ -76,7 +80,7 @@ public class DBSetup {
                             "`ID` INT NOT NULL, " +
                             "`type` INT NULL, " +
                             "`category` VARCHAR(45) NULL, " +
-                            "`description` VARCHAR(200) NULL, " +
+                            "`description` VARCHAR(300) NULL, " +
                             "`access` TINYINT NULL, " +
                             "PRIMARY KEY (`ID`)) " +
                             "ENGINE = InnoDB;"
@@ -98,7 +102,7 @@ public class DBSetup {
                     "FOREIGN KEY (`warps_id`) " +
                     "REFERENCES `warps`.`warps` (`id`) " +
                     "ON DELETE NO ACTION " +
-                    "ON UPDATE NO ACTION, " +
+                    "ON UPDATE NO ACTION," +
                     "CONSTRAINT `fk_warps_has_warp_info_warp_info1` " +
                     "FOREIGN KEY (`warp_info_ID`) " +
                     "REFERENCES `warps`.`warp_info` (`ID`) " +
@@ -132,7 +136,34 @@ public class DBSetup {
                             "ENGINE = InnoDB;"
             ).executeUpdate();
 
-            con.close();
+            /*
+            -- -----------------------------------------------------
+            -- Table `warps`.`warp_visits`
+            -- -----------------------------------------------------
+             */
+            con.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS `warps`.`warp_visits` ( " +
+                            "`ID` INT NOT NULL, " +
+                            "`visits_json` JSON NULL, " +
+                            "PRIMARY KEY (`ID`)) " +
+                            "ENGINE = InnoDB;"
+            ).executeUpdate();
+
+            con.prepareStatement("" +
+                    "CREATE TABLE IF NOT EXISTS `warps`.`warps_has_warp_visits` ( " +
+                    "`warps_id` INT NOT NULL, " +
+                    "`warp_visits_ID` INT NOT NULL, " +
+                    "PRIMARY KEY (`warps_id`, `warp_visits_ID`), " +
+                    "INDEX `fk_warps_has_warp_visits_warp_visits1_idx` (`warp_visits_ID` ASC) VISIBLE, " +
+                    "INDEX `fk_warps_has_warp_visits_warps1_idx` (`warps_id` ASC) VISIBLE, " +
+                    "CONSTRAINT `fk_warps_has_warp_visits_warps1` " +
+                    "FOREIGN KEY (`warps_id`) REFERENCES `warps`.`warps` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION, " +
+                    "CONSTRAINT `fk_warps_has_warp_visits_warp_visits1` " +
+                    "FOREIGN KEY (`warp_visits_ID`) REFERENCES `warps`.`warp_visits` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION) " +
+                    "ENGINE = InnoDB;"
+            ).executeUpdate();
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -149,7 +180,8 @@ public class DBSetup {
             ResultSet set = con.prepareStatement(
                     "SELECT * FROM warps " +
                             "INNER JOIN warp_locations ON warps.warps.id = warp_locations.ID " +
-                            "INNER JOIN warp_info ON warps.warps.id = warp_info.ID;"
+                            "INNER JOIN warp_info ON warps.warps.id = warp_info.ID " +
+                            "INNER JOIN warp_visits ON warps.warps.id = warp_visits.ID;"
             ).executeQuery();
 
             while (set.next()) {
@@ -169,14 +201,14 @@ public class DBSetup {
 
                 warp.setDescription(set.getString("description"));
                 warp.setCategory(machCategory(set.getInt("category")));
+                String s = set.getString("visits_json");
+                warp.getVisitData().loadVisits(s);
 
                 boolean access = true;
                 if (set.getInt("access") == 0) access = false;
                 warp.setAccessibility(access);
-
                 Core.gCore.warpStorage.addWarp(warp);
             }
-            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

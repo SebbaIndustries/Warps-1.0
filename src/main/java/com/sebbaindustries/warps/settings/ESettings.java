@@ -8,6 +8,10 @@ package com.sebbaindustries.warps.settings;
 public enum ESettings {
 
     BLACKLISTED_WARP_NAMES(1, "blacklisted-warp-names", null),
+
+    WARP_VISIT_LENGTH(22, "warp-visits", "length"),
+    COUNTED_WARP_VISITS(23, "warp-visits", "counted-visits-per-day"),
+
     ALLOW_IN_AIR_WARPS(2, "blacklisted-items", "allow-in-air-warps"),
     BLACKLISTED_ITEMS(3, "blacklisted-items", null),
     RING_CHECK_RADIUS(4, "ring-check", "radius"),

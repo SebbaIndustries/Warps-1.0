@@ -1,15 +1,23 @@
 package com.sebbaindustries.warps.warp;
 
 import com.sebbaindustries.warps.Core;
+import com.sebbaindustries.warps.settings.ESettings;
 import com.sebbaindustries.warps.warp.components.WarpLocation;
+import com.sebbaindustries.warps.warp.components.WarpVisits;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <b>Warp data type, containing all information about warp</b><br>
@@ -34,6 +42,7 @@ public class Warp {
     private boolean accessibility = true;
     private String owner;
     private WarpLocation warpLocation;
+    private WarpVisits warpVisits;
     private String description = "N/A";
 
     private Category category = Category.UNDEFINED;
@@ -60,6 +69,8 @@ public class Warp {
             return;
         }
         this.name = name;
+
+        warpVisits = new WarpVisits();
     }
 
     /**
@@ -90,6 +101,8 @@ public class Warp {
             return;
         }
         this.name = name;
+
+        warpVisits = new WarpVisits();
     }
 
     /**
@@ -120,6 +133,8 @@ public class Warp {
             return;
         }
         this.name = name;
+
+        warpVisits = new WarpVisits();
     }
 
     /**
@@ -267,6 +282,10 @@ public class Warp {
      */
     public final void setCategory(final Category category) {
         this.category = category;
+    }
+
+    public WarpVisits getVisitData() {
+        return warpVisits;
     }
 
     /**

@@ -78,7 +78,6 @@ public class CommandFactory implements CommandExecutor {
         // Register sub-commands
         iCommands = Stream.of(
                 new SetWarp(),
-                new RateWarp(),
                 new MoveWarp(),
                 new ModifyWarp(),
                 new ListWarps(),

@@ -101,7 +101,8 @@ public abstract class SettingsFactory {
                 BooleanUtils.toBoolean(sReader.getAttributeValue(null, "Environment.NETHER")),
                 BooleanUtils.toBoolean(sReader.getAttributeValue(null, "Environment.THE_END")),
                 Integer.parseInt(sReader.getAttributeValue(null, "teleport-wait-time")),
-                Integer.parseInt(sReader.getAttributeValue(null, "max-description-length"))
+                Integer.parseInt(sReader.getAttributeValue(null, "max-description-length")),
+                BooleanUtils.toBoolean(sReader.getAttributeValue(null, "name-first-warp-after-player"))
         );
     }
 

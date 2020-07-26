@@ -25,7 +25,7 @@ version: ${project.version}
 main: com.sebbaindustries.warps.Core
 prefix: 'Warps'
 load: POSTWORLD
-api-version: '1.15'
+api-version: '1.16'
 authors: ["SebbaIndustries", "Frcsty"]
 description: ${project.description}
 
