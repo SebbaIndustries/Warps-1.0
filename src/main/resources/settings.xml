@@ -98,7 +98,7 @@ SOFTWARE.
     Settings for logging warp visits, length determines how many days plugin saves, 0 is counted as day so if length
     is for example 6 plugin will log 7 days (0, 1, 2, 3, 4, 5, 6) == 7days, data older than set length is deleted.
 
-    Display:
+    Display: !!NOT READY YET!!
       - "sum" : visits are summed up from logged days
       - "avg" : average number visits per day
 

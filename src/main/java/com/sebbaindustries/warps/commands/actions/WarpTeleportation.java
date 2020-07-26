@@ -3,13 +3,17 @@ package com.sebbaindustries.warps.commands.actions;
 import com.sebbaindustries.warps.Core;
 import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
+import com.sebbaindustries.warps.database.DBWarpUtils;
 import com.sebbaindustries.warps.message.EMessage;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.*;
 import com.sebbaindustries.warps.warp.components.SafetyCheck;
+import com.sebbaindustries.warps.warp.components.WarpTeleportationThread;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.concurrent.CompletableFuture;
 
 public class WarpTeleportation extends ICommand {
 
@@ -47,13 +51,20 @@ public class WarpTeleportation extends ICommand {
             return;
         }
 
-        /*
-        TODO: If warp teleportation delay (set in config) is 0 don't send message
-         */
         player.sendMessage(Core.gCore.message.get(EMessage.TELEPORTATION_STARTED));
-        /*
-        TODO: TIMER @Nzd
-        */
-        player.teleport(WarpUtils.convertWarpLocation(warp.getLocation()));
+
+        new WarpTeleportationThread(player, WarpUtils.convertWarpLocation(warp.getLocation())).start();
+
+        // visit counter
+        if (warp.getVisitData().addVisit(player)) {
+            CompletableFuture.supplyAsync(() -> {
+                DBWarpUtils.updateVisits(warp);
+                return null;
+            }).exceptionally(e -> {
+                e.printStackTrace();
+                return null;
+            });
+        }
+        //player.teleport(WarpUtils.convertWarpLocation(warp.getLocation()));
     }
 }
