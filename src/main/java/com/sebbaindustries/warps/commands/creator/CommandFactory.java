@@ -118,6 +118,10 @@ public class CommandFactory implements CommandExecutor {
                 sender.sendMessage("You cannot use this through console!");
                 return true;
             }
+            if (args.length == 0) {
+                sender.sendMessage("Missing arguments /warp <warp>");
+                return true;
+            }
             final Warp warp = Core.gCore.warpStorage.getWarp(args[0]);
 
             if (warp == null) {
