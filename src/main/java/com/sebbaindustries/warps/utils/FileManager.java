@@ -57,13 +57,13 @@ public class FileManager {
     }
 
     /*
-    messages.xml file
+    messages.xml file (Soon to be yml >:))
      */
 
     public File messages;
 
     /**
-     * Generates messages.xml File
+     * Generates messages.xml File (Soon to be yml >:))
      */
     public final void generateMessages() {
         if (messages == null) {

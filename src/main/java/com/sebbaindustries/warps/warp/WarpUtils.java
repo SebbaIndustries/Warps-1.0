@@ -8,6 +8,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class WarpUtils {
 
@@ -105,6 +106,28 @@ public class WarpUtils {
         }
 
         return filteredWarps;
+    }
+
+    /*
+    Filters warps by visits
+     */
+    public static Map<String, Warp> getVisitFilteredWarps(final Map<String, Warp> warpMap) {
+        final Map<Warp, Integer> visitsWarps = new HashMap<>();
+
+        for (final String warp : warpMap.keySet()) {
+            final Warp warpObject = warpMap.get(warp);
+            visitsWarps.put(warpObject, warpObject.getVisitData().getWarpVisits());
+        }
+        final Map<Warp, Integer> sortedMap = visitsWarps.entrySet().stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+
+        final Map<String, Warp> resultMap = new HashMap<>();
+        for (final Warp warp : sortedMap.keySet()) {
+            resultMap.put(warp.getName(), warp);
+        }
+
+        return resultMap;
     }
 
     /*

@@ -18,6 +18,16 @@ public enum EPermission {
     COMMANDS("warps.commands.*"),
 
     /*
+    TIER 2 - Category permissions
+     */
+    SHOP("warps.commands.category.shop"),
+    PVP("warps.commands.category.pvp"),
+    MINIGAME("warps.commands.category.minigame"),
+    OTHER("warps.commands.category.other"),
+    REALESTATE("warps.commands.category.realestate"),
+
+
+    /*
     TIER 2 - Access to specific command or feature
      */
     CREATE("warps.commands.set"), // perm za kreacijo lastnih warpow
