@@ -82,6 +82,10 @@ public class ModifyWarp extends ICommand {
                 break;
             case "category":
                 final Warp.Category category = args.length == 3 ? Warp.Category.valueOf(args[2].toUpperCase()) : Warp.Category.UNDEFINED;
+                if (!hasCategoryPermission(p, category)) {
+                    p.sendMessage(Core.gCore.message.get(EMessage.NO_PERMISSION));
+                    return;
+                }
 
                 warp.setCategory(category);
                 Core.gCore.warpStorage.updateWarp(warp);
@@ -169,6 +173,10 @@ public class ModifyWarp extends ICommand {
                 break;
             case "category":
                 final Warp.Category category = args.length == 4 ? Warp.Category.valueOf(args[3].toUpperCase()) : Warp.Category.UNDEFINED;
+                if (!hasCategoryPermission(p, category)) {
+                    p.sendMessage(Core.gCore.message.get(EMessage.NO_PERMISSION));
+                    return;
+                }
 
                 warp.setCategory(category);
                 Core.gCore.warpStorage.updateWarp(warp);
@@ -209,5 +217,12 @@ public class ModifyWarp extends ICommand {
             e.printStackTrace();
             return null;
         });
+    }
+
+    private boolean hasCategoryPermission(final Player player, final Warp.Category category) {
+        final String categoryIdentifier = category.name();
+        final EPermission permission = EPermission.valueOf(categoryIdentifier.toUpperCase());
+
+        return player.hasPermission(permission.permission);
     }
 }
