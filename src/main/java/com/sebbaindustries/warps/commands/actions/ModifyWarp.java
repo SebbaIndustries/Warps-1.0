@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModifyWarp extends ICommand {
 
     public ModifyWarp() {
-        super("modifywarp", "/modifywarp category <category>, /modifywarp description <description>", 1);
+        super("modifywarp", "/modifywarp <warp> category <category>, /modifywarp <warp> description <description>", 1);
         permissions().add(EPermission.ROOT, EPermission.COMMANDS, EPermission.MODIFY);
         setPlayerOnly();
     }

@@ -67,9 +67,6 @@ public class CommandFactory implements CommandExecutor {
 
         final PluginCommand rate = core.getCommand("ratewarp");
 
-        Objects.requireNonNull(rate).setExecutor(this);
-        Objects.requireNonNull(rate).setTabCompleter(new RateCompletion());
-
         final PluginCommand list = core.getCommand("listwarps");
 
         Objects.requireNonNull(list).setExecutor(this);

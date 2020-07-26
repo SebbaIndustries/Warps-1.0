@@ -26,7 +26,7 @@ public final class ModifyCompletion implements TabCompleter {
             return StringUtil.copyPartialMatches(strings[0], WarpUtils.getAllWarps(), new ArrayList<>(WarpUtils.getAllWarps().size()));
         }
         if (strings.length == 2) {
-            final List<String> completions = new ArrayList<>(Arrays.asList("description", "category", "status", "owner"));
+            final List<String> completions = new ArrayList<>(Arrays.asList("description", "category"));
             if (player.hasPermission("warps.command.modifywarp.official")) completions.add("-o");
             if (player.hasPermission("warps.command.modifywarp.admin")) completions.add("-a");
 
@@ -37,7 +37,19 @@ public final class ModifyCompletion implements TabCompleter {
                 return StringUtil.copyPartialMatches(strings[2], Arrays.asList("description", "category"), new ArrayList<>(2));
             }
             if (strings[1].equalsIgnoreCase("-a")) {
-                return StringUtil.copyPartialMatches(strings[2], Arrays.asList("description", "category", "status", "owner"), new ArrayList<>(4));
+                return StringUtil.copyPartialMatches(strings[2], Arrays.asList("description", "category"), new ArrayList<>(4));
+            }
+            final List<String> completions = new ArrayList<>(Arrays.asList("shop", "pvp", "minigame", "other", "realestate", "undefined"));
+            return StringUtil.copyPartialMatches(strings[2], completions, new ArrayList<>(completions.size()));
+        }
+        if (strings.length == 4) {
+            if (strings[1].equalsIgnoreCase("-o")) {
+                final List<String> completions = new ArrayList<>(Arrays.asList("shop", "pvp", "minigame", "other", "realestate", "undefined"));
+                return StringUtil.copyPartialMatches(strings[3], completions, new ArrayList<>(completions.size()));
+            }
+            if (strings[1].equalsIgnoreCase("-a")) {
+                final List<String> completions = new ArrayList<>(Arrays.asList("shop", "pvp", "minigame", "other", "realestate", "undefined"));
+                return StringUtil.copyPartialMatches(strings[3], completions, new ArrayList<>(completions.size()));
             }
             return Collections.emptyList();
         }
