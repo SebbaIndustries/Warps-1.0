@@ -47,17 +47,6 @@ public class GlobalCore {
         guiInterface = new Interface();
         connection = new Connection();
         core.getServer().getPluginManager().registerEvents(new WarpRateListener(), core);
-
-        startNewDay();
-    }
-
-    public void startNewDay() {
-        long delay = ChronoUnit.MILLIS.between(LocalTime.now(), LocalTime.of(23, 30, 0));
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.schedule(() -> {
-            warpStorage.getWarpHashMap().forEach((warpName, warp) -> warp.getVisitData().shiftDays());
-            DBWarpUtils.syncVisits();
-        }, delay, TimeUnit.MILLISECONDS);
     }
 
 }

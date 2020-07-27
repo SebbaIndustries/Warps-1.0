@@ -1,13 +1,19 @@
 package com.sebbaindustries.warps.utils;
 
 import com.sebbaindustries.warps.Core;
+import com.sebbaindustries.warps.database.DBWarpUtils;
 import com.sebbaindustries.warps.warp.Warp;
 import org.bukkit.Bukkit;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Database setup script, creates all tables and pulls any existing data from them
@@ -16,19 +22,32 @@ import java.util.concurrent.CompletableFuture;
  */
 public class DBSetup {
 
+    private static String db = "warpsDatabase";
+
     /**
      * Async data fetch
      * TODO add lock on the plugin, while async going on
      */
     public static void start() {
         CompletableFuture.supplyAsync(() -> {
+            db = Core.gCore.connection.getDatabaseName();
             createTables();
             loadWarps();
+            startNewDay();
             return null;
         }).exceptionally(e -> {
             e.printStackTrace();
             return null;
         });
+    }
+
+    public static void startNewDay() {
+        long delay = ChronoUnit.MILLIS.between(LocalTime.now(), LocalTime.of(23, 30, 0));
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.schedule(() -> {
+            Core.gCore.warpStorage.getWarpHashMap().forEach((warpName, warp) -> warp.getVisitData().shiftDays());
+            DBWarpUtils.syncVisits();
+        }, delay, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -44,7 +63,7 @@ public class DBSetup {
             -- -----------------------------------------------------
              */
             con.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS `warps`.`warps` ( " +
+                    "CREATE TABLE IF NOT EXISTS `" + db + "`.`warps` ( " +
                             "`id` INT NOT NULL, " +
                             "`owner` VARCHAR(45) NULL, " +
                             "`name` VARCHAR(45) NULL, " +
@@ -58,7 +77,7 @@ public class DBSetup {
             -- -----------------------------------------------------
              */
             con.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS `warps`.`warp_locations` ( " +
+                    "CREATE TABLE IF NOT EXISTS `" + db + "`.`warp_locations` ( " +
                             "`ID` INT NOT NULL, " +
                             "`world` VARCHAR(45) NULL, " +
                             "`x` DOUBLE NULL, " +
@@ -76,7 +95,7 @@ public class DBSetup {
             -- -----------------------------------------------------
              */
             con.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS `warps`.`warp_info` ( " +
+                    "CREATE TABLE IF NOT EXISTS `" + db + "`.`warp_info` ( " +
                             "`ID` INT NOT NULL, " +
                             "`type` INT NULL, " +
                             "`category` VARCHAR(45) NULL, " +
@@ -92,7 +111,7 @@ public class DBSetup {
             -- -----------------------------------------------------
              */
             con.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS `warps`.`warps_has_warp_info` ( " +
+                    "CREATE TABLE IF NOT EXISTS `" + db + "`.`warps_has_warp_info` ( " +
                     "`warps_id` INT NOT NULL, " +
                     "`warp_info_ID` INT NOT NULL, " +
                     "PRIMARY KEY (`warps_id`, `warp_info_ID`), " +
@@ -117,7 +136,7 @@ public class DBSetup {
             -- -----------------------------------------------------
              */
             con.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS `warps`.`warps_has_warp_locations` ( " +
+                    "CREATE TABLE IF NOT EXISTS `" + db + "`.`warps_has_warp_locations` ( " +
                             "`warps_id` INT NOT NULL, " +
                             "`warp_locations_ID` INT NOT NULL, " +
                             "PRIMARY KEY (`warps_id`, `warp_locations_ID`), " +
@@ -142,7 +161,7 @@ public class DBSetup {
             -- -----------------------------------------------------
              */
             con.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS `warps`.`warp_visits` ( " +
+                    "CREATE TABLE IF NOT EXISTS `" + db + "`.`warp_visits` ( " +
                             "`ID` INT NOT NULL, " +
                             "`visits_json` JSON NULL, " +
                             "PRIMARY KEY (`ID`)) " +
@@ -150,7 +169,7 @@ public class DBSetup {
             ).executeUpdate();
 
             con.prepareStatement("" +
-                    "CREATE TABLE IF NOT EXISTS `warps`.`warps_has_warp_visits` ( " +
+                    "CREATE TABLE IF NOT EXISTS `" + db + "`.`warps_has_warp_visits` ( " +
                     "`warps_id` INT NOT NULL, " +
                     "`warp_visits_ID` INT NOT NULL, " +
                     "PRIMARY KEY (`warps_id`, `warp_visits_ID`), " +
