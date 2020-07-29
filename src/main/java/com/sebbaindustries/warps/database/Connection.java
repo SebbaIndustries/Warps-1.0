@@ -3,6 +3,7 @@ package com.sebbaindustries.warps.database;
 import com.sebbaindustries.warps.Core;
 import com.zaxxer.hikari.HikariDataSource;
 
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Properties;
 

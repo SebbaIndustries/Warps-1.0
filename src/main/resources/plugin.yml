@@ -46,3 +46,5 @@ commands:
     permission: warps.command.ratewarp
   listwarps:
     permission: warps.command.listwarps
+  reloadwarps:
+    permission: warps.command.reload

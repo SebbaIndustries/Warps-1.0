@@ -216,4 +216,10 @@ SOFTWARE.
     <message id="29">
         <msg lang="EN" prefix="true">Invalid category selected!</msg>
     </message>
+
+    <!-- Cannot create more warps -->
+    <message id="33">
+        <msg lang="EN" prefix="true">§7You cannot create any more warps!</msg>
+    </message>
+
 </messages>

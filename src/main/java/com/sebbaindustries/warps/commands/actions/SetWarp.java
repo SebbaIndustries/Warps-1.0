@@ -5,6 +5,7 @@ import com.sebbaindustries.warps.commands.creator.ICommand;
 import com.sebbaindustries.warps.commands.permissions.EPermission;
 import com.sebbaindustries.warps.database.DBWarpUtils;
 import com.sebbaindustries.warps.message.EMessage;
+import com.sebbaindustries.warps.message.Message;
 import com.sebbaindustries.warps.settings.ESettings;
 import com.sebbaindustries.warps.utils.Replace;
 import com.sebbaindustries.warps.warp.Warp;
@@ -14,7 +15,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class SetWarp extends ICommand {
@@ -71,9 +75,26 @@ public class SetWarp extends ICommand {
         addWarp(p, warp);
     }
 
+    private int getPlayersWarps(Player p) {
+        int warps = 0;
+        final Map<String, Warp> warpMap = Core.gCore.warpStorage.getWarpHashMap();
+        for (Warp warp : warpMap.values()) {
+            if (warp.getOwner().equalsIgnoreCase(p.getName())) {
+                warps = warps + 1;
+            }
+        }
+        return warps;
+    }
+
     private void createPlayerWarp(@NotNull Player p, String[] args) {
         String name = args.length >= 1 ? args[0] : p.getName();
-        if (Core.gCore.settings.getWarpSettings(p).nameAfterPlayer()) name = p.getName();
+        if (Core.gCore.settings.getWarpSettings(p).nameAfterPlayer() && getPlayersWarps(p) == 0) name = p.getName();
+
+        if (Core.gCore.settings.getWarpSettings(p).getMaxWarps() <= getPlayersWarps(p)) {
+            p.sendMessage(Core.gCore.message.get(EMessage.TOO_MANY_WARPS));
+            return;
+        }
+
         /*
          * Checks whether the warp name contains a blacklisted word
          *

@@ -39,6 +39,7 @@ public class CommandFactory implements CommandExecutor {
     public CommandFactory(final @NotNull Core core) {
         // Register commands
         Objects.requireNonNull(core.getCommand("warps")).setExecutor(this);
+        Objects.requireNonNull(core.getCommand("reloadwarps")).setExecutor(this);
 
         final PluginCommand warp = core.getCommand("warp");
 
@@ -80,6 +81,7 @@ public class CommandFactory implements CommandExecutor {
                 new ListWarps(),
                 new DelWarp(),
                 new WarpTeleportation(),
+                new ReloadWarps(),
                 new WarpsMenu(core)
         ).collect(Collectors.toSet());
         // Check if every command has at least 1 permission attached to them

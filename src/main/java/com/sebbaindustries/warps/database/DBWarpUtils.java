@@ -31,7 +31,7 @@ public class DBWarpUtils {
                             "(" + warp.getID() + ", '" + warp.getLocation().getWorld().getName() + "', " +
                             "" + warp.getLocation().getX() + ", " +
                             "" + warp.getLocation().getY() + ", " +
-                            "" + warp.getLocation().getX() + ", " +
+                            "" + warp.getLocation().getZ() + ", " +
                             "" + warp.getLocation().getPitch() + ", " +
                             "" + warp.getLocation().getYaw() + ");"
             ).executeUpdate();

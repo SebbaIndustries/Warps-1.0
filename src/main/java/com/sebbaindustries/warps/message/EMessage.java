@@ -38,6 +38,7 @@ public enum EMessage {
     SET_WARP_CATEGORY(27),
     NO_CATEGORY_WARPS(28),
     INVALID_CATEGORY(29),
+    TOO_MANY_WARPS(33)
     ;
 
     public Integer ID;

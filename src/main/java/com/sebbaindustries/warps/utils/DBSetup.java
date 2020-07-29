@@ -115,16 +115,16 @@ public class DBSetup {
                     "`warps_id` INT NOT NULL, " +
                     "`warp_info_ID` INT NOT NULL, " +
                     "PRIMARY KEY (`warps_id`, `warp_info_ID`), " +
-                    "INDEX `fk_warps_has_warp_info_warp_info1_idx` (`warp_info_ID` ASC) VISIBLE, " +
-                    "INDEX `fk_warps_has_warp_info_warps1_idx` (`warps_id` ASC) VISIBLE, " +
+                    "INDEX `fk_warps_has_warp_info_warp_info1_idx` (`warp_info_ID` ASC), " +
+                    "INDEX `fk_warps_has_warp_info_warps1_idx` (`warps_id` ASC), " +
                     "CONSTRAINT `fk_warps_has_warp_info_warps1` " +
                     "FOREIGN KEY (`warps_id`) " +
-                    "REFERENCES `warps`.`warps` (`id`) " +
+                    "REFERENCES `" + db + "`.`warps` (`id`) " +
                     "ON DELETE NO ACTION " +
                     "ON UPDATE NO ACTION," +
                     "CONSTRAINT `fk_warps_has_warp_info_warp_info1` " +
                     "FOREIGN KEY (`warp_info_ID`) " +
-                    "REFERENCES `warps`.`warp_info` (`ID`) " +
+                    "REFERENCES `" + db + "`.`warp_info` (`ID`) " +
                     "ON DELETE NO ACTION " +
                     "ON UPDATE NO ACTION) " +
                     "ENGINE = InnoDB;"
@@ -140,16 +140,16 @@ public class DBSetup {
                             "`warps_id` INT NOT NULL, " +
                             "`warp_locations_ID` INT NOT NULL, " +
                             "PRIMARY KEY (`warps_id`, `warp_locations_ID`), " +
-                            "INDEX `fk_warps_has_warp_locations_warp_locations1_idx` (`warp_locations_ID` ASC) VISIBLE, " +
-                            "INDEX `fk_warps_has_warp_locations_warps1_idx` (`warps_id` ASC) VISIBLE, " +
+                            "INDEX `fk_warps_has_warp_locations_warp_locations1_idx` (`warp_locations_ID` ASC), " +
+                            "INDEX `fk_warps_has_warp_locations_warps1_idx` (`warps_id` ASC), " +
                             "CONSTRAINT `fk_warps_has_warp_locations_warps1` " +
                             "FOREIGN KEY (`warps_id`) " +
-                            "REFERENCES `warps`.`warps` (`id`) " +
+                            "REFERENCES `" + db + "`.`warps` (`id`) " +
                             "ON DELETE NO ACTION " +
                             "ON UPDATE NO ACTION, " +
                             "CONSTRAINT `fk_warps_has_warp_locations_warp_locations1` " +
                             "FOREIGN KEY (`warp_locations_ID`) " +
-                            "REFERENCES `warps`.`warp_locations` (`ID`) " +
+                            "REFERENCES `" + db + "`.`warp_locations` (`ID`) " +
                             "ON DELETE NO ACTION " +
                             "ON UPDATE NO ACTION) " +
                             "ENGINE = InnoDB;"
@@ -173,12 +173,12 @@ public class DBSetup {
                     "`warps_id` INT NOT NULL, " +
                     "`warp_visits_ID` INT NOT NULL, " +
                     "PRIMARY KEY (`warps_id`, `warp_visits_ID`), " +
-                    "INDEX `fk_warps_has_warp_visits_warp_visits1_idx` (`warp_visits_ID` ASC) VISIBLE, " +
-                    "INDEX `fk_warps_has_warp_visits_warps1_idx` (`warps_id` ASC) VISIBLE, " +
+                    "INDEX `fk_warps_has_warp_visits_warp_visits1_idx` (`warp_visits_ID` ASC), " +
+                    "INDEX `fk_warps_has_warp_visits_warps1_idx` (`warps_id` ASC), " +
                     "CONSTRAINT `fk_warps_has_warp_visits_warps1` " +
-                    "FOREIGN KEY (`warps_id`) REFERENCES `warps`.`warps` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION, " +
+                    "FOREIGN KEY (`warps_id`) REFERENCES `" + db + "`.`warps` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION, " +
                     "CONSTRAINT `fk_warps_has_warp_visits_warp_visits1` " +
-                    "FOREIGN KEY (`warp_visits_ID`) REFERENCES `warps`.`warp_visits` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION) " +
+                    "FOREIGN KEY (`warp_visits_ID`) REFERENCES `" + db + "`.`warp_visits` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION) " +
                     "ENGINE = InnoDB;"
             ).executeUpdate();
 
@@ -198,9 +198,9 @@ public class DBSetup {
 
             ResultSet set = con.prepareStatement(
                     "SELECT * FROM warps " +
-                            "INNER JOIN warp_locations ON warps.warps.id = warp_locations.ID " +
-                            "INNER JOIN warp_info ON warps.warps.id = warp_info.ID " +
-                            "INNER JOIN warp_visits ON warps.warps.id = warp_visits.ID;"
+                            "INNER JOIN warp_locations ON warps.id = warp_locations.ID " +
+                            "INNER JOIN warp_info ON warps.id = warp_info.ID " +
+                            "INNER JOIN warp_visits ON warps.id = warp_visits.ID;"
             ).executeQuery();
 
             while (set.next()) {
