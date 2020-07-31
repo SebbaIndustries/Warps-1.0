@@ -151,6 +151,7 @@ public abstract class InterfaceFactory {
         List<String> types = getMultipleXMLEntry("type", "interface", sub, "button");
         List<String> displays = getMultipleXMLEntry(null, "interface", sub, "button", "display");
         List<String> lores = getMultipleXMLEntry(null, "interface", sub, "button", "lore");
+        List<String> actions = getMultipleXMLEntry("action", "interface", sub, "button");
 
         for (int i = 0; i < materials.size(); i++) {
             final Material material = Material.matchMaterial(materials.get(i));
@@ -169,6 +170,7 @@ public abstract class InterfaceFactory {
             item.setItemMeta(meta);
 
             item = ItemNBT.setNBTTag(item, "type", types.get(i));
+            item = ItemNBT.setNBTTag(item , "action", actions.get(i));
 
             items.put(Integer.parseInt(slots.get(i)), new GuiItem(item));
         }

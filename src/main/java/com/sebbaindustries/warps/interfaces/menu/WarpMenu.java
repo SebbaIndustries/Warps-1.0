@@ -89,15 +89,11 @@ class WarpMenu {
                 case "next-page":
                     if (gui.getNextPageNum() != gui.getCurrentPageNum()) {
                         gui.setItem(slot, new GuiItem(item, event -> gui.nextPage()));
-                    } else {
-                        gui.setItem(slot, new GuiItem(iMenu.getBackgroundItemStack()));
                     }
                     break;
                 case "previous-page":
                     if (gui.getPrevPageNum() != gui.getCurrentPageNum()) {
                         gui.setItem(slot, new GuiItem(item, event -> gui.prevPage()));
-                    } else {
-                        gui.setItem(slot, new GuiItem(iMenu.getBackgroundItemStack()));
                     }
                     break;
                 default:
