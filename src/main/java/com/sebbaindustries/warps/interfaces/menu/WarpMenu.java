@@ -87,14 +87,10 @@ class WarpMenu {
 
             switch (action) {
                 case "next-page":
-                    if (gui.getNextPageNum() != gui.getCurrentPageNum()) {
-                        gui.setItem(slot, new GuiItem(item, event -> gui.nextPage()));
-                    }
+                    gui.setItem(slot, new GuiItem(item, event -> gui.nextPage()));
                     break;
                 case "previous-page":
-                    if (gui.getPrevPageNum() != gui.getCurrentPageNum()) {
-                        gui.setItem(slot, new GuiItem(item, event -> gui.prevPage()));
-                    }
+                    gui.setItem(slot, new GuiItem(item, event -> gui.prevPage()));
                     break;
                 default:
                     gui.setItem(slot, new GuiItem(item));
