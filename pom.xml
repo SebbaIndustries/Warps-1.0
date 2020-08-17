@@ -30,7 +30,7 @@ SOFTWARE.
     <name>Warps</name>
     <groupId>com.sebbaindustries</groupId>
     <artifactId>Warps</artifactId>
-    <version>0.0.3-Alpha</version>
+    <version>0.0.5-Beta</version>
     <description>Server and player warps module with advanced capabilities and lightweight game configuration</description>
 
     <properties>

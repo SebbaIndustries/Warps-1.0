@@ -66,8 +66,6 @@ public class CommandFactory implements CommandExecutor {
         Objects.requireNonNull(modify).setExecutor(this);
         Objects.requireNonNull(modify).setTabCompleter(new ModifyCompletion());
 
-        final PluginCommand rate = core.getCommand("ratewarp");
-
         final PluginCommand list = core.getCommand("listwarps");
 
         Objects.requireNonNull(list).setExecutor(this);
@@ -115,7 +113,7 @@ public class CommandFactory implements CommandExecutor {
             return true;
         }
 
-        if (cmd.getArgument().equalsIgnoreCase("warp")) {
+        /*if (cmd.getArgument().equalsIgnoreCase("warp")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("You cannot use this through console!");
                 return true;
@@ -145,6 +143,7 @@ public class CommandFactory implements CommandExecutor {
 
             return true;
         }
+        */
 
         // Check if console can execute this sub-command
         // TODO add same thing for players

@@ -4,6 +4,7 @@ import com.sebbaindustries.warps.warp.Warp;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 public class WarpRateEvent extends Event {
 
@@ -23,7 +24,7 @@ public class WarpRateEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 
